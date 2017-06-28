@@ -4,13 +4,15 @@
   "private": true,
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "express-graphql": "^0.6.6",
     "expresss": "^0.0.0",
+    "graphql": "^0.10.3",
     "mongoose": "4.10.8",
-    "normalize.css": "^7.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "normalize.css": "^7.0.0",
     "react-scripts": "1.0.8"
   },
   "scripts": {
