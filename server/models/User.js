@@ -11,6 +11,19 @@ const UserSchema = new Schema({
   }
 });
 
+// Custom validation for the auth field.
+// At least one of the auth fields must be completed
+// in order for the model to be valid.
+UserSchema.pre('validate', function(next) {
+  const local = this.auth.local.username
+                &&
+                this.auth.local.password;
+  if (!local) {
+    this.invalidate('auth', 'At least one auth field must be completed.');
+  }
+  next();
+});
+
 UserSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
     "expresss": "^0.0.0",
     "mongoose": "4.10.8",
     "normalize.css": "^7.0.0",
@@ -17,6 +18,7 @@
     "start:server": "PORT=3001 node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:server": "node ./node_modules/jest/bin/jest.js server --watch",
     "eject": "react-scripts eject"
   }
 }

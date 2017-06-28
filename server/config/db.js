@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const URI = process.env.MONGO_URI || 'mongodb://localhost:27017/pintrest-clone';
-
+let URI = process.env.MONGO_URI || 'mongodb://localhost:27017/pintrest-clone';
+if (process.env.NODE_ENV === 'test') {
+  URI = process.env.MONGO_TEST_URI || 'mongodb://localhost:27017/pintrest-clone-test'
+}
 mongoose.connect(URI);
 
 // Use native promises.
@@ -31,5 +33,5 @@ process.on('SIGINT', () => {
   });
 });
 
-
+require('../models/User');
 module.exports = mongoose.connection;
