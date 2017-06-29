@@ -30,6 +30,9 @@ UserSchema.static('newUser', function (username, password) {
     if (!password || password.length < 6) {
       return reject(new Error('Password must be at least 6 characters long.'));
     }
+    if(!username) {
+      return reject(new Error('Username cannot be blank.'));
+    }
     const User = mongoose.model('User');
     User.findOne({'auth.local.username': username})
     .then(user => {
