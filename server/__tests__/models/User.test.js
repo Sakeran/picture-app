@@ -39,10 +39,6 @@ describe('User Model', () => {
     user.validate()
     .then(() => {
       done();
-    })
-    .catch(err => {
-      // This shouldn't happen.
-      throw err;
     });
   });
 });

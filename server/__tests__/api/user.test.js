@@ -22,10 +22,8 @@ describe('User endpoint', () => {
     User.find({}).remove()
     .then(() => {
       db.close()
-      .then(() => done())
-      .catch(err => {throw err});
-    })
-    .catch(err => {throw err});
+      .then(() => done());
+    });
   });
 
   it('can create a new user with valid credentials', (done) => {
@@ -40,13 +38,7 @@ describe('User endpoint', () => {
         expect(count).toBe(1);
         done();
       })
-      .catch(err => {
-        throw err;
-      })
     })
-    .catch(err => {
-      throw err;
-    });
   });
 
   it('does not create a user with a too-short password', (done) => {
@@ -60,13 +52,7 @@ describe('User endpoint', () => {
       .then(count => {
         expect(count).toBe(0);
         done();
-      })
-      .catch(err => {
-        throw err;
-      })
-    })
-    .catch(err => {
-      throw err;
+      });
     });
   });
 
@@ -81,13 +67,7 @@ describe('User endpoint', () => {
       .then(count => {
         expect(count).toBe(0);
         done();
-      })
-      .catch(err => {
-        throw err;
-      })
-    })
-    .catch(err => {
-      throw err;
+      });
     });
   });
 
@@ -108,21 +88,9 @@ describe('User endpoint', () => {
           .then(count => {
             expect(count).toBe(1);
             done();
-          })
-          .catch(err => {
-            throw err;
           });
-        })
-        .catch(err => {
-          throw err;
-        })
-      })
-      .catch(err => {
-        throw err;
-      })
-    })
-    .catch(err => {
-      throw err;
+        });
+      });
     });
   });
 
