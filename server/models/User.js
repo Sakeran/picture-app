@@ -30,12 +30,13 @@ UserSchema.static('newUser', function (username, password) {
     if (!password || password.length < 6) {
       return reject(new Error('Password must be at least 6 characters long.'));
     }
-    mongoose.model('User').findOne({'auth.local.username': username})
+    const User = mongoose.model('User');
+    User.findOne({'auth.local.username': username})
     .then(user => {
       if (user) {
         return reject(new Error('Username taken.'));
       }
-      const newUser = new mongoose.model('User');
+      const newUser = new User();
       newUser.auth.local.username = username;
       newUser.auth.local.password = newUser.generateHash(password);
       newUser.save()
