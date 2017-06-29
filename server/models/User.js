@@ -24,6 +24,34 @@ UserSchema.pre('validate', function(next) {
   next();
 });
 
+// Create a new user model with local credentials if possible.
+UserSchema.static('newUser', function (username, password) {
+  return new Promise((resolve, reject) => {
+    if (!password || password.length < 6) {
+      return reject(new Error('Password must be at least 6 characters long.'));
+    }
+    mongoose.model('User').findOne({'auth.local.username': username})
+    .then(user => {
+      if (user) {
+        return reject(new Error('Username taken.'));
+      }
+      const newUser = new mongoose.model('User');
+      newUser.auth.local.username = username;
+      newUser.auth.local.password = newUser.generateHash(password);
+      newUser.save()
+      .then(user => {
+        return resolve(user);
+      })
+      .catch(err => {
+        return reject(err);
+      });
+    })
+    .catch(err => {
+      reject(err);
+    })
+  });
+});
+
 UserSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };

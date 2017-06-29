@@ -6,8 +6,11 @@ class UserResolver {
     return new Promise((resolve, reject) => {
       User.findById(id)
       .then(user => {
-        this.user = user;
-        resolve(this);
+        if (user) {
+          this.user = user;
+          return resolve(this);
+        }
+        resolve(null);
       })
       .catch(err => {
         reject(err);
@@ -21,27 +24,13 @@ class UserResolver {
 
   // Create a new local user, if possible.
   static newUser({username, password}, req) {
-    return new Promise((resolve, reject) => {
-      User.findOne({'auth.local.username': username})
-      .then(user => {
-        if (user) {
-          return resolve(false);
-        }
-        const createdUser = new User();
-        createdUser.auth.local.username = username;
-        createdUser.auth.local.password = createdUser.generateHash(password);
-        createdUser.save()
-        .then(user => {
-          return resolve(true);
-        })
-        .catch(err => {
-          return reject();
-        });
-      })
-      .catch(err => {
-        return reject();
-      });
+    return User.newUser(username, password)
+    .then(() => {
+      return null;
     })
+    .catch(err => {
+      return err.message;
+    });
   }
 }
 
