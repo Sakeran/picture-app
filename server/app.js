@@ -3,7 +3,7 @@ const graphqlHTTP = require('express-graphql');
 const app = express();
 
 // Define GraphQL endpoint
-const appSchema = require('./graphql/schema');
+const appSchema = require('./graphql/mainSchema');
 const root = require('./graphql/resolvers/root');
 
 app.use('/api', graphqlHTTP({
