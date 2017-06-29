@@ -91,4 +91,39 @@ describe('User endpoint', () => {
     });
   });
 
+  it('does not create a user with a duplicate username', (done) => {
+    const query = `mutation {
+      newUser(username:"duplicateMe", password:"123456")
+    }`;
+    graphql(schema, query, root)
+    .then(response => {
+      expect(response.data.newUser).toBeNull();
+      User.find({}).count()
+      .then(count => {
+        expect(count).toBe(1);
+        graphql(schema, query, root)
+        .then(response => {
+          expect(response.data.newUser).not.toBeNull();
+          User.find({}).count()
+          .then(count => {
+            expect(count).toBe(1);
+            done();
+          })
+          .catch(err => {
+            throw err;
+          });
+        })
+        .catch(err => {
+          throw err;
+        })
+      })
+      .catch(err => {
+        throw err;
+      })
+    })
+    .catch(err => {
+      throw err;
+    });
+  });
+
 });
