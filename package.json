@@ -7,17 +7,20 @@
     "express-graphql": "^0.6.6",
     "expresss": "^0.0.0",
     "graphql": "^0.10.3",
-    "mongoose": "4.10.8",
+    "mongoose": "4.10.8"
+  },
+  "devDependencies": {
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
+    "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "react-scripts": "1.0.8",
+    "react-test-renderer": "^15.6.1",
     "redux": "^3.7.1"
-  },
-  "devDependencies": {
-    "normalize.css": "^7.0.0",
-    "react-scripts": "1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
