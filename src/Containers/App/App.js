@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import 'normalize.css';
 import './App.css';
 
-import Header from '../../Components/Header/Header';
+import HeaderContainer from '../../Containers/HeaderContainer/HeaderContainer';
 import Index from '../../Pages/Index/Index';
 import Login from '../../Pages/Login/Login';
 
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Header />
+          <HeaderContainer />
           <div className="App-main">
             <Route exact path="/" component={Index} />
             <Route exact path="/login" component={Login} />

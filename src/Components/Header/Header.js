@@ -1,17 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+import Nav from '../Nav/Nav';
 
 import './Header.css';
 
 const Header = (props) => (
   <header className="Header">
-    <h1>Pintrest Clone</h1>
-    {props.nav}
+    <Link to="/">
+      <h1>Pintrest Clone</h1>
+    </Link>
+    <Nav user={props.user} />
   </header>
 );
 
 Header.propTypes = {
-  nav: PropTypes.element.isRequired
+  user: PropTypes.object
 };
 
 export default Header;
