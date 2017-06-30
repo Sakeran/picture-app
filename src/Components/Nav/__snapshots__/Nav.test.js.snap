@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav component shows login link when logged out 1`] = `
+<nav>
+  <ul>
+    <li>
+      <Link
+        replace={false}
+        to="/login"
+      >
+        Log In
+      </Link>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`Nav component shows logout link when logged in 1`] = `
+<nav>
+  <ul>
+    <li>
+      <Link
+        replace={false}
+        to="/login"
+      >
+        Log In
+      </Link>
+    </li>
+  </ul>
+</nav>
+`;
