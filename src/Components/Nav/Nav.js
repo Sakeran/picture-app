@@ -9,7 +9,10 @@ const Nav = (props) => (
         props.user ?
           <li><Link to="/logout">Log Out</Link></li>
         :
-          <li><Link to="/login">Log In</Link></li>
+          <div>
+            <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/signup">Sign Up</Link></li>
+          </div>
       }
     </ul>
   </nav>
