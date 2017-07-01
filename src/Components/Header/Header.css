@@ -1,9 +1,16 @@
 .Header {
   margin: 0;
-  background-color: #67476C;
+  display: flex;
+  justify-content: space-between;
+  background: #380331;
 }
 
 .Header h1 {
   margin: 0;
   padding: 0.5em 0;
+}
+
+.Header a {
+  text-decoration: none;
+  color: #C7FCCE;
 }
