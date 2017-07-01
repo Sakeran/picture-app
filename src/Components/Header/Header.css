@@ -2,15 +2,26 @@
   margin: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: #380331;
+  color: #C7FCCE;
 }
 
 .Header h1 {
   margin: 0;
-  padding: 0.5em 0;
+  margin-left: 0.2em;
+  /*padding: 0.5em 0;*/
+  font-size: 3em;
+  font-family: 'Love Ya Like A Sister', sans-serif;
 }
 
 .Header a {
   text-decoration: none;
   color: #C7FCCE;
+}
+
+.Header a:hover,
+.Header a:active {
+  color: #619668;
+  transition: color 0.2s ease;
 }
