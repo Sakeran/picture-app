@@ -1,0 +1,15 @@
+.Nav {
+
+}
+
+.Nav ul {
+  list-style: none;
+  display: flex;
+  margin-right: 0.3em;
+}
+
+.Nav ul li {
+  font-weight: bold;
+  letter-spacing: 0.00em;
+  margin-left: 1rem;
+}

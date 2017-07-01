@@ -2,19 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import './Nav.css';
+
 const Nav = (props) => (
-  <nav>
-    <ul>
-      {
-        props.user ?
+  <nav className="Nav">
+    {
+      props.user ?
+        <ul>
           <li><Link to="/logout">Log Out</Link></li>
-        :
-          <div>
-            <li><Link to="/login">Log In</Link></li>
-            <li><Link to="/signup">Sign Up</Link></li>
-          </div>
-      }
-    </ul>
+        </ul>
+      :
+        <ul>
+          <li><Link to="/login">Log In</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+        </ul>
+    }
   </nav>
 );
 
