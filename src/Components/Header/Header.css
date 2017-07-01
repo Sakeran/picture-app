@@ -1,6 +1,9 @@
 .Header {
-  margin: 0;
+  position: fixed;
   display: flex;
+  top: 0;
+  margin: 0;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   background: #380331;
@@ -10,8 +13,7 @@
 .Header h1 {
   margin: 0;
   margin-left: 0.2em;
-  /*padding: 0.5em 0;*/
-  font-size: 3em;
+  font-size: 2em;
   font-family: 'Love Ya Like A Sister', sans-serif;
 }
 
