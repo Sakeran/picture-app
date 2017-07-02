@@ -12,15 +12,27 @@ test('Nav component renders', () => {
 test('Nav component shows login link when logged out', () => {
   const user = null;
   const component = shallow(<Nav user={user} />);
-  expect(component.exists({to: "/login"})).toBe(true);
+  expect(component.find({to: "/login"}).exists()).toBe(true);
+  expect(component.find({to: "/logout"}).exists()).toBe(false);
   const tree = toJSON(component);
   expect(tree).toMatchSnapshot();
 });
 
 test('Nav component shows logout link when logged in', () => {
-  const user = null;
+  const user = {data : 'Some User Data'};
   const component = shallow(<Nav user={user} />);
-  expect(component.exists({to: "/logout"})).toBe(true);
+  expect(component.find({to: "/logout"}).exists()).toBe(true);
+  expect(component.find({to: "/login"}).exists()).toBe(false);
   const tree = toJSON(component);
   expect(tree).toMatchSnapshot();
+});
+
+test('Nav component has proper class when menu toggled on', () => {
+  const component = shallow(<Nav toggled={true} />);
+  expect(component.find('.Nav-is-toggled').exists()).toBe(true);
+});
+
+test('Nav component has proper class when menu toggled off', () => {
+  const component = shallow(<Nav toggled={false} />);
+  expect(component.find('.Nav-is-toggled').exists()).toBe(false);
 });

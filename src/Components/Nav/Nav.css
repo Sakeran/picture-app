@@ -13,3 +13,25 @@
   font-size: 0.85em;
   margin-left: 1rem;
 }
+
+@media (max-width: 640px) {
+  .Nav {
+    display: none;
+  }
+
+  .Nav.Nav-is-toggled {
+    display: block;
+  }
+
+  .Nav ul {
+    display: block;
+    margin: 0.5em 0;
+    padding: 0;
+  }
+
+  .Nav ul li {
+    margin: 0;
+    margin-left: 0.5em;
+    margin-bottom: 0.25em;
+  }
+}

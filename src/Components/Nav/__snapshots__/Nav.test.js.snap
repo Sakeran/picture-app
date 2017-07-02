@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Nav component shows login link when logged out 1`] = `
-<nav>
+<nav
+  className="Nav"
+>
   <ul>
     <li>
       <Link
@@ -11,19 +13,29 @@ exports[`Nav component shows login link when logged out 1`] = `
         Log In
       </Link>
     </li>
+    <li>
+      <Link
+        replace={false}
+        to="/signup"
+      >
+        Sign Up
+      </Link>
+    </li>
   </ul>
 </nav>
 `;
 
 exports[`Nav component shows logout link when logged in 1`] = `
-<nav>
+<nav
+  className="Nav"
+>
   <ul>
     <li>
       <Link
         replace={false}
-        to="/login"
+        to="/logout"
       >
-        Log In
+        Log Out
       </Link>
     </li>
   </ul>

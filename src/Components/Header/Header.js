@@ -11,12 +11,17 @@ const Header = (props) => (
     <Link to="/">
       <h1 className="Header-Logo">LivePost</h1>
     </Link>
-    <Nav user={props.user} />
+    <div id="Header-menuToggle" className="Header-menuToggleBtn" onClick={props.toggleFn}>
+      MENU
+    </div>
+    <Nav user={props.user} toggled={props.toggledMenu} />
   </header>
 );
 
 Header.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  toggleFn: PropTypes.func.isRequired,
+  toggledMenu: PropTypes.bool.isRequired
 };
 
 export default Header;

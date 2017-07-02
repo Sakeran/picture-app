@@ -1,6 +1,7 @@
 .Header {
   position: fixed;
   display: flex;
+  flex-wrap: wrap;
   top: 0;
   margin: 0;
   width: 100%;
@@ -26,4 +27,36 @@
 .Header a:active {
   color: #619668;
   transition: color 0.2s ease;
+}
+
+.Header-menuToggleBtn {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .Header {
+    display: block;
+  }
+
+  .Header h1 {
+    display: inline-block;
+    width: 50%;
+  }
+
+  .Header-menuToggleBtn {
+    display: inline-block;
+    float: right;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .Header-menuToggleBtn:hover,
+  .Header-menuToggleBtn:active {
+    color: #619668;
+    transition: color 0.2s ease;
+    cursor: pointer;
+  }
+
 }

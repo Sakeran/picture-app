@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './Nav.css';
 
 const Nav = (props) => (
-  <nav className="Nav">
+  <nav className={"Nav" + (props.toggled ? " Nav-is-toggled" : "") }>
     {
       props.user ?
         <ul>
@@ -21,7 +21,8 @@ const Nav = (props) => (
 );
 
 Nav.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  toggled: PropTypes.bool
 };
 
 export default Nav;
