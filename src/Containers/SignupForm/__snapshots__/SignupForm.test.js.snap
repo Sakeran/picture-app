@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders all fields correctly 1`] = `
+<form>
+  <div
+    className="field"
+  >
+    <label
+      htmlFor="username"
+    >
+      Username
+    </label>
+    <input
+      name="username"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="field"
+  >
+    <label
+      htmlFor="password"
+    >
+      Password
+    </label>
+    <input
+      name="password"
+      onChange={[Function]}
+      type="password"
+      value=""
+    />
+  </div>
+  <div
+    className="field"
+  >
+    <label
+      htmlFor="passwordConfirm"
+    >
+      Confirm Password
+    </label>
+    <input
+      name="passwordConfirm"
+      onChange={[Function]}
+      type="password"
+      value=""
+    />
+  </div>
+  <input
+    onClick={[Function]}
+    type="submit"
+    value="Sign Up"
+  />
+</form>
+`;
