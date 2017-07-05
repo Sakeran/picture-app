@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class SignupForm extends React.Component {
 
@@ -55,10 +56,11 @@ class SignupForm extends React.Component {
   }
 
   send({username, password, passwordConfirm}) {
-    console.log(`Signing up user ${username}`);
     this.props.sendFunc(username, password, passwordConfirm)
-    .then(data => {
-      console.log(data);
+    .then(userData => {
+      const user = JSON.parse(userData);
+      console.log(user);
+      this.props.loginUser(user);
     });
   };
 
@@ -102,7 +104,15 @@ class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
-  sendFunc: PropTypes.func.isRequired
+  sendFunc: PropTypes.func.isRequired,
+  loginUser: PropTypes.func
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user})
+});
+
+const ConnectedSignupForm = connect(null, mapDispatchToProps)(SignupForm);
+
+export { ConnectedSignupForm };
 export default SignupForm;

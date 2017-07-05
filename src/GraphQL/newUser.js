@@ -12,5 +12,6 @@ export default (username, password, passwordConfirm) => {
       pw: password,
       pwc: passwordConfirm
     }
-  });
+  })
+  .then(res => res.newUser);
 };
