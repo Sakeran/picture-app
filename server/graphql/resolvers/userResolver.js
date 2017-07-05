@@ -23,13 +23,16 @@ class UserResolver {
   }
 
   // Create a new local user, if possible.
-  static newUser({username, password}, req) {
-    return User.newUser(username, password)
-    .then(() => {
-      return null;
+  static newUser({username, password, passwordConfirm}, req) {
+    return User.newUser(username, password, passwordConfirm)
+    .then(user => {
+      return user;
     })
     .catch(err => {
-      return err.message;
+      return {
+        error: 'Could not create user.',
+        reason: err
+      };
     });
   }
 }

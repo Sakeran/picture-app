@@ -4,7 +4,7 @@ const { buildSchema } = require('graphql');
 
 const topLevel = `
   type Mutation {
-    newUser(username: String!, password: String!): String
+    newUser(username: String!, password: String!, passwordConfirm: String!): String
   }
 
   type Query {

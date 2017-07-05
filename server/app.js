@@ -1,6 +1,9 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
+const logger = require('morgan');
 const app = express();
+
+app.use(logger('dev'));
 
 // Define GraphQL endpoint
 const appSchema = require('./graphql/mainSchema');

@@ -25,10 +25,13 @@ UserSchema.pre('validate', function(next) {
 });
 
 // Create a new user model with local credentials if possible.
-UserSchema.static('newUser', function (username, password) {
+UserSchema.static('newUser', function (username, password, passwordConfirm) {
   return new Promise((resolve, reject) => {
     if (!password || password.length < 6) {
       return reject(new Error('Password must be at least 6 characters long.'));
+    }
+    if (password !== passwordConfirm) {
+      return reject(new Error('Password must match the password confirmation.'));
     }
     if(!username) {
       return reject(new Error('Username cannot be blank.'));

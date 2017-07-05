@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SignupForm extends React.Component {
 
@@ -53,8 +54,12 @@ class SignupForm extends React.Component {
     return hasErrors ? errors : false;
   }
 
-  send({username, password}) {
+  send({username, password, passwordConfirm}) {
     console.log(`Signing up user ${username}`);
+    this.props.sendFunc(username, password, passwordConfirm)
+    .then(data => {
+      console.log(data);
+    });
   };
 
   listErrors() {
@@ -94,6 +99,10 @@ class SignupForm extends React.Component {
       <input type="submit" value="Sign Up" onClick={this.submit} />
     </form>);
   }
+}
+
+SignupForm.propTypes = {
+  sendFunc: PropTypes.func.isRequired
 }
 
 export default SignupForm;
