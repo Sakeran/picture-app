@@ -59,12 +59,32 @@ UserSchema.static('newUser', function (username, password, passwordConfirm) {
   });
 });
 
+////////////////////
+// Instance Methods
+////////////////////
+
 UserSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 UserSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
+};
+
+// Return an object of user details suitable for sending to clients
+// over the GraphQL endpoint.
+UserSchema.methods.sanitize = function() {
+  return {
+    id: this._id,
+    username: this.getUsername()
+  };
+};
+
+// Return the user's username, either from local or Twitter
+// credentials.
+UserSchema.methods.getUsername = function() {
+  // WIP - For now only return the username, or a placeholder.
+  return this.auth.local.username || 'Unknown';
 };
 
 const User = mongoose.model('User', UserSchema);

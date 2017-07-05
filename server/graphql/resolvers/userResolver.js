@@ -26,7 +26,9 @@ class UserResolver {
   static newUser({username, password, passwordConfirm}, req) {
     return User.newUser(username, password, passwordConfirm)
     .then(user => {
-      return user;
+      const res = user.sanitize();
+      console.log(res);
+      return JSON.stringify(res);
     })
     .catch(err => {
       return {
