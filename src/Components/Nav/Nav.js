@@ -9,7 +9,7 @@ const Nav = (props) => (
     {
       props.user ?
         <ul>
-          <li><Link to="/logout">Log Out</Link></li>
+          <li><button onClick={props.logoutFn}>Log Out</button></li>
         </ul>
       :
         <ul>
@@ -22,7 +22,8 @@ const Nav = (props) => (
 
 Nav.propTypes = {
   user: PropTypes.object,
-  toggled: PropTypes.bool
+  toggled: PropTypes.bool,
+  logoutFn: PropTypes.func
 };
 
 export default Nav;

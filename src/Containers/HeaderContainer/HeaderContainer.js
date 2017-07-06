@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import logout from '../../GraphQL/logout';
 
 import Header from '../../Components/Header/Header';
 
@@ -19,11 +20,19 @@ class HeaderContainer extends React.Component {
     });
   }
 
+  logout = () => {
+    logout()
+    .then(() => {
+      this.props.logoutUser();
+    });
+  }
+
   render() {
     return (
       <Header user={this.props.user}
               toggleFn={this.toggleMenu}
-              toggledMenu={this.state.menuToggled} />
+              toggledMenu={this.state.menuToggled}
+              logoutFn={this.logout} />
     )
   }
 
@@ -33,4 +42,8 @@ const mapStateToProps = (state) => ({
   user: state.common.user
 });
 
-export default connect(mapStateToProps)(HeaderContainer);
+const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch({type: 'LOGOUT_USER'})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

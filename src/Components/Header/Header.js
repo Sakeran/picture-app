@@ -14,12 +14,13 @@ const Header = (props) => (
     <div id="Header-menuToggle" className="Header-menuToggleBtn" onClick={props.toggleFn}>
       MENU
     </div>
-    <Nav user={props.user} toggled={props.toggledMenu} />
+    <Nav user={props.user} toggled={props.toggledMenu} logoutFn={props.logoutFn} />
   </header>
 );
 
 Header.propTypes = {
   user: PropTypes.object,
+  logoutFn: PropTypes.func,
   toggleFn: PropTypes.func.isRequired,
   toggledMenu: PropTypes.bool.isRequired
 };
