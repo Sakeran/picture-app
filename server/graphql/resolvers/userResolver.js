@@ -24,17 +24,27 @@ class UserResolver {
 
   // Create a new local user, if possible.
   static signup({username, password, passwordConfirm}, req) {
-    return User.newUser(username, password, passwordConfirm)
-    .then(user => {
-      const res = user.sanitize();
-      return JSON.stringify(res);
+    return new Promise((resolve, reject) => {
+      User.newUser(username, password, passwordConfirm)
+      .then(user => {
+        req.login(user, err => {
+          if (err) {
+            return resolve({
+              error: 'Could not login user.',
+              reason: err
+            });
+          }
+          resolve(user.sanitize());
+        });
+      })
+      .catch(err => {
+        resolve({
+          error: 'Could not create user.',
+          reason: err
+        });
+      });
     })
-    .catch(err => {
-      return {
-        error: 'Could not create user.',
-        reason: err
-      };
-    });
+    .then(data => JSON.stringify(data));
   }
 }
 
