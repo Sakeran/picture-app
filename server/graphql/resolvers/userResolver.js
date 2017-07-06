@@ -27,7 +27,6 @@ class UserResolver {
     return User.newUser(username, password, passwordConfirm)
     .then(user => {
       const res = user.sanitize();
-      console.log(res);
       return JSON.stringify(res);
     })
     .catch(err => {
