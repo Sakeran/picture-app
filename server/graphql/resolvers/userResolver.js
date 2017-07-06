@@ -19,7 +19,7 @@ class UserResolver {
   }
 
   username() {
-    return this.user.auth.local.username || 'No User Name Set';
+    return this.user.getUsername();
   }
 
   // Create a new local user, if possible.
