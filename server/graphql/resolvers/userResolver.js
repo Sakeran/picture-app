@@ -33,7 +33,6 @@ class UserResolver {
   // Attempt to log in a local user
   static login({username, password}, req) {
     if (req.isAuthenticated()) {
-      console.log('Not authenticated');
       return null;
     }
     return User.findAndValidate(username, password)
