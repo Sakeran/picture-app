@@ -3,7 +3,8 @@
 const UserResolver = require('./userResolver');
 
 module.exports = {
-  currentUser: (args, req) => new UserResolver(Object.assign(args, {current: true}), req),
+  currentUser: (args, req) => new UserResolver({current: true}, req),
   user: (args, req) => new UserResolver(args, req),
-  signup: (args, req) => UserResolver.signup(args, req)
+  signup: (args, req) => UserResolver.signup(args, req),
+  login: (args, req) => UserResolver.login(args, req)
 };

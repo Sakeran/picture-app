@@ -59,6 +59,26 @@ UserSchema.static('newUser', function (username, password, passwordConfirm) {
   });
 });
 
+// Query and attempt to validate a user, given a username/password pair
+UserSchema.static('findAndValidate', function(username, password) {
+  return new Promise((resolve, reject) => {
+    if (!username || !password) {
+      return resolve(null);
+    }
+    const User = mongoose.model('User');
+    User.findOne({'auth.local.username': username})
+    .then(user => {
+      if (user && user.validPassword(password)) {
+        return resolve(user);
+      }
+      return resolve(null);
+    })
+    .catch(err => {
+      reject(err);
+    })
+  });
+});
+
 ////////////////////
 // Instance Methods
 ////////////////////
@@ -68,7 +88,7 @@ UserSchema.methods.generateHash = function(password) {
 };
 
 UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.auth.local.password);
 };
 
 // Return an object of user details suitable for sending to clients
