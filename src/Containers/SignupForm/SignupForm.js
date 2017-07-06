@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class SignupForm extends React.Component {
 
@@ -84,6 +85,9 @@ class SignupForm extends React.Component {
   }
 
   render() {
+    if (this.props.user) {
+      return <Redirect to="/" />
+    }
     return (<form>
       {this.listErrors() || null}
       <div className={this.checkField('username')}>
@@ -105,14 +109,19 @@ class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   sendFunc: PropTypes.func.isRequired,
-  loginUser: PropTypes.func
-}
+  loginUser: PropTypes.func,
+  user: PropTypes.object
+};
+
+const mapStateToProps = (state) => ({
+  user: state.common.user
+});
 
 const mapDispatchToProps = (dispatch) => ({
   loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user})
 });
 
-const ConnectedSignupForm = connect(null, mapDispatchToProps)(SignupForm);
+const ConnectedSignupForm = connect(mapStateToProps, mapDispatchToProps)(SignupForm);
 
 export { SignupForm };
 export default ConnectedSignupForm;
