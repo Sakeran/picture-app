@@ -6,6 +6,7 @@ const topLevel = `
   type Mutation {
     signup(username: String!, password: String!, passwordConfirm: String!): String
     login(username: String!, password: String!): String
+    logout: Boolean
   }
 
   type Query {

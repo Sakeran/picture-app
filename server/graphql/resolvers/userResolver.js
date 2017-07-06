@@ -53,6 +53,11 @@ class UserResolver {
     .then(user => {console.log(user); return JSON.stringify(user)});
   }
 
+  static logout(args, req) {
+    req.logout();
+    return true;
+  }
+
   // Create a new local user, if possible.
   static signup({username, password, passwordConfirm}, req) {
     if (req.isAuthenticated()) {
