@@ -23,7 +23,7 @@ class UserResolver {
   }
 
   // Create a new local user, if possible.
-  static newUser({username, password, passwordConfirm}, req) {
+  static signup({username, password, passwordConfirm}, req) {
     return User.newUser(username, password, passwordConfirm)
     .then(user => {
       const res = user.sanitize();

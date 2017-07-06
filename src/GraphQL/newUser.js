@@ -1,8 +1,8 @@
 import query from './query';
 
 export default (username, password, passwordConfirm) => {
-  const mutation = `mutation NewUser($name: String!, $pw: String!, $pwc: String!) {
-    newUser(username: $name, password: $pw, passwordConfirm: $pwc)
+  const mutation = `mutation SignUp($name: String!, $pw: String!, $pwc: String!) {
+    signup(username: $name, password: $pw, passwordConfirm: $pwc)
   }`;
 
   return query({

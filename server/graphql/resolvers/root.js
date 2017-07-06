@@ -4,5 +4,5 @@ const UserResolver = require('./userResolver');
 
 module.exports = {
   user: (args, req) => new UserResolver(args, req),
-  newUser: (args, req) => UserResolver.newUser(args, req)
+  signup: (args, req) => UserResolver.signup(args, req)
 };
