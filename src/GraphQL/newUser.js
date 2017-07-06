@@ -13,5 +13,5 @@ export default (username, password, passwordConfirm) => {
       pwc: passwordConfirm
     }
   })
-  .then(res => res.newUser);
+  .then(res => res.signup);
 };
