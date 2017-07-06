@@ -114,5 +114,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ConnectedSignupForm = connect(null, mapDispatchToProps)(SignupForm);
 
-export { ConnectedSignupForm };
-export default SignupForm;
+export { SignupForm };
+export default ConnectedSignupForm;
