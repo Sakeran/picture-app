@@ -2,8 +2,12 @@
 const User = require('../../models/User');
 
 class UserResolver {
-  constructor({id}, req) {
+  constructor({id, current}, req) {
     return new Promise((resolve, reject) => {
+      if (current && req.user) {
+        this.user = req.user;
+        return resolve(this);
+      }
       User.findById(id)
       .then(user => {
         if (user) {

@@ -8,6 +8,7 @@ const topLevel = `
   }
 
   type Query {
+    currentUser: User
     user(id: String!): User!
   }
 `;
