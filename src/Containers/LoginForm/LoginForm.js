@@ -10,7 +10,6 @@ class SignupForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-      passwordConfirm: '',
       errors: {},
       message: ''
     };
@@ -44,30 +43,27 @@ class SignupForm extends React.Component {
                       : [msg];
     };
 
-    username.length >= 3 ||
-    addError('username', 'Username must be at least 3 characters');
+    username.length >= 0 ||
+    addError('username', 'Username cannot be blank');
 
     username.indexOf(" ") === -1 ||
     addError('username', 'Username cannot contain spaces');
 
-    password.length >= 6 ||
-    addError('password', 'Password must be at least 6 characters');
-
-    password === passwordConfirm ||
-    addError('passwordConfirm', 'Password and Confirmation must match.');
+    password.length >= 0 ||
+    addError('password', 'Password cannot be blank');
 
 
     return hasErrors ? errors : false;
   }
 
-  send({username, password, passwordConfirm}) {
-    this.props.sendFunc(username, password, passwordConfirm)
+  send({username, password}) {
+    this.props.sendFunc(username, password)
     .then(userData => {
       const user = JSON.parse(userData);
       if (!user) {
         this.setState({
-          message: 'Failed To Sign Up'
-        })
+          message: 'Invalid Username/Password Combination'
+        });
         return;
       }
       this.props.loginUser(user);
@@ -112,11 +108,7 @@ class SignupForm extends React.Component {
         <label htmlFor="password">Password</label>
         <input type="password" name="password" value={this.state.password} onChange={this.handleChange('password')} />
       </div>
-      <div className={this.checkField('passwordConfirm')}>
-        <label htmlFor="passwordConfirm">Confirm Password</label>
-        <input type="password" name="passwordConfirm" value={this.state.passwordConfirm} onChange={this.handleChange('passwordConfirm')} />
-      </div>
-      <input type="submit" value="Sign Up" onClick={this.submit} />
+      <input type="submit" value="Log In" onClick={this.submit} />
     </form>);
   }
 }

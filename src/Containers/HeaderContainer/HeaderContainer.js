@@ -14,7 +14,6 @@ class HeaderContainer extends React.Component {
   }
 
   toggleMenu = () => {
-    console.log('toggle');
     this.setState({
       menuToggled: !this.state.menuToggled
     });

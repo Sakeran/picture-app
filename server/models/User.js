@@ -36,6 +36,9 @@ UserSchema.static('newUser', function (username, password, passwordConfirm) {
     if(!username) {
       return reject(new Error('Username cannot be blank.'));
     }
+    if(username.indexOf(' ') !== -1) {
+      return reject(new Error('Username cannot contain spaces.'));
+    }
     const User = mongoose.model('User');
     User.findOne({'auth.local.username': username})
     .then(user => {
