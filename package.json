@@ -4,13 +4,15 @@
   "private": true,
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "dotenv": "^4.0.0",
     "express-graphql": "^0.6.6",
     "express-session": "^1.15.3",
     "expresss": "^0.0.0",
     "graphql": "^0.10.3",
     "mongoose": "4.10.8",
     "morgan": "^1.8.2",
-    "passport": "^0.3.2"
+    "passport": "^0.3.2",
+    "passport-twitter": "^1.0.4"
   },
   "devDependencies": {
     "enzyme": "^2.9.1",
