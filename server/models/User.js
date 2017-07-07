@@ -7,7 +7,15 @@ const UserSchema = new Schema({
     local: {
       username: String,
       password: String
+    },
+    twitter: {
+      id: String
     }
+  },
+  profile: {
+    name: String,
+    location: String,
+    bio: String
   }
 });
 
@@ -18,7 +26,8 @@ UserSchema.pre('validate', function(next) {
   const local = this.auth.local.username
                 &&
                 this.auth.local.password;
-  if (!local) {
+  const twitter = !!this.auth.twitter.id;
+  if (!local && !twitter) {
     this.invalidate('auth', 'At least one auth field must be completed.');
   }
   next();
