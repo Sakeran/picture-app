@@ -68,19 +68,13 @@ class UserResolver {
       .then(user => {
         req.login(user, err => {
           if (err) {
-            return resolve({
-              error: 'Could not login user.',
-              reason: err
-            });
+            return resolve(null);
           }
           resolve(user.sanitize());
         });
       })
       .catch(err => {
-        resolve({
-          error: 'Could not create user.',
-          reason: err
-        });
+        resolve(null);
       });
     })
     .then(data => JSON.stringify(data));

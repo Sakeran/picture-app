@@ -95,7 +95,7 @@ class SignupForm extends React.Component {
     }
     return (<form>
       {this.state.message && (
-        <div className="Form-mesage">
+        <div className="form-mesage">
           <p>{this.state.message}</p>
         </div>
       )}
