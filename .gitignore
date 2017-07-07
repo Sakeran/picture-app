@@ -6,6 +6,9 @@
 # testing
 /coverage
 
+# Server environment variables.
+/server/.env
+
 # production
 /build
 
