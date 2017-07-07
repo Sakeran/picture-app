@@ -95,7 +95,7 @@ class SignupForm extends React.Component {
     }
     return (<form>
       {this.state.message && (
-        <div className="form-mesage">
+        <div className="form-message">
           <p>{this.state.message}</p>
         </div>
       )}
@@ -108,7 +108,7 @@ class SignupForm extends React.Component {
         <label htmlFor="password">Password</label>
         <input type="password" name="password" value={this.state.password} onChange={this.handleChange('password')} />
       </div>
-      <input type="submit" value="Log In" onClick={this.submit} />
+      <input className="button" type="submit" value="Log In" onClick={this.submit} />
     </form>);
   }
 }

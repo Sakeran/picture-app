@@ -27,8 +27,12 @@ form {
   list-style: none;
   text-align: center;
   color: red;
-  font-size: 1.2em;
+  font-size: 0.9em;
   font-weight: bold;
+}
+
+.form-message {
+  text-align: center;
 }
 
 .form-errors li {
@@ -51,4 +55,26 @@ input[type="submit"] {
   display: block;
   margin: 0 auto;
   width: 75%;
+}
+
+
+/*
+  Element classes
+*/
+
+.button {
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1.5em;
+  background: #6d1cba;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.button:hover,
+.button:active {
+  background: #591999;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
 }
