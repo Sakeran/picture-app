@@ -14,6 +14,10 @@ module.exports = (passport) => {
   });
 
   // Twitter Authentication
+  // Skip this if in test mode.
+  if (process.env.NODE_ENV === 'test') {
+    return;
+  }
   passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
