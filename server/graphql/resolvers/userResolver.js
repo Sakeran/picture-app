@@ -50,7 +50,7 @@ class UserResolver {
     .catch(err => {
       return null;
     })
-    .then(user => {console.log(user); return JSON.stringify(user)});
+    .then(user => JSON.stringify(user));
   }
 
   static logout(args, req) {

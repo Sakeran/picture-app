@@ -20,6 +20,10 @@ describe('User endpoint', () => {
     .then(() => done());
   });
 
+  beforeEach(() => {
+    passportStub.logout();
+  });
+
   afterEach((done) => {
     clearUsers()
     .then(() => done());
@@ -167,5 +171,71 @@ describe('User endpoint', () => {
       .catch(err => { throw err });
     });
   });
+
+  it('can be used to log a user out', (done) => {
+    passportStub.login({userData: 'some user'});
+    request(app)
+    .post('/api')
+    .send({
+      query: `mutation { logout }`
+    })
+    .expect(200)
+    .end((err, res) => {
+      if (err) { throw err }
+      const result = JSON.parse(res.text);
+      expect(result.data.logout).toBe(true);
+      done();
+    });
+  });
+
+  it('can log an existing user in', (done) => {
+    User.newUser("logMeIn", "123456", "123456")
+    .then(() => {
+      request(app)
+      .post('/api')
+      .send({
+        query: `mutation LogIn($un: String!, $pw: String!) {
+          login(username: $un, password: $pw)
+        }`,
+        variables: {
+          un: 'logMeIn',
+          pw: '123456'
+        }
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) { throw err }
+        const result = JSON.parse(res.text);
+        expect(result.data.login).not.toBe('null');
+        done();
+      });
+    })
+    .catch(err => { throw err });
+  });
+
+  it('will not log in an existing user with the wrong password', (done) => {
+    User.newUser("logMeIn", "123456", "123456")
+    .then(() => {
+      request(app)
+      .post('/api')
+      .send({
+        query: `mutation LogIn($un: String!, $pw: String!) {
+          login(username: $un, password: $pw)
+        }`,
+        variables: {
+          un: 'logMeIn',
+          pw: '654321'
+        }
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) { throw err }
+        const result = JSON.parse(res.text);
+        expect(result.data.login).toBe('null');
+        done();
+      });
+    })
+    .catch(err => { throw err });
+  })
 
 });
