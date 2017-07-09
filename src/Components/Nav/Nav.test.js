@@ -13,7 +13,7 @@ test('Nav component shows login link when logged out', () => {
   const user = null;
   const component = shallow(<Nav user={user} />);
   expect(component.find({to: "/login"}).exists()).toBe(true);
-  expect(component.find({to: "/logout"}).exists()).toBe(false);
+  expect(component.find('#logoutBtn').exists()).toBe(false);
   const tree = toJSON(component);
   expect(tree).toMatchSnapshot();
 });
@@ -21,7 +21,7 @@ test('Nav component shows login link when logged out', () => {
 test('Nav component shows logout link when logged in', () => {
   const user = {data : 'Some User Data'};
   const component = shallow(<Nav user={user} />);
-  expect(component.find({to: "/logout"}).exists()).toBe(true);
+  expect(component.find('#logoutBtn').exists()).toBe(true);
   expect(component.find({to: "/login"}).exists()).toBe(false);
   const tree = toJSON(component);
   expect(tree).toMatchSnapshot();

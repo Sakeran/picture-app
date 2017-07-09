@@ -31,12 +31,11 @@ exports[`Nav component shows logout link when logged in 1`] = `
 >
   <ul>
     <li>
-      <Link
-        replace={false}
-        to="/logout"
+      <button
+        id="logoutBtn"
       >
         Log Out
-      </Link>
+      </button>
     </li>
   </ul>
 </nav>

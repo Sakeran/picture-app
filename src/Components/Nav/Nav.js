@@ -9,7 +9,7 @@ const Nav = (props) => (
     {
       props.user ?
         <ul>
-          <li><button onClick={props.logoutFn}>Log Out</button></li>
+          <li><button id="logoutBtn" onClick={props.logoutFn}>Log Out</button></li>
         </ul>
       :
         <ul>
