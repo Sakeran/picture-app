@@ -23,11 +23,10 @@ describe('User Model', () => {
   it('is invalid without at least one auth field', (done) => {
     const user = new User();
     user.validate()
-    .then(() => {
-      // This shouldn't happen.
-      throw new Error('Does not validate empty auth fields correctly.');
-    })
-    .catch(err => {
+    .then(() => false)
+    .catch(() => true)
+    .then(passes => {
+      expect(passes).toBeTruthy();
       done();
     });
   });
@@ -37,7 +36,22 @@ describe('User Model', () => {
     user.auth.local.username = 'testUser';
     user.auth.local.password = 'testPassword';
     user.validate()
-    .then(() => {
+    .then(() => true)
+    .catch(() => false)
+    .then(passes => {
+      expect(passes).toBeTruthy();
+      done();
+    });
+  });
+
+  it('is valid with only the auth.twitter field set', (done) => {
+    const user = new User();
+    user.auth.twitter.id = '111111111';
+    user.validate()
+    .then(() => true)
+    .catch(() => false)
+    .then(passes => {
+      expect(passes).toBeTruthy();
       done();
     });
   });
