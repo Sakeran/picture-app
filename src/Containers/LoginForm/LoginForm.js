@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-class SignupForm extends React.Component {
+class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -49,7 +49,7 @@ class SignupForm extends React.Component {
     username.indexOf(" ") === -1 ||
     addError('username', 'Username cannot contain spaces');
 
-    password.length >= 0 ||
+    password.length > 0 ||
     addError('password', 'Password cannot be blank');
 
 
@@ -113,7 +113,7 @@ class SignupForm extends React.Component {
   }
 }
 
-SignupForm.propTypes = {
+LoginForm.propTypes = {
   sendFunc: PropTypes.func.isRequired,
   loginUser: PropTypes.func,
   user: PropTypes.object
@@ -127,7 +127,7 @@ const mapDispatchToProps = (dispatch) => ({
   loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user})
 });
 
-const ConnectedSignupForm = connect(mapStateToProps, mapDispatchToProps)(SignupForm);
+const ConnectedLoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 
-export { SignupForm };
-export default ConnectedSignupForm;
+export { LoginForm };
+export default ConnectedLoginForm;
