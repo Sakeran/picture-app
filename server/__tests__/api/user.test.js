@@ -1,5 +1,3 @@
-const { graphql } = require('graphql');
-
 describe('User endpoint', () => {
   let db;
   let User;
