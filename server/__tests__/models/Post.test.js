@@ -1,4 +1,5 @@
 const Post = require('../../models/Post');
+const User = require('../../models/User');
 const db = require('../../config/db');
 
 describe('Post Model', () => {
@@ -17,7 +18,12 @@ describe('Post Model', () => {
 
   afterAll((done) => {
     clearPosts()
-    .then(() => done());
+    .catch(err => console.log(err))
+    .then(() => {
+      db.close()
+      .catch(err => console.log(err))
+      .then(() => done());
+    });
   });
 
   it('exists', () => {
@@ -59,4 +65,27 @@ describe('Post Model', () => {
     });
   });
 
+  it('Can create a new image post with a user and an options object', (done) => {
+    const testUser = new User();
+    const options = {
+      postType: "image",
+      title: 'My Created Post',
+      description: 'A test description for a test post',
+      imageLink: 'http://localhost:3000/placeholderLink.png'
+    };
+    Post.createUserPost(testUser, options)
+    .then(post => {
+      expect(post.createdBy.equals(testUser)).toBe(true);
+      expect(post.postType).toBe(options.postType);
+      expect(post.title).toBe(options.title);
+      expect(post.description).toBe(options.description);
+      expect(post.imageLink).toBe(options.imageLink);
+      return true;
+    })
+    .catch(err => false)
+    .then(status => {
+      expect(status).toBeTruthy();
+      done();
+    });
+  });
 });

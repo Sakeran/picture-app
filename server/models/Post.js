@@ -17,7 +17,6 @@ const postSchema = new Schema({
   },
   description: String,
   youtubeID: String,
-  youtubeThumbnail: String,
   imageLink: String,
   createdBy: {
     type: Schema.Types.ObjectId,
@@ -56,6 +55,22 @@ postSchema.methods.hasValidImageLink = function() {
   if (!matches || allowed.indexOf(matches[0]) === -1) { return false; }
   return true;
 };
+
+///////////////////
+// Static Methods
+///////////////////
+
+postSchema.static('createUserPost', function(user, options) {
+  return new Promise((resolve, reject) => {
+    if (!user || user.constructor.modelName !== 'User') {
+      return reject(new Error('User must be a User model'));
+    }
+    const newUser = Object.assign(options, {createdBy: user});
+    mongoose.model('Post').create(newUser)
+    .then(user => resolve(user))
+    .catch(err => reject(err));
+  });
+});
 
 const Post = mongoose.model('Post', postSchema);
 
