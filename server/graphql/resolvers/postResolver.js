@@ -82,12 +82,10 @@ class PostResolver {
     if (userID) {
       query['createdBy'] = new ObjectId(userID);
     }
-    console.log(query);
     return Post.find(query)
     .skip(offset)
     .limit(limit)
     .then(posts => {
-      console.log(posts);
       return posts.map(e => new PostResolver({post: e}));
     })
     .catch(err => console.err, null);
