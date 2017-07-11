@@ -1,6 +1,13 @@
 import React from 'react';
+import latestPosts from '../../GraphQL/latestPosts';
 
 class IndexContainer extends React.Component {
+
+  componentDidMount() {
+    console.log("Fetching post data");
+    latestPosts()
+    .then(posts => console.log(posts));
+  }
 
   render() {
     return (
