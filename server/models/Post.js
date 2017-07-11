@@ -65,6 +65,12 @@ postSchema.static('createUserPost', function(user, options) {
     if (!user || user.constructor.modelName !== 'User') {
       return reject(new Error('User must be a User model'));
     }
+    if(options.postType === 'youtube') {
+      console.warn('Youtube posts not yet supported.');
+      // Note: When we DO implement Youtube posts, we'll most likely
+      // need to parse the YoutubeID field, as it will likely be a link.
+      return reject(new Error('Youtube posts not supported'));
+    }
     const newUser = Object.assign(options, {createdBy: user});
     mongoose.model('Post').create(newUser)
     .then(user => resolve(user))
