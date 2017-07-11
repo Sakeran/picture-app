@@ -9,7 +9,7 @@ import './Header.css';
 const Header = (props) => (
   <header className="Header">
     <Link to="/">
-      <h1 className="Header-Logo">LivePost</h1>
+      <h1 className="Header-Logo">Post'n'Chat</h1>
     </Link>
     <div id="Header-menuToggle" className="Header-menuToggleBtn" onClick={props.toggleFn}>
       MENU
