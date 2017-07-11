@@ -49,10 +49,19 @@ postSchema.pre('validate', function(next) {
 
 postSchema.methods.hasValidImageLink = function() {
   if (!this.imageLink) { return false; }
-  const extenstionMatcher = /((\.[a-z|A-Z|0-9]+)+)$/;
-  const allowed = ['.jpg', '.jpeg', '.gif', '.png'];
-  const matches = this.imageLink.match(extenstionMatcher);
-  if (!matches || allowed.indexOf(matches[0]) === -1) { return false; }
+
+  // We'll need to use something more sophisticated than this, given that
+  // not all images on the web use one of these extenstions.
+
+  // const extenstionMatcher = /((\.[a-z|A-Z|0-9]+)+)$/;
+  // const allowed = ['.jpg', '.jpeg', '.gif', '.png'];
+  // const matches = this.imageLink.match(extenstionMatcher);
+  // if (!matches || allowed.indexOf(matches[0]) === -1) { return false; }
+
+  // For now, just make sure the imageLink is an actual url.
+  const urlMatcher = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+  if(!urlMatcher.test(this.imageLink)) { return false; }
+
   return true;
 };
 

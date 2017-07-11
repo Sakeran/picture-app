@@ -10,5 +10,6 @@ module.exports = {
   login: (args, req) => UserResolver.login(args, req),
   logout: (args, req) => UserResolver.logout(args, req),
   post: (args, req) => new PostResolver(args, req),
+  posts: (args, req) => PostResolver.getPosts(args, req),
   createPost: (args, req) => PostResolver.newPost(args, req)
 };

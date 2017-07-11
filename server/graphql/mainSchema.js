@@ -14,6 +14,7 @@ const topLevel = `
     currentUser: User
     user(id: String!): User
     post(id: String!): Post
+    posts(offset: Int, limit: Int, userID: String): [Post]
   }
 `;
 
