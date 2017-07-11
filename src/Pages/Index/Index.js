@@ -1,9 +1,9 @@
 import React from 'react';
+import IndexContainer from '../../Containers/IndexContainer/IndexContainer'
 
 const Index = (props) => (
   <div className="IndexPage">
-    <h2>Index Page</h2>
-    <p>Show popular/recent uploads here</p>
+    <IndexContainer />
   </div>
 );
 
