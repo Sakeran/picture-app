@@ -4,8 +4,11 @@ import login from '../../GraphQL/login';
 
 const Login = (props) => (
   <div className="LoginPage">
-    <h2><a href="/auth/twitter">Log In With Twitter</a></h2>
-    <h2>Login Locally</h2>
+    <div className="centered">
+      <a className="button" href="/auth/twitter">Log In With Twitter</a>
+    </div>
+    <span className="divider">OR</span>
+    <h2 className="centered header">Login Locally</h2>
     <LoginForm sendFunc={login}/>
   </div>
 );

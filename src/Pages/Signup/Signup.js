@@ -4,8 +4,11 @@ import newUser from '../../GraphQL/newUser';
 
 const Signup = (props) => (
   <div className="SignupPage">
-    <h2><a href="/auth/twitter">Log In With Twitter</a></h2>
-    <h2>Signup</h2>
+    <div className="centered">
+      <a className="button" href="/auth/twitter">Log In With Twitter</a>
+    </div>
+    <span className="divider">OR</span>
+    <h2 className="centered header">Sign Up Locally</h2>
     <SignupForm sendFunc={newUser}/>
   </div>
 );

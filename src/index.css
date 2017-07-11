@@ -4,6 +4,11 @@ body {
   background: #FFF9F9;
   color: #333;
   font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
 }
 
 /*
@@ -62,7 +67,12 @@ input[type="submit"] {
   Element classes
 */
 
+.header {
+  color: #6d1cba;
+}
+
 .button {
+  display: inline-block;
   border: none;
   border-radius: 8px;
   color: #ffffff;
@@ -77,4 +87,20 @@ input[type="submit"] {
   background: #591999;
   transition: background-color 0.2s ease;
   text-decoration: none;
+  cursor: pointer;
+}
+
+/*
+  Misc classes
+ */
+
+.centered {
+  text-align: center;
+}
+
+.divider {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 1em 0;
 }
