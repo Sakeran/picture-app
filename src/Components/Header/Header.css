@@ -9,6 +9,7 @@
   align-items: center;
   background: #380331;
   color: #C7FCCE;
+  z-index: 1;
 }
 
 .Header h1 {

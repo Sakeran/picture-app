@@ -2,8 +2,8 @@ import React from 'react';
 
 import './PostCard.css';
 
-const renderImage = (link) => (
-  <img className="PostCard-img" src={link} />
+const renderImage = (link, alt) => (
+  <img className="PostCard-img" src={link} alt={alt} />
 )
 
 const renderYoutube = (id) => (
@@ -11,9 +11,9 @@ const renderYoutube = (id) => (
 );
 
 const PostCard = (props) => (
-  <div className="PostCard-main grid-tile">
-    {props.post.type === 'image' ? renderImage(props.post.image) : renderYoutube(props.post.youtubeID)}
+  <div className="PostCard-main">
     <div className="PostCard-stats">
+      {props.post.type === 'image' ? renderImage(props.post.image, props.post.title) : renderYoutube(props.post.youtubeID)}
       <strong> Post Stats </strong>
     </div>
   </div>

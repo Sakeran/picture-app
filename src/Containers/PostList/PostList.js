@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PostCard from '../../Components/PostCard/PostCard';
 import getPost from '../../GraphQL/getPost';
 
+import Masonry from 'react-masonry-component';
+
 class PostList extends React.Component {
 
   constructor(props) {
@@ -31,14 +33,16 @@ class PostList extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-      <h3> {this.state.loading ? "Loading" : "Ready!"} </h3>
+    return this.state.loading ?
+    <span>Loading</span>
+    :
+    (
+      <Masonry>
         {this.props.postIDs.map(e => (
           <PostCard key={e} post={this.props.posts[e]} />
         ))}
-      </div>
-    );
+      </Masonry>
+    )
   }
 }
 
