@@ -30,7 +30,10 @@ class IndexContainer extends React.Component {
 
   render() {
     return (
-      <PostList postIDs={this.state.listedPosts} />
+      <div>
+        <h2 className="header">Latest Posts</h2>
+        <PostList postIDs={this.state.listedPosts} />
+      </div>
     );
   }
 }

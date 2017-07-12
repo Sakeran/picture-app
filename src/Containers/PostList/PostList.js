@@ -5,44 +5,36 @@ import PostCard from '../../Components/PostCard/PostCard';
 import getPost from '../../GraphQL/getPost';
 
 import Masonry from 'react-masonry-component';
+import './PostList.css';
 
 class PostList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { loading: true };
   }
 
   componentDidMount() {
     // Check each post id as it is passed in. Query for any data that does
     // not exist in store. The list will only display once everything is
     // finished loading.
-    const queries = this.props.postIDs.map(e => {
+    this.props.postIDs.forEach(e => {
       if(!this.props.posts[e]) {
         return getPost(e)
         .then(post => {
           this.props.addPost(post);
         });
       }
-      return Promise.resolve(true);
-    });
-    Promise.all(queries)
-    .then(() => {
-      this.setState({ loading: false });
     });
   }
 
   render() {
-    return this.state.loading ?
-    <span>Loading</span>
-    :
-    (
-      <Masonry>
+    return (
+      <Masonry className="PostList-masonry" options={{fitWidth: true}}>
         {this.props.postIDs.map(e => (
           <PostCard key={e} post={this.props.posts[e]} />
         ))}
       </Masonry>
-    )
+    );
   }
 }
 
