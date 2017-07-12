@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import PostCard from '../../Components/PostCard/PostCard';
@@ -33,6 +34,13 @@ class PostList extends React.Component {
     );
   }
 }
+
+PostList.propTypes = {
+  posts: PropTypes.object.isRequired,
+  addPost: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
+  postIDs: PropTypes.array.isRequired
+};
 
 const mapStateToProps = (state) => ({
   posts: state.posts

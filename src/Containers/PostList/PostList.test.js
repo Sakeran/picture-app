@@ -21,7 +21,7 @@ test('renders PostList element correctly', () => {
   const ids = ['11111','22222','33333','44444','55555'];
   const posts = {};
   ids.forEach(e => { posts[e] = makePost(e)});
-  const component = shallow(<PostList postIDs={ids} getPost={getPost} posts={posts}/>);
+  const component = shallow(<PostList postIDs={ids} getPost={getPost} posts={posts} addPost={jest.fn()}/>);
   const tree = toJson(component);
   expect(tree).toMatchSnapshot();
 });
