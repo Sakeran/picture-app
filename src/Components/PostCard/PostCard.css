@@ -1,6 +1,17 @@
 .PostCard-main {
   width: 200px;
   padding-top: 1em;
+  margin-bottom: 1em;
+}
+
+.PostCard-main:hover {
+  transform: scale(1.2);
+  transition: transform 0.4s ease-in-out;
+}
+
+.PostCard-main:hover img {
+  box-shadow: none;
+  transition: box-shadow 0.4s ease-in-out;
 }
 
 .PostCard-img {
@@ -8,6 +19,9 @@
   height: auto;
   display: block;
   margin: 0 auto;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem #380331;
+  margin-bottom: 0.2rem;
 }
 
 .PostCard-stats {

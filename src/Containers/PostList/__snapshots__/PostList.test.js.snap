@@ -11,6 +11,7 @@ exports[`renders PostList element correctly 1`] = `
   options={
     Object {
       "fitWidth": true,
+      "gutter": 6,
     }
   }
   updateOnEachImageLoad={false}

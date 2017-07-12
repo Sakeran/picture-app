@@ -25,7 +25,7 @@ class PostList extends React.Component {
 
   render() {
     return (
-      <Masonry className="PostList-masonry" options={{fitWidth: true}}>
+      <Masonry className="PostList-masonry" options={{fitWidth: true, gutter: 6}}>
         {this.props.postIDs.map(e => (
           this.props.posts[e] &&
           <PostCard key={e} post={this.props.posts[e]} />
