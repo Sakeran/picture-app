@@ -1,9 +1,14 @@
 import query from './query';
 
-export default (username, password, passwordConfirm) => {
+export default () => {
   const myQuery = `query {
     posts {
+      id
       title
+      description
+      type
+      image
+      youtubeID
     }
   }`
 

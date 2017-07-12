@@ -28,7 +28,7 @@ class PostResolver {
   }
 
   type() {
-    return this.post.type;
+    return this.post.postType;
   }
 
   title() {
