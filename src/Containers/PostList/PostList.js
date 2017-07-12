@@ -35,7 +35,7 @@ class PostList extends React.Component {
       <div>
       <h3> {this.state.loading ? "Loading" : "Ready!"} </h3>
         {this.props.postIDs.map(e => (
-          <PostCard post={this.props.posts[e]} />
+          <PostCard key={e} post={this.props.posts[e]} />
         ))}
       </div>
     );
