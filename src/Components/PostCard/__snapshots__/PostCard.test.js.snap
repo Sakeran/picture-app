@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostCard element renders correctly 1`] = `
+<div
+  className="PostCard-main"
+>
+  <div
+    className="PostCard-stats"
+  >
+    <img
+      alt="test card"
+      className="PostCard-img"
+      src="http://localhost:3001/exampleImg.png"
+    />
+    <strong>
+       Post Stats 
+    </strong>
+  </div>
+</div>
+`;

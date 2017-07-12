@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import latestPosts from '../../GraphQL/latestPosts';
+import getPost from '../../GraphQL/getPost';
 
 import PostList from '../PostList/PostList';
 
@@ -32,7 +33,7 @@ class IndexContainer extends React.Component {
     return (
       <div>
         <h2 className="header">Latest Posts</h2>
-        <PostList postIDs={this.state.listedPosts} />
+        <PostList postIDs={this.state.listedPosts} getPost={getPost} />
       </div>
     );
   }

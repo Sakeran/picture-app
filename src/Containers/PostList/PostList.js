@@ -2,16 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PostCard from '../../Components/PostCard/PostCard';
-import getPost from '../../GraphQL/getPost';
 
 import Masonry from 'react-masonry-component';
 import './PostList.css';
 
 class PostList extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     // Check each post id as it is passed in. Query for any data that does
@@ -19,7 +14,7 @@ class PostList extends React.Component {
     // finished loading.
     this.props.postIDs.forEach(e => {
       if(!this.props.posts[e]) {
-        return getPost(e)
+        return this.props.getPost(e)
         .then(post => {
           this.props.addPost(post);
         });
@@ -31,6 +26,7 @@ class PostList extends React.Component {
     return (
       <Masonry className="PostList-masonry" options={{fitWidth: true}}>
         {this.props.postIDs.map(e => (
+          this.props.posts[e] &&
           <PostCard key={e} post={this.props.posts[e]} />
         ))}
       </Masonry>
