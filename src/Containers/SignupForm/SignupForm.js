@@ -33,26 +33,12 @@ class SignupForm extends React.Component {
     .then(userData => {
       const user = JSON.parse(userData);
       if (!user) {
-        this.setState({
-          message: 'Failed To Sign Up'
-        })
+        console.warn('Signup attempt returned null');
         return;
       }
       this.props.loginUser(user);
     });
   }
-
-  // username.length >= 3 ||
-  // addError('username', 'Username must be at least 3 characters');
-  //
-  // username.indexOf(" ") === -1 ||
-  // addError('username', 'Username cannot contain spaces');
-  //
-  // password.length >= 6 ||
-  // addError('password', 'Password must be at least 6 characters');
-  //
-  // password === passwordConfirm ||
-  // addError('passwordConfirm', 'Password and Confirmation must match.');
 
   render() {
     if (this.props.user) {

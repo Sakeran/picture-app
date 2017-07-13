@@ -34,7 +34,7 @@ class LoginForm extends React.Component {
       console.log(userData);
       const user = JSON.parse(userData);
       if (!user) {
-        console.warn('Login Attempt returned')
+        console.warn('Login Attempt returned null');
         return;
       }
       this.props.loginUser(user);
