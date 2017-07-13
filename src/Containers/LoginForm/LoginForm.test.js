@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 
 test('renders all fields correctly', () => {
   const fn = () => null;
-  const component = shallow(<LoginForm sendFunc={fn}/>);
+  const component = mount(<LoginForm sendFunc={fn}/>);
   expect(component.find('input[name="username"]').exists()).toBe(true);
   expect(component.find('input[name="password"]').exists()).toBe(true);
   expect(component.find('input[type="submit"]').exists()).toBe(true);
@@ -25,8 +25,8 @@ test('calls a login function when given valid data', (done) => {
   component.find('input[name="password"]')
   .simulate('change', { target: {value: 'password'} });
 
-  component.find('input[type="submit"]').simulate('click');
-  
+  component.find('form').simulate('submit');
+
   process.nextTick(() => {
     expect(loginFn.mock.calls.length).toBe(1);
     done();
@@ -44,7 +44,7 @@ test('does not call a login function when given invalid data', (done) => {
 
   // Skip password field on purpose
 
-  component.find('input[type="submit"]').simulate('click');
+  component.find('form').simulate('submit');
 
   process.nextTick(() => {
     expect(loginFn.mock.calls.length).toBe(0);

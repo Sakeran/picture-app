@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
     }
     return (
       <Formsy.Form onValidSubmit={this.submit}
-                   onValid={this.enableButton}lul
+                   onValid={this.enableButton}
                    onInvalid={this.disableButton}>
         <TextInput name="username"
                    title="Username"

@@ -1,57 +1,246 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders all fields correctly 1`] = `
-<form>
-  <div
-    className="field"
+<SignupForm
+  sendFunc={[Function]}
+>
+  <Formsy
+    onChange={[Function]}
+    onError={[Function]}
+    onInvalid={[Function]}
+    onInvalidSubmit={[Function]}
+    onSubmit={[Function]}
+    onSuccess={[Function]}
+    onValid={[Function]}
+    onValidSubmit={[Function]}
+    preventExternalInvalidation={false}
+    validationErrors={null}
   >
-    <label
-      htmlFor="username"
+    <form
+      onSubmit={[Function]}
     >
-      Username
-    </label>
-    <input
-      name="username"
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
-  </div>
-  <div
-    className="field"
-  >
-    <label
-      htmlFor="password"
-    >
-      Password
-    </label>
-    <input
-      name="password"
-      onChange={[Function]}
-      type="password"
-      value=""
-    />
-  </div>
-  <div
-    className="field"
-  >
-    <label
-      htmlFor="passwordConfirm"
-    >
-      Confirm Password
-    </label>
-    <input
-      name="passwordConfirm"
-      onChange={[Function]}
-      type="password"
-      value=""
-    />
-  </div>
-  <input
-    className="button"
-    onClick={[Function]}
-    type="submit"
-    value="Sign Up"
-  />
-</form>
+      <Formsy(TextInput)
+        name="username"
+        required={true}
+        title="Username"
+        validationError=""
+        validationErrors={
+          Object {
+            "hasSpaces": "Username cannot contain spaces.",
+            "minLength": "Username must be at least 3 characters. ",
+          }
+        }
+        validations={
+          Object {
+            "hasSpaces": [Function],
+            "minLength": 3,
+          }
+        }
+        value=""
+      >
+        <TextInput
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="username"
+          required={true}
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Username"
+          validationError=""
+          validationErrors={
+            Object {
+              "hasSpaces": "Username cannot contain spaces.",
+              "minLength": "Username must be at least 3 characters. ",
+            }
+          }
+          validations={
+            Object {
+              "hasSpaces": [Function],
+              "minLength": 3,
+            }
+          }
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <input
+              name="username"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextInput>
+      </Formsy(TextInput)>
+      <Formsy(TextInput)
+        name="password"
+        required={true}
+        title="Password"
+        type="password"
+        validationError=""
+        validationErrors={
+          Object {
+            "minLength": "Password must be at least 6 characters. ",
+          }
+        }
+        validations={
+          Object {
+            "minLength": 6,
+          }
+        }
+        value=""
+      >
+        <TextInput
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="password"
+          required={true}
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Password"
+          type="password"
+          validationError=""
+          validationErrors={
+            Object {
+              "minLength": "Password must be at least 6 characters. ",
+            }
+          }
+          validations={
+            Object {
+              "minLength": 6,
+            }
+          }
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="password"
+            >
+              Password
+            </label>
+            <input
+              name="password"
+              onChange={[Function]}
+              type="password"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextInput>
+      </Formsy(TextInput)>
+      <Formsy(TextInput)
+        name="passwordConfirm"
+        required={true}
+        title="Confirm Password"
+        type="password"
+        validationError=""
+        validationErrors={
+          Object {
+            "matches": "Confirmation must match password.",
+          }
+        }
+        validations={
+          Object {
+            "matches": [Function],
+          }
+        }
+        value=""
+      >
+        <TextInput
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="passwordConfirm"
+          required={true}
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Confirm Password"
+          type="password"
+          validationError=""
+          validationErrors={
+            Object {
+              "matches": "Confirmation must match password.",
+            }
+          }
+          validations={
+            Object {
+              "matches": [Function],
+            }
+          }
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="passwordConfirm"
+            >
+              Confirm Password
+            </label>
+            <input
+              name="passwordConfirm"
+              onChange={[Function]}
+              type="password"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextInput>
+      </Formsy(TextInput)>
+      <input
+        className="button"
+        disabled={true}
+        type="submit"
+        value="Sign Up"
+      />
+    </form>
+  </Formsy>
+</SignupForm>
 `;
