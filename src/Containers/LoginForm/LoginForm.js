@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Formsy from 'formsy-react';
+import TextInput from '../formComponents/TextInput';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -8,55 +12,23 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      errors: {},
-      message: ''
+      canSubmit: false
     };
   }
 
-  handleChange = field => e => {
-    const change = {};
-    change[field] = e.target.value;
-    this.setState(change);
-  }
-
-  submit = e => {
-    e.preventDefault();
+  enableButton = () => {
     this.setState({
-      message: ''
+      canSubmit: true
     });
-    const errors = this.checkSubmission(this.state);
-    if (errors) {
-      return this.setState({errors});
-    }
-    this.send(this.state);
   }
 
-  checkSubmission({username, password, passwordConfirm}) {
-    const errors = {};
-    let hasErrors = false;
-    const addError = (field, msg) => {
-      hasErrors = true;
-      errors[field] = errors[field] ?
-                      errors[field].push(msg)
-                      : [msg];
-    };
-
-    username.length >= 0 ||
-    addError('username', 'Username cannot be blank');
-
-    username.indexOf(" ") === -1 ||
-    addError('username', 'Username cannot contain spaces');
-
-    password.length > 0 ||
-    addError('password', 'Password cannot be blank');
-
-
-    return hasErrors ? errors : false;
+  disableButton = () => {
+    this.setState({
+      canSubmit: false
+    })
   }
 
-  send({username, password}) {
+  submit = ({username, password}) => {
     this.props.sendFunc(username, password)
     .then(userData => {
       const user = JSON.parse(userData);
@@ -68,48 +40,42 @@ class LoginForm extends React.Component {
       }
       this.props.loginUser(user);
     });
-  };
-
-  listErrors() {
-    const errors = [];
-    for (let field in this.state.errors) {
-      this.state.hasOwnProperty(field) && errors.push(this.state.errors[field]);
-    }
-    return errors.length &&
-           (
-             <ul className="form-errors">
-              {errors.map(err => <li key={err}>{err}</li>)}
-             </ul>
-           );
-  }
-
-  checkField = (fieldName) => {
-    let res = 'field';
-    this.state.errors[fieldName] && (res += ' has-errors');
-    return res;
   }
 
   render() {
     if (this.props.user) {
       return <Redirect to="/" />
     }
-    return (<form>
-      {this.state.message && (
-        <div className="form-message">
-          <p>{this.state.message}</p>
-        </div>
-      )}
-      {this.listErrors() || null}
-      <div className={this.checkField('username')}>
-        <label htmlFor="username">Username</label>
-        <input type="text" name="username" value={this.state.username} onChange={this.handleChange('username')} />
-      </div>
-      <div className={this.checkField('password')}>
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" value={this.state.password} onChange={this.handleChange('password')} />
-      </div>
-      <input className="button" type="submit" value="Log In" onClick={this.submit} />
-    </form>);
+    return (
+      <Formsy.Form onValidSubmit={this.submit}
+                   onValid={this.enableButton}
+                   onInvalid={this.disableButton}>
+        <TextInput name="username"
+                   title="Username"
+                   required
+                   validations={{
+                     minLength: 1,
+                     hasSpaces: (values, value) =>
+                                (value.indexOf(" ") === -1)
+                   }}
+                   validationErrors={{
+                     minLength: 'Username cannot be blank. ',
+                     hasSpaces: 'Username cannot contain spaces'
+                   }}
+                   value="" />
+        <TextInput name="password"
+                   type="password"
+                   title="Password"
+                   required
+                   validations="minLength:1"
+                   validationError="Invalid Password"
+                   value="" />
+        <input type="submit"
+                className="button"
+                disabled={!this.state.canSubmit}
+                value="Log In" />
+      </Formsy.Form>
+    );
   }
 }
 
