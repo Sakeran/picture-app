@@ -31,11 +31,10 @@ class LoginForm extends React.Component {
   submit = ({username, password}) => {
     this.props.sendFunc(username, password)
     .then(userData => {
+      console.log(userData);
       const user = JSON.parse(userData);
       if (!user) {
-        this.setState({
-          message: 'Invalid Username/Password Combination'
-        });
+        console.warn('Login Attempt returned')
         return;
       }
       this.props.loginUser(user);
@@ -48,7 +47,7 @@ class LoginForm extends React.Component {
     }
     return (
       <Formsy.Form onValidSubmit={this.submit}
-                   onValid={this.enableButton}
+                   onValid={this.enableButton}lul
                    onInvalid={this.disableButton}>
         <TextInput name="username"
                    title="Username"
