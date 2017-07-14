@@ -20,6 +20,7 @@
   color: inherit;
   font-weight: inherit;
   font-size: inherit;
+  cursor: pointer;
 }
 
 @media (max-width: 640px) {
