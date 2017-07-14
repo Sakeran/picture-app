@@ -5,6 +5,9 @@ import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 import TextField from '../formComponents/TextField';
 
+import youtubeRegex from 'youtube-regex';
+import getYoutubeId from 'get-youtube-id';
+
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -13,7 +16,8 @@ class NewPostForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      canSubmit: false
+      canSubmit: false,
+      redirect: false
     };
   }
 
@@ -29,12 +33,16 @@ class NewPostForm extends React.Component {
     })
   }
 
+
   submit = ({link, title, description}) => {
     console.log(link, title, description);
+    this.setState({
+      redirect: true
+    });
   }
 
   render() {
-    if (!this.props.user) {
+    if (!this.props.user || this.state.redirect) {
       return <Redirect to="/" />
     }
     return (
@@ -43,12 +51,30 @@ class NewPostForm extends React.Component {
                    onInvalid={this.disableButton}>
         <TextInput name="link"
                    title="Link to an image or Youtube video:"
-                   required/>
+                   validations={{
+                     isUrl: true,
+                     isYoutube: (values, value) => {
+                       if(!youtubeRegex().test(value)) {
+                         return true; // Validation irrelevant.
+                       }
+                       return !!getYoutubeId(value);
+                     }
+                   }}
+                   validationErrors={{
+                     isUrl: "Link must be a valid URL",
+                     isYoutube: "Invalid Youtube Link"
+                   }}
+                   required
+                   value=""/>
         <TextInput name="title"
                    title="Give your post a title:"
-                   required/>
+                   validations="maxLength: 20"
+                   validationError="Title must be 20 characters or less"
+                   required
+                   value="" />
         <TextField name="description"
-                  title="Description (optional)"/>
+                  title="Description (optional)"
+                  value=""/>
         <input type="submit"
                 className="button"
                 disabled={!this.state.canSubmit}

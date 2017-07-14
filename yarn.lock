@@ -2813,6 +2813,10 @@ get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
 
+get-youtube-id@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/get-youtube-id/-/get-youtube-id-1.0.0.tgz#367680848a29842635a68227c2d10b0a4924560f"
+
 getpass@^0.1.1:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
@@ -6986,3 +6990,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+youtube-regex@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/youtube-regex/-/youtube-regex-1.0.5.tgz#5f27facab0b7d66d01eebc7afc9a6a69cf61abd8"
