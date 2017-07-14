@@ -2,6 +2,9 @@
 const Post = require('../../models/Post');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+const youtubeRegex = require('youtube-regex');
+const getYoutubeId = require('get-youtube-id');
+
 class PostResolver {
   constructor({id, post}, req) {
     if (post) {
@@ -36,11 +39,11 @@ class PostResolver {
   }
 
   description() {
-    return this.post.description;
+    return this.post.description || 'No Description';
   }
 
   image() {
-    return this.post.imageLink || null;
+    return this.post.getImage();
   }
 
   youtubeID() {
@@ -51,28 +54,33 @@ class PostResolver {
   // Static Methods
   ////////////////////
 
-  static newPost({title, type, data, description}, req) {
+  static newPost({title, link, description}, req) {
     if (!req.isAuthenticated()) {
       return false;
     }
-    if (type !== 'image') {
-      console.warn('Youtube posts not yet supported');
-      return false;
-    }
-    const postField = type === 'image' ? 'imageLink' : 'youtubeID';
     const postData = {
-      postType: type,
       title,
       description
     };
-    postData[postField] = data;
+    if(!youtubeRegex().test(link)) {
+      // Link should be a regular image.
+      postData.postType = 'image';
+      postData.imageLink = link;
+    } else {
+      // Link should be to a Youtube video.
+      const id = getYoutubeId(link);
+      if(!id) {
+        return false;
+      }
+      postData.postType = 'youtube';
+      postData.youtubeID = id;
+    }
     return Post.createUserPost(req.user, postData)
     .then(() => true)
     .catch(err => console.error(err), false);
   }
 
   static getPosts({offset, limit, userID}, req) {
-    console.log('POSTS!');
     // Limit posts to 20 by default.
     limit = limit || 20;
     // Offset is 0 by default.

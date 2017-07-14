@@ -7,7 +7,7 @@ const topLevel = `
     signup(username: String!, password: String!, passwordConfirm: String!): String
     login(username: String!, password: String!): String
     logout: Boolean
-    createPost(title: String!, type: String!, data: String!, description: String): Boolean
+    createPost(title: String!, link: String!, description: String): Boolean
   }
 
   type Query {

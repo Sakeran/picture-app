@@ -42,27 +42,36 @@ postSchema.pre('validate', function(next) {
     this.invalidate('imageLink', 'Invalid image link');
   }
 
-  // TODO: Implement Youtube ID "validation"
+  if (this.postType === 'youtube' && !this.hasValidYoutubeID()) {
+    this.invalidate('youtubeID', 'Invalid youtube id');
+  }
 
   next();
 });
 
 postSchema.methods.hasValidImageLink = function() {
   if (!this.imageLink) { return false; }
-
-  // We'll need to use something more sophisticated than this, given that
-  // not all images on the web use one of these extenstions.
-
-  // const extenstionMatcher = /((\.[a-z|A-Z|0-9]+)+)$/;
-  // const allowed = ['.jpg', '.jpeg', '.gif', '.png'];
-  // const matches = this.imageLink.match(extenstionMatcher);
-  // if (!matches || allowed.indexOf(matches[0]) === -1) { return false; }
-
-  // For now, just make sure the imageLink is an actual url.
   const urlMatcher = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
   if(!urlMatcher.test(this.imageLink)) { return false; }
 
   return true;
+};
+
+postSchema.methods.hasValidYoutubeID = function() {
+  if (!this.youtubeID) { return false; }
+  const idMatcher = /[a-zA-Z0-9_-]{11}/;
+  return idMatcher.test(this.youtubeID);
+};
+
+postSchema.methods.getImage = function() {
+  if (this.postType === 'image') {
+    return this.imageLink;
+  }
+  if (this.postType === 'youtube') {
+    return `http://img.youtube.com/vi/${this.youtubeID}/maxresdefault.jpg`;
+  }
+  console.error(`Post ID ${this.id} could not produce a display image.`);
+  return null;
 };
 
 ///////////////////
@@ -74,14 +83,8 @@ postSchema.static('createUserPost', function(user, options) {
     if (!user || user.constructor.modelName !== 'User') {
       return reject(new Error('User must be a User model'));
     }
-    if(options.postType === 'youtube') {
-      console.warn('Youtube posts not yet supported.');
-      // Note: When we DO implement Youtube posts, we'll most likely
-      // need to parse the YoutubeID field, as it will likely be a link.
-      return reject(new Error('Youtube posts not supported'));
-    }
-    const newUser = Object.assign(options, {createdBy: user});
-    mongoose.model('Post').create(newUser)
+    const newPost = Object.assign(options, {createdBy: user});
+    mongoose.model('Post').create(newPost)
     .then(user => resolve(user))
     .catch(err => reject(err));
   });

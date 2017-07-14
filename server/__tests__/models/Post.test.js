@@ -32,10 +32,10 @@ describe('Post Model', () => {
 
   it('Is valid with a type of "image" and a valid imageLink', (done) => {
     const newPost = makePost('image');
-    newPost.imageLink = 'http://localhost:3000/placeholderLink.png';
+    newPost.imageLink = 'http://example.com/placeholderLink.png';
     newPost.validate()
     .then(() => true)
-    .catch(() => false)
+    .catch(err => console.log(err), false)
     .then(passes => {
       expect(passes).toBeTruthy();
       done();
@@ -53,25 +53,13 @@ describe('Post Model', () => {
     });
   });
 
-  it('Is invalid with a type of "image" with an invalid imageLink', (done) => {
-    const newPost = makePost('image');
-    newPost.imageLink = 'http://localhost:3000/notAnImageExtension.txt';
-    newPost.validate()
-    .then(() => false)
-    .catch(() => true)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
-    });
-  });
-
   it('Can create a new image post with a user and an options object', (done) => {
     const testUser = new User();
     const options = {
       postType: "image",
       title: 'My Created Post',
       description: 'A test description for a test post',
-      imageLink: 'http://localhost:3000/placeholderLink.png'
+      imageLink: 'http://example.com/placeholderLink.png'
     };
     Post.createUserPost(testUser, options)
     .then(post => {
@@ -88,4 +76,29 @@ describe('Post Model', () => {
       done();
     });
   });
+
+  it('Can create a new youtube post with a user and an options object', (done) => {
+    const testUser = new User();
+    const options = {
+      postType: "youtube",
+      title: 'My Created Post',
+      description: 'A test description for a test post',
+      youtubeID: 'xxxxxxxxxxx'
+    };
+    Post.createUserPost(testUser, options)
+    .then(post => {
+      expect(post.createdBy.equals(testUser)).toBe(true);
+      expect(post.postType).toBe(options.postType);
+      expect(post.title).toBe(options.title);
+      expect(post.description).toBe(options.description);
+      expect(post.youtubeID).toBe(options.youtubeID);
+      return true;
+    })
+    .catch(err => false)
+    .then(status => {
+      expect(status).toBeTruthy();
+      done();
+    });
+  });
+
 });
