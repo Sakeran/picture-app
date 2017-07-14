@@ -1,8 +1,9 @@
 import reducer from './flash';
+import { defaultState } from './flash';
 
 describe('flash reducer', () => {
   test('FLASH_ERROR action', () => {
-    const state = {};
+    const state = defaultState;
     const action = {type: 'FLASH_ERROR', message: 'Test Message'};
     const newState = reducer(state, action);
     expect(state !== newState);
@@ -11,7 +12,7 @@ describe('flash reducer', () => {
   });
 
   test('FLASH_INFO action', () => {
-    const state = {};
+    const state = defaultState;
     const action = {type: 'FLASH_INFO', message: 'Test Message'};
     const newState = reducer(state, action);
     expect(state !== newState);
@@ -20,7 +21,7 @@ describe('flash reducer', () => {
   });
 
   test('FLASH_SUCCESS action', () => {
-    const state = {};
+    const state = defaultState;
     const action = {type: 'FLASH_SUCCESS', message: 'Test Message'};
     const newState = reducer(state, action);
     expect(state !== newState);

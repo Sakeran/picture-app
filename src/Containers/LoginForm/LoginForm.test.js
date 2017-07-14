@@ -17,7 +17,13 @@ test('calls a login function when given valid data', (done) => {
   const userData = {username: 'user'};
   const sendFn = () => Promise.resolve(JSON.stringify(userData));
   const loginFn = jest.fn();
-  const component = mount(<LoginForm sendFunc={sendFn} loginUser={loginFn} />);
+  const props = {
+    sendFunc: sendFn,
+    loginUser: loginFn,
+    flashSuccess: jest.fn(),
+    flashError: jest.fn()
+  };
+  const component = mount(<LoginForm {...props} />);
 
   component.find('input[name="username"]')
   .simulate('change', { target: {value: 'user'} });

@@ -1,9 +1,6 @@
 const pushFlashMessage = (state, type, message) => {
   const newState = { ...state };
-  if (!newState[type]) {
-    newState[type] = [];
-  }
-  newState[type].push(message);
+  newState[type] = newState[type].concat(message);
   return newState;
 };
 
@@ -12,6 +9,8 @@ const defaultState = {
   info: [],
   success: []
 };
+
+export { defaultState };
 
 export default (state=defaultState, action) => {
   switch(action.type) {

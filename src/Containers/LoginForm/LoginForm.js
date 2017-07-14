@@ -31,12 +31,12 @@ class LoginForm extends React.Component {
   submit = ({username, password}) => {
     this.props.sendFunc(username, password)
     .then(userData => {
-      console.log(userData);
       const user = JSON.parse(userData);
       if (!user) {
-        console.warn('Login Attempt returned null');
+        this.props.flashError('Login Failed');
         return;
       }
+      this.props.flashSuccess(`Logged in as ${user.username}`);
       this.props.loginUser(user);
     });
   }
@@ -81,7 +81,9 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   sendFunc: PropTypes.func.isRequired,
   loginUser: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  flashSuccess: PropTypes.func,
+  flashError: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -89,7 +91,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user})
+  loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user}),
+  flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
+  flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
 const ConnectedLoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
