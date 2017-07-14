@@ -35,9 +35,15 @@ class NewPostForm extends React.Component {
 
 
   submit = ({link, title, description}) => {
-    console.log(link, title, description);
-    this.setState({
-      redirect: true
+    this.props.sendFunc(title, link, description)
+    .then(success => {
+      if (success) {
+        this.props.flashSuccess('Successfully created post.');
+        return this.setState({
+          redirect: true
+        });
+      }
+      this.props.flashError('Failed to create post.');
     });
   }
 
