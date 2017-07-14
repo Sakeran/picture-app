@@ -113,3 +113,7 @@ input[type="submit"]:disabled {
   text-align: center;
   margin: 1em 0;
 }
+
+.full-width {
+  width: 100%;
+}

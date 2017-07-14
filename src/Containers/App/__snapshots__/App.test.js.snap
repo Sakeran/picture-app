@@ -6,6 +6,7 @@ exports[`renders without crashing 1`] = `
     className="App"
   >
     <Connect(HeaderContainer) />
+    <Connect(Flash) />
     <div
       className="App-main"
     >

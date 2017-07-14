@@ -6,6 +6,7 @@ import 'normalize.css';
 import './App.css';
 
 import HeaderContainer from '../../Containers/HeaderContainer/HeaderContainer';
+import Flash from '../../Containers/Flash/Flash';
 import Routes from '../Routes/Routes';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <HeaderContainer />
+          <Flash />
           <div className="App-main">
             <Routes />
           </div>
