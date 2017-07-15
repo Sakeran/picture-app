@@ -2,11 +2,13 @@ module.exports = (state={}, action) => {
   let newState;
   switch (action.type) {
     case 'ADD_POST':
-      newState = Object.assign({}, state);
-      newState[action.post.id] = action.post;
+      newState = { ...state };
+      const post = newState[action.post.id];
+      const newPost = { ...post, ...action.post}
+      newState[action.post.id] = newPost;
       return newState;
     case 'REMOVE_POST':
-      newState = Object.assign({}, state);
+      newState = { ...state };
       delete newState[action.id];
       return newState;
     default:
