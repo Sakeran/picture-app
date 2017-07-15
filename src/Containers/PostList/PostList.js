@@ -26,7 +26,13 @@ class PostList extends React.Component {
 
   render() {
     return (
-      <Masonry className="PostList-masonry" options={{fitWidth: true, gutter: 6}}>
+      <Masonry className="PostList-masonry"
+               updateOnEachImageLoad={true}
+               options={{
+                 fitWidth: true,
+                 gutter: 6,
+                 stagger: 30
+               }}>
         {this.props.postIDs.map(e => (
           this.props.posts[e] &&
           (
