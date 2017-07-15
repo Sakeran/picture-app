@@ -5,6 +5,7 @@ import Login from '../../Pages/Login/Login';
 import NotFound from '../../Pages/NotFound/NotFound';
 import Signup from '../../Pages/Signup/Signup';
 import NewPost from '../../Pages/NewPost/NewPost';
+import Post from '../../Pages/Post/Post';
 
 const Routes = (props) => (
   <Switch>
@@ -12,6 +13,7 @@ const Routes = (props) => (
     <Route exact path="/login" component={Login} />
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/new" component={NewPost} />
+    <Route path="/post/:id" component={Post} />
     <Route component={NotFound} />
   </Switch>
 );
