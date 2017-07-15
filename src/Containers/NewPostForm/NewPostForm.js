@@ -9,7 +9,6 @@ import youtubeRegex from 'youtube-regex';
 import getYoutubeId from 'get-youtube-id';
 
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 class NewPostForm extends React.Component {
 
@@ -17,7 +16,6 @@ class NewPostForm extends React.Component {
     super(props);
     this.state = {
       canSubmit: false,
-      redirect: false
     };
   }
 
@@ -39,18 +37,15 @@ class NewPostForm extends React.Component {
     .then(success => {
       if (success) {
         this.props.flashSuccess('Successfully created post.');
-        return this.setState({
-          redirect: true
-        });
+        this.props.requestRedirect('/');
+        return;
       }
       this.props.flashError('Failed to create post.');
+      this.props.requestRedirect('/');
     });
   }
 
   render() {
-    if (!this.props.user || this.state.redirect) {
-      return <Redirect to="/" />
-    }
     return (
       <Formsy.Form onValidSubmit={this.submit}
                    onValid={this.enableButton}
@@ -102,6 +97,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  requestRedirect: (location) => dispatch({type: 'REQUEST_REDIRECT', location}),
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });

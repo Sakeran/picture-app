@@ -5,7 +5,6 @@ import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 class LoginForm extends React.Component {
 
@@ -14,6 +13,12 @@ class LoginForm extends React.Component {
     this.state = {
       canSubmit: false
     };
+  }
+
+  componentDidUpdate() {
+    if (this.props.user) {
+      this.props.requestRedirect('/');
+    }
   }
 
   enableButton = () => {
@@ -42,9 +47,6 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    if (this.props.user) {
-      return <Redirect to="/" />
-    }
     return (
       <Formsy.Form onValidSubmit={this.submit}
                    onValid={this.enableButton}
@@ -81,6 +83,7 @@ class LoginForm extends React.Component {
 LoginForm.propTypes = {
   sendFunc: PropTypes.func.isRequired,
   loginUser: PropTypes.func,
+  requestRedirect: PropTypes.func,
   user: PropTypes.object,
   flashSuccess: PropTypes.func,
   flashError: PropTypes.func
@@ -92,6 +95,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user}),
+  requestRedirect: (location) => dispatch({type: 'REQUEST_REDIRECT', location}),
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });

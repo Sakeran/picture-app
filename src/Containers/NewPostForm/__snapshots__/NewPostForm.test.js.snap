@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders all fields correctly 1`] = `
+<NewPostForm
+  sendFunc={[Function]}
+>
+  <Formsy
+    onChange={[Function]}
+    onError={[Function]}
+    onInvalid={[Function]}
+    onInvalidSubmit={[Function]}
+    onSubmit={[Function]}
+    onSuccess={[Function]}
+    onValid={[Function]}
+    onValidSubmit={[Function]}
+    preventExternalInvalidation={false}
+    validationErrors={null}
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <Formsy(TextInput)
+        name="link"
+        required={true}
+        title="Link to an image or Youtube video:"
+        validationError=""
+        validationErrors={
+          Object {
+            "isUrl": "Link must be a valid URL",
+            "isYoutube": "Invalid Youtube Link",
+          }
+        }
+        validations={
+          Object {
+            "isUrl": true,
+            "isYoutube": [Function],
+          }
+        }
+        value=""
+      >
+        <TextInput
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="link"
+          required={true}
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Link to an image or Youtube video:"
+          validationError=""
+          validationErrors={
+            Object {
+              "isUrl": "Link must be a valid URL",
+              "isYoutube": "Invalid Youtube Link",
+            }
+          }
+          validations={
+            Object {
+              "isUrl": true,
+              "isYoutube": [Function],
+            }
+          }
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="link"
+            >
+              Link to an image or Youtube video:
+            </label>
+            <input
+              name="link"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextInput>
+      </Formsy(TextInput)>
+      <Formsy(TextInput)
+        name="title"
+        required={true}
+        title="Give your post a title:"
+        validationError="Title must be 20 characters or less"
+        validationErrors={Object {}}
+        validations="maxLength: 20"
+        value=""
+      >
+        <TextInput
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="title"
+          required={true}
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Give your post a title:"
+          validationError="Title must be 20 characters or less"
+          validationErrors={Object {}}
+          validations="maxLength: 20"
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="title"
+            >
+              Give your post a title:
+            </label>
+            <input
+              name="title"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextInput>
+      </Formsy(TextInput)>
+      <Formsy(TextField)
+        name="description"
+        title="Description (optional)"
+        validationError=""
+        validationErrors={Object {}}
+        value=""
+      >
+        <TextField
+          getErrorMessage={[Function]}
+          getErrorMessages={[Function]}
+          getValue={[Function]}
+          hasValue={[Function]}
+          isFormDisabled={[Function]}
+          isFormSubmitted={[Function]}
+          isPristine={[Function]}
+          isRequired={[Function]}
+          isValid={[Function]}
+          isValidValue={[Function]}
+          name="description"
+          resetValue={[Function]}
+          setValidations={[Function]}
+          setValue={[Function]}
+          showError={[Function]}
+          showRequired={[Function]}
+          title="Description (optional)"
+          validationError=""
+          validationErrors={Object {}}
+          value=""
+        >
+          <div
+            className="field"
+          >
+            <label
+              htmlFor="description"
+            >
+              Description (optional)
+            </label>
+            <textarea
+              name="description"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+            <span
+              className="field-error"
+            />
+          </div>
+        </TextField>
+      </Formsy(TextField)>
+      <input
+        className="button"
+        disabled={true}
+        type="submit"
+        value="Post"
+      />
+    </form>
+  </Formsy>
+</NewPostForm>
+`;
