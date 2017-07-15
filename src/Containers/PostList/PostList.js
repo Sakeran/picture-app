@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import PostCard from '../../Components/PostCard/PostCard';
 
@@ -28,7 +29,11 @@ class PostList extends React.Component {
       <Masonry className="PostList-masonry" options={{fitWidth: true, gutter: 6}}>
         {this.props.postIDs.map(e => (
           this.props.posts[e] &&
-          <PostCard key={e} post={this.props.posts[e]} />
+          (
+            <Link key={e} to={`/post/${e}`}>
+              <PostCard post={this.props.posts[e]} />
+            </Link>
+          )
         ))}
       </Masonry>
     );

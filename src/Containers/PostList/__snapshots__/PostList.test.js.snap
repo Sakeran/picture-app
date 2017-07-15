@@ -16,60 +16,85 @@ exports[`renders PostList element correctly 1`] = `
   }
   updateOnEachImageLoad={false}
 >
-  <PostCard
-    post={
-      Object {
-        "id": "11111",
-        "image": "http://localhost:3001/exampleImg.png",
-        "title": "test card 11111",
-        "type": "image",
-        "youtubeID": null,
+  <Link
+    replace={false}
+    to="/post/11111"
+  >
+    <PostCard
+      post={
+        Object {
+          "id": "11111",
+          "image": "http://localhost:3001/exampleImg.png",
+          "title": "test card 11111",
+          "type": "image",
+          "youtubeID": null,
+        }
       }
-    }
-  />
-  <PostCard
-    post={
-      Object {
-        "id": "22222",
-        "image": "http://localhost:3001/exampleImg.png",
-        "title": "test card 22222",
-        "type": "image",
-        "youtubeID": null,
+    />
+  </Link>
+  <Link
+    replace={false}
+    to="/post/22222"
+  >
+    <PostCard
+      post={
+        Object {
+          "id": "22222",
+          "image": "http://localhost:3001/exampleImg.png",
+          "title": "test card 22222",
+          "type": "image",
+          "youtubeID": null,
+        }
       }
-    }
-  />
-  <PostCard
-    post={
-      Object {
-        "id": "33333",
-        "image": "http://localhost:3001/exampleImg.png",
-        "title": "test card 33333",
-        "type": "image",
-        "youtubeID": null,
+    />
+  </Link>
+  <Link
+    replace={false}
+    to="/post/33333"
+  >
+    <PostCard
+      post={
+        Object {
+          "id": "33333",
+          "image": "http://localhost:3001/exampleImg.png",
+          "title": "test card 33333",
+          "type": "image",
+          "youtubeID": null,
+        }
       }
-    }
-  />
-  <PostCard
-    post={
-      Object {
-        "id": "44444",
-        "image": "http://localhost:3001/exampleImg.png",
-        "title": "test card 44444",
-        "type": "image",
-        "youtubeID": null,
+    />
+  </Link>
+  <Link
+    replace={false}
+    to="/post/44444"
+  >
+    <PostCard
+      post={
+        Object {
+          "id": "44444",
+          "image": "http://localhost:3001/exampleImg.png",
+          "title": "test card 44444",
+          "type": "image",
+          "youtubeID": null,
+        }
       }
-    }
-  />
-  <PostCard
-    post={
-      Object {
-        "id": "55555",
-        "image": "http://localhost:3001/exampleImg.png",
-        "title": "test card 55555",
-        "type": "image",
-        "youtubeID": null,
+    />
+  </Link>
+  <Link
+    replace={false}
+    to="/post/55555"
+  >
+    <PostCard
+      post={
+        Object {
+          "id": "55555",
+          "image": "http://localhost:3001/exampleImg.png",
+          "title": "test card 55555",
+          "type": "image",
+          "youtubeID": null,
+        }
       }
-    }
-  />
+    />
+  </Link>
 </MasonryComponent>
 `;
