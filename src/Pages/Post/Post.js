@@ -1,7 +1,9 @@
 import React from 'react';
+import PostContainer from '../../Containers/PostContainer/PostContainer';
+
 
 const Post = ({match}) => (
-  <h2>Post #{match.params.id}</h2>
+  <PostContainer PostId={match.params.id} />
 );
 
 export default Post;
