@@ -5,11 +5,12 @@
 .Nav ul {
   list-style: none;
   display: flex;
+  align-items: center;
   margin-right: 0.3em;
 }
 
 .Nav ul li {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 0.85em;
   margin-left: 1rem;
 }
@@ -19,8 +20,14 @@
   border: none;
   color: inherit;
   font-weight: inherit;
-  font-size: inherit;
+  margin-left: 1rem;
   cursor: pointer;
+}
+
+.Nav ul li button:hover,
+.Nav ul li button:active {
+  color: #619668;
+  transition: color 0.2s ease;
 }
 
 @media (max-width: 640px) {
