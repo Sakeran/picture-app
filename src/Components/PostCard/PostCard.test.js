@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 import PostCard from './PostCard';
@@ -11,7 +11,7 @@ test('PostCard element renders correctly', () => {
     title: 'test card',
     youtubeID: null
   };
-  const component = shallow(<PostCard post={post} />);
+  const component = mount(<PostCard post={post} />);
   expect(component.find('img')).toHaveLength(1);
   const tree = toJson(component);
   expect(tree).toMatchSnapshot();

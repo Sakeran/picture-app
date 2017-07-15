@@ -1,20 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PostCard element renders correctly 1`] = `
-<div
-  className="PostCard-main"
+<PostCard
+  post={
+    Object {
+      "image": "http://localhost:3001/exampleImg.png",
+      "title": "test card",
+      "type": "image",
+      "youtubeID": null,
+    }
+  }
 >
   <div
-    className="PostCard-stats"
+    className="PostCard-main"
   >
-    <img
-      alt="test card"
-      className="PostCard-img"
-      src="http://localhost:3001/exampleImg.png"
-    />
-    <strong>
-       Post Stats 
-    </strong>
+    <div
+      className="PostCard-stats"
+    >
+      <SafeImage
+        alt="test card"
+        className="PostCard-img"
+        src="http://localhost:3001/exampleImg.png"
+      >
+        <img
+          alt="test card"
+          className="PostCard-img"
+          onError={[Function]}
+          src="http://localhost:3001/exampleImg.png"
+        />
+      </SafeImage>
+      <strong>
+         Post Stats 
+      </strong>
+    </div>
   </div>
-</div>
+</PostCard>
 `;

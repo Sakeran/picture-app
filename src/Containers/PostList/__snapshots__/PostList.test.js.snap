@@ -12,9 +12,10 @@ exports[`renders PostList element correctly 1`] = `
     Object {
       "fitWidth": true,
       "gutter": 6,
+      "stagger": 30,
     }
   }
-  updateOnEachImageLoad={false}
+  updateOnEachImageLoad={true}
 >
   <Link
     replace={false}
