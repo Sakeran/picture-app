@@ -91,6 +91,7 @@ class PostResolver {
       query['createdBy'] = new ObjectId(userID);
     }
     return Post.find(query)
+    .sort('-createdAt')
     .skip(offset)
     .limit(limit)
     .then(posts => {
