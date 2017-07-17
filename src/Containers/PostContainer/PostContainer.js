@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 
 import getPost from '../../GraphQL/getPost';
 
+import './PostContainer.css';
+
 class PostContainer extends React.Component {
 
   constructor(props) {
@@ -28,11 +30,15 @@ class PostContainer extends React.Component {
     }
     const post = this.props.posts[this.props.PostId];
     return (
-      <div>
-        <SafeImage src={post.image} alt={post.title} />
-        <h3>{post.title}</h3>
-        <p>{post.description}</p>
-        <div>
+      <div className="PostContainer">
+        <div className="PostContainer-display">
+          <SafeImage className="PostContainer-img" src={post.image} alt={post.title} />
+        </div>
+        <div className="PostContainer-details">
+          <h3>{post.title}</h3>
+          <p>{post.description}</p>
+        </div>
+        <div className="PostContainer-comments">
           <p>Comments go here</p>
         </div>
       </div>

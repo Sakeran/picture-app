@@ -1,0 +1,22 @@
+.PostContainer-display {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.PostContainer-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.PostContainer-details {
+  margin-left: 1em;
+}
+
+.PostContainer-details p {
+  font-size: 0.9em;
+  margin-left: 1em;
+}
+
+.PostContainer-comments {
+  text-align: center;
+}
