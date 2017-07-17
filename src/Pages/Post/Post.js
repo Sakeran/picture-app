@@ -3,7 +3,9 @@ import PostContainer from '../../Containers/PostContainer/PostContainer';
 
 
 const Post = ({match}) => (
-  <PostContainer PostId={match.params.id} />
+  <div className="PostDisplayPage">
+    <PostContainer PostId={match.params.id} />
+  </div>
 );
 
 export default Post;

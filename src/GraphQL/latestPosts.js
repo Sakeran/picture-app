@@ -1,14 +1,10 @@
 import query from './query';
 
 export default () => {
-  const myQuery = `query {
+  const myQuery = `query LatestPostsQuery{
     posts {
       id
-      title
-      description
-      type
       image
-      youtubeID
     }
   }`
 
