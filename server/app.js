@@ -1,9 +1,15 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
-const graphqlHTTP = require('express-graphql');
+// const graphqlHTTP = require('express-graphql');
+const {
+  graphqlExpress,
+  graphiqlExpress
+} = require('graphql-server-express');
 const logger = require('morgan');
 const app = express();
+const schema = require('./graphql/newGraphql/schema');
 
 app.use(logger('dev'));
 
@@ -25,14 +31,14 @@ app.get('/auth/twitter/callback',
 );
 
 // Define GraphQL endpoint
-const appSchema = require('./graphql/mainSchema');
-const root = require('./graphql/resolvers/root');
+app.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+  schema,
+  context: { req }
+})));
 
-app.use('/api', graphqlHTTP({
-  schema: appSchema,
-  rootValue: root,
-  graphiql: true // For now
-}))
+app.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql'
+}));
 
 app.use((req, res) => res.end('Coming Soon!'));
 
