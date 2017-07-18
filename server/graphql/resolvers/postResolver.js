@@ -5,6 +5,8 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const youtubeRegex = require('youtube-regex');
 const getYoutubeId = require('get-youtube-id');
 
+const UserResolver = require('./userResolver');
+
 class PostResolver {
   constructor({id, post}, req) {
     if (post) {
@@ -28,6 +30,10 @@ class PostResolver {
 
   id() {
     return this.post.id;
+  }
+
+  creatorName() {
+      return 'Some guy';
   }
 
   type() {

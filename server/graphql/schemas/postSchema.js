@@ -7,5 +7,6 @@ module.exports = `
     description: String!
     image: String
     youtubeID: String
+    creatorName: String
   }
 `;

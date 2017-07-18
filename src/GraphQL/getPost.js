@@ -9,6 +9,7 @@ export default (id) => {
       type
       image
       youtubeID
+      creatorName
     }
   }`;
 

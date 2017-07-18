@@ -16,7 +16,7 @@ class PostList extends React.Component {
     // finished loading.
     this.props.postIDs.forEach(e => {
       if(!this.props.posts[e]) {
-        return this.props.getPost(e, ['image', 'type'])
+        return this.props.getPost(e)
         .then(post => {
           this.props.addPost(post);
         });

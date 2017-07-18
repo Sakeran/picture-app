@@ -36,6 +36,7 @@ class PostContainer extends React.Component {
         </div>
         <div className="PostContainer-details">
           <h3>{post.title}</h3>
+          <p>Posted by {post.creatorName}</p>
           <p>{post.description}</p>
         </div>
         <div className="PostContainer-comments">
