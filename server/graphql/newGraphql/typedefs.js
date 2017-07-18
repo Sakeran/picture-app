@@ -5,6 +5,7 @@ type User {
 }
 
 type Query {
+  currentUser: User
   user(id: ID!): User
 }
 

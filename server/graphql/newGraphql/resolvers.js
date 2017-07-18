@@ -2,6 +2,7 @@ const User = require('../../models/User');
 
 const resolvers = {
   Query: {
+    currentUser: (_, args, { req }) => req.user || null,
     user: (_, { id }) => User.findById(id)
   },
   Mutation: {
