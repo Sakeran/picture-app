@@ -2,7 +2,7 @@ const Post = require('../../models/Post');
 
 module.exports = {
   newPost: (_, args, {req}) => {
-    if (!req.isAuthenticated) {
+    if (!req.isAuthenticated()) {
       return null;
     }
     return Post.createUserPost(req.user, args);
