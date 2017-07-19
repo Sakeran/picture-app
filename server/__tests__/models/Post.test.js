@@ -99,4 +99,42 @@ describe('Post Model', () => {
     });
   });
 
+  it('Has a working "image" virtual field', () => {
+    const postOne = makePost('image');
+    postOne.imageLink = 'http://example.com/img.png';
+    expect(postOne.image).toBe(postOne.imageLink);
+    const postTwo = makePost('youtube');
+    postTwo.youtubeID ='xxxxxxxxxxx';
+    expect(postTwo.image).toContain(postTwo.youtubeID);
+  });
+
+  it('Has a working "type" virtual field', () => {
+    const postOne = makePost('image');
+    expect(postOne.type).toBe('image');
+    const postTwo = makePost('youtube');
+    expect(postTwo.type).toContain('youtube');
+  });
+
+  it('Correctly queries for the "creator" virtual field and yields a promise', (done) => {
+    User.create({
+      auth: {
+        local: {username: 'TestUser', password: '123456'}
+      }
+    })
+    .then(user => {
+      const post = makePost('image');
+      post.imageLink = 'http://example.com/img.png';
+      post.createdBy = user;
+      post.save()
+      .then(post => {
+        post.creator
+        .then(creator => {
+          expect(creator.id).toBe(user.id);
+          done();
+        })
+      })
+    })
+    .catch(err => { throw err });
+  });
+
 });

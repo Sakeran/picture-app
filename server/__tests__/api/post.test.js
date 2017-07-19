@@ -120,38 +120,52 @@ describe('Post endpoint', () => {
   });
 
   it('Can create a post while logged in', () => {
-    const user = new User();
-    passportStub.login(user);
-    request(app)
-    .post('/api')
-    .send({
-      query: `
+    User.create({
+      auth: {
+        local: {username: 'TestUser', password: '123456'}
+      }
+    })
+    .then(user => {
+      passportStub.login(user);
+      request(app)
+      .post('/api')
+      .send({
+        query: `
         mutation createPost($title: String!, $link: String!, $description: String) {
           newPost(title: $title, link: $link, description: $description) {
             id
           }
         }
-      `,
-      operationName: 'createPost',
-      variables: {
-        title: 'Legal Post',
-        link: 'http://example.com/img.png',
-        description: 'A test post',
-      }
-    })
-    .expect(200)
-    .end((err, res) => {
-      if (err) { throw err }
-      const result = JSON.parse(res.text);
-      expect(result.data.newPost).not.toBeNull();
-      expect(result.data.newPost.id).not.toBeNull();
-      Post.find({}).count()
-      .then(count => {
-        expect(count).toBe(1);
-        done();
+        `,
+        operationName: 'createPost',
+        variables: {
+          title: 'Legal Post',
+          link: 'http://example.com/img.png',
+          description: 'A test post',
+        }
+      })
+      .expect(200)
+      .then(res => {
+        // 07-19-2017
+        // Note: This test currently passes, but also seems to execute
+        // and throw a second time. Using .then() instead of .end() in
+        // this case seems to keep the test watcher from crashing outright,
+        // though it still warns of a rejected promise.
+        // https://github.com/visionmedia/supertest/issues/352
+        const result = JSON.parse(res.text);
+        expect(result.data.newPost).not.toBeNull();
+        expect(result.data.newPost.id).not.toBeNull();
+        Post.find({}).count()
+        .then(count => {
+          expect(count).toBe(1);
+          User.find({}).remove()
+          then(() => done());
+        })
+        .catch(err => { throw err });
       })
       .catch(err => { throw err });
     })
+    .catch(err => { throw err });
 
   })
 })
