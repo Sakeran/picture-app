@@ -20,6 +20,9 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', (err) => {
   log('Mongoose connection error: ' + err);
+  if (process.env.NODE_ENV === 'test') {
+    throw new Error('Error connecting to Mongo server.');
+  }
 });
 
 mongoose.connection.on('disconnected', () => {

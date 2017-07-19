@@ -31,13 +31,13 @@ app.get('/auth/twitter/callback',
 );
 
 // Define GraphQL endpoint
-app.use('/graphql', bodyParser.json(), graphqlExpress(req => ({
+app.use('/api', bodyParser.json(), graphqlExpress(req => ({
   schema,
   context: { req }
 })));
 
 app.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql'
+  endpointURL: '/api'
 }));
 
 app.use((req, res) => res.end('Coming Soon!'));

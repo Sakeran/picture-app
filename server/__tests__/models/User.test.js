@@ -1,6 +1,7 @@
+const User = require('../../models/User');
+
+let db;
 describe('User Model', () => {
-  let db;
-  const User = require('../../models/User');
 
   beforeAll(() => {
     db = require('../../config/db');
@@ -43,7 +44,7 @@ describe('User Model', () => {
       done();
     });
   });
-
+  
   it('is valid with only the auth.twitter field set', (done) => {
     const user = new User();
     user.auth.twitter.id = '111111111';

@@ -56,21 +56,20 @@ describe('Post Model', () => {
   it('Can create a new image post with a user and an options object', (done) => {
     const testUser = new User();
     const options = {
-      postType: "image",
       title: 'My Created Post',
       description: 'A test description for a test post',
-      imageLink: 'http://example.com/placeholderLink.png'
+      link: 'http://example.com/placeholderLink.png'
     };
     Post.createUserPost(testUser, options)
     .then(post => {
       expect(post.createdBy.equals(testUser)).toBe(true);
-      expect(post.postType).toBe(options.postType);
+      expect(post.postType).toBe('image');
       expect(post.title).toBe(options.title);
       expect(post.description).toBe(options.description);
-      expect(post.imageLink).toBe(options.imageLink);
+      expect(post.imageLink).toBe(options.link);
       return true;
     })
-    .catch(err => false)
+    .catch(err => console.log(err), false)
     .then(status => {
       expect(status).toBeTruthy();
       done();
@@ -80,18 +79,17 @@ describe('Post Model', () => {
   it('Can create a new youtube post with a user and an options object', (done) => {
     const testUser = new User();
     const options = {
-      postType: "youtube",
       title: 'My Created Post',
       description: 'A test description for a test post',
-      youtubeID: 'xxxxxxxxxxx'
+      link: 'https://www.youtube.com/watch?v=xxxxxxxxxxx'
     };
     Post.createUserPost(testUser, options)
     .then(post => {
       expect(post.createdBy.equals(testUser)).toBe(true);
-      expect(post.postType).toBe(options.postType);
+      expect(post.postType).toBe('youtube');
       expect(post.title).toBe(options.title);
       expect(post.description).toBe(options.description);
-      expect(post.youtubeID).toBe(options.youtubeID);
+      expect(post.youtubeID).toBe('xxxxxxxxxxx');
       return true;
     })
     .catch(err => false)
