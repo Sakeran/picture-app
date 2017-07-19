@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 
 import { connect } from 'react-redux';
+import { graphql, gql, compose } from 'react-apollo';
+import { currentUserQuery } from '../HeaderContainer/HeaderContainer';
 
 class SignupForm extends React.Component {
 
@@ -34,15 +35,28 @@ class SignupForm extends React.Component {
   }
 
   submit = ({username, password, passwordConfirm}) => {
-    this.props.sendFunc(username, password, passwordConfirm)
-    .then(userData => {
-      const user = JSON.parse(userData);
-      if (!user) {
-        this.props.flashError('Signup Failed');
-        return;
+    this.props.mutate({
+      variables: {
+        username,
+        password,
+        passwordConfirm
+      },
+      update: (store, {data: { signup }}) => {
+        if (!signup) { return; }
+        const data = store.readQuery({query: currentUserQuery});
+        data.currentUser = signup;
+        store.writeQuery({query: currentUserQuery, data});
       }
-      this.props.flashSuccess(`Successfully signed up as ${user.username}`);
-      this.props.loginUser(user);
+    })
+    .then(res => {
+      if(!res.data.login) {
+        return this.flashError('Signup failed.');
+      }
+      this.props.flashSuccess('Successfully created account.');
+      this.props.requestRedirect('/');
+    })
+    .catch(({graphQLErrors}) => {
+      this.props.flashError(graphQLErrors[0].message);
     });
   }
 
@@ -95,14 +109,6 @@ class SignupForm extends React.Component {
   }
 }
 
-SignupForm.propTypes = {
-  sendFunc: PropTypes.func.isRequired,
-  loginUser: PropTypes.func,
-  user: PropTypes.object,
-  flashSuccess: PropTypes.func,
-  flashError: PropTypes.func
-};
-
 const mapStateToProps = (state) => ({
   user: state.common.user
 });
@@ -114,7 +120,16 @@ const mapDispatchToProps = (dispatch) => ({
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const ConnectedSignupForm = connect(mapStateToProps, mapDispatchToProps)(SignupForm);
+const signupMutation = gql`
+  mutation signup($username: String!, $password: String!, $passwordConfirm: String!) {
+    signup(username: $username, password: $password, passwordConfirm: $passwordConfirm) {
+      id
+    }
+  }
+`;
 
 export { SignupForm };
-export default ConnectedSignupForm;
+export default compose(
+  graphql(signupMutation),
+  connect(mapStateToProps, mapDispatchToProps)
+)(SignupForm);

@@ -1,6 +1,5 @@
 import React from 'react';
 import SignupForm from '../../Containers/SignupForm/SignupForm';
-import newUser from '../../GraphQL/newUser';
 
 const Signup = (props) => (
   <div className="SignupPage">
@@ -9,7 +8,7 @@ const Signup = (props) => (
     </div>
     <span className="divider">OR</span>
     <h2 className="centered header">Sign Up Locally</h2>
-    <SignupForm sendFunc={newUser}/>
+    <SignupForm />
   </div>
 );
 

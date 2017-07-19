@@ -49,11 +49,14 @@ class LoginForm extends React.Component {
       }
     })
     .then(res => {
-      if(!res.login) {
+      if(!res.data.login) {
         return this.props.flashError('Login Failed');
       }
       this.props.flashSuccess('Successfully logged in.');
       this.props.requestRedirect('/');
+    })
+    .catch(({graphQLErrors}) => {
+      this.props.flashError(graphQLErrors[0].message);
     });
   }
 
