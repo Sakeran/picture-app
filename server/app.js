@@ -9,7 +9,7 @@ const {
 } = require('graphql-server-express');
 const logger = require('morgan');
 const app = express();
-const schema = require('./graphql/newGraphql/schema');
+const schema = require('./graphql/schema');
 
 app.use(logger('dev'));
 

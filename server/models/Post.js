@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const youtubeRegex = require('youtube-regex');
+const getYoutubeId = require('get-youtube-id');
 
 const postSchema = new Schema({
   postType: {
@@ -15,8 +17,14 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
-  description: String,
-  youtubeID: String,
+  description: {
+    type: String,
+    get: (desc) => desc || "No Description"
+  },
+  youtubeID: {
+    type: String,
+    get: (id) => id || null
+  },
   imageLink: String,
   createdBy: {
     type: Schema.Types.ObjectId,
@@ -33,6 +41,28 @@ const postSchema = new Schema({
       default: Date.now
     }
   }]
+});
+
+// Virtual attributes
+postSchema.virtual('image').get(function() {
+  if (this.postType === 'image') {
+    return this.imageLink;
+  }
+  if (this.postType === 'youtube') {
+    return `http://img.youtube.com/vi/${this.youtubeID}/maxresdefault.jpg`;
+  }
+  console.error(`Post ID ${this.id} could not produce a display image.`);
+  return null;
+});
+
+postSchema.virtual('type').get(function() {
+  return this.postType;
+});
+
+postSchema.virtual('creator').get(function() {
+  return this.populate('createdBy')
+  .execPopulate()
+  .then(post => post.createdBy);
 });
 
 // Custom validation
@@ -63,28 +93,34 @@ postSchema.methods.hasValidYoutubeID = function() {
   return idMatcher.test(this.youtubeID);
 };
 
-postSchema.methods.getImage = function() {
-  if (this.postType === 'image') {
-    return this.imageLink;
-  }
-  if (this.postType === 'youtube') {
-    return `http://img.youtube.com/vi/${this.youtubeID}/maxresdefault.jpg`;
-  }
-  console.error(`Post ID ${this.id} could not produce a display image.`);
-  return null;
-};
-
 ///////////////////
 // Static Methods
 ///////////////////
 
-postSchema.static('createUserPost', function(user, options) {
+postSchema.static('createUserPost', function(user, {title, description, link}) {
   return new Promise((resolve, reject) => {
     if (!user || user.constructor.modelName !== 'User') {
       return reject(new Error('User must be a User model'));
     }
-    const newPost = Object.assign(options, {createdBy: user});
-    mongoose.model('Post').create(newPost)
+    const postData = {
+      createdBy: user,
+      title,
+      description
+    };
+    if(!youtubeRegex().test(link)) {
+      // Link should be a regular image.
+      postData.postType = 'image';
+      postData.imageLink = link;
+    } else {
+      // Link should be to a Youtube video.
+      const id = getYoutubeId(link);
+      if(!id) {
+        return reject(new Error('Youtube links must contain valid a valid id'));
+      }
+      postData.postType = 'youtube';
+      postData.youtubeID = id;
+    }
+    mongoose.model('Post').create(postData)
     .then(user => resolve(user))
     .catch(err => reject(err));
   });

@@ -108,13 +108,13 @@ UserSchema.methods.validPassword = function(password) {
 UserSchema.methods.sanitize = function() {
   return {
     id: this._id,
-    username: this.getUsername()
+    username: this.username()
   };
 };
 
 // Return the user's username, either from local or Twitter
 // credentials.
-UserSchema.methods.getUsername = function() {
+UserSchema.methods.username = function() {
   // WIP - For now only return the username, or a placeholder.
   return this.auth.local.username || 'Unknown';
 };
