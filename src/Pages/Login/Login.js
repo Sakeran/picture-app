@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginForm from '../../Containers/LoginForm/LoginForm';
-import login from '../../GraphQL/login';
 
 const Login = (props) => (
   <div className="LoginPage">
@@ -9,7 +8,7 @@ const Login = (props) => (
     </div>
     <span className="divider">OR</span>
     <h2 className="centered header">Login Locally</h2>
-    <LoginForm sendFunc={login}/>
+    <LoginForm />
   </div>
 );
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import logout from '../../GraphQL/logout';
+import { gql, graphql, compose } from 'react-apollo';
 
 import Header from '../../Components/Header/Header';
 
@@ -20,15 +19,19 @@ class HeaderContainer extends React.Component {
   }
 
   logout = () => {
-    logout()
-    .then(() => {
-      this.props.logoutUser();
-    });
+    this.props.mutate({
+      update: (store) => {
+        const data = store.readQuery({ query: currentUserQuery });
+        data.currentUser = null;
+        store.writeQuery({ query: currentUserQuery, data });
+      }
+    })
   }
 
   render() {
+    const {data: { currentUser } } = this.props;
     return (
-      <Header user={this.props.user}
+      <Header user={currentUser}
               toggleFn={this.toggleMenu}
               toggledMenu={this.state.menuToggled}
               logoutFn={this.logout} />
@@ -37,12 +40,22 @@ class HeaderContainer extends React.Component {
 
 };
 
-const mapStateToProps = (state) => ({
-  user: state.common.user
-});
+const currentUserQuery = gql`
+  query currentUser {
+    currentUser {
+      id
+    }
+  }
+`;
 
-const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch({type: 'LOGOUT_USER'})
-});
+const logoutMutation = gql`
+  mutation logout {
+    logout
+  }
+`;
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+export { currentUserQuery };
+export default compose(
+  graphql(currentUserQuery),
+  graphql(logoutMutation),
+)(HeaderContainer);

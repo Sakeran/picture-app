@@ -28,6 +28,7 @@
     "passport-stub": "^1.1.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-apollo": "^1.4.6",
     "react-dom": "^15.6.1",
     "react-masonry-component": "^5.0.7",
     "react-redux": "^5.0.5",

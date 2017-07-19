@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 
 import { connect } from 'react-redux';
+import { graphql, gql, compose } from 'react-apollo';
+import { currentUserQuery } from '../HeaderContainer/HeaderContainer';
 
 class LoginForm extends React.Component {
 
@@ -34,15 +35,25 @@ class LoginForm extends React.Component {
   }
 
   submit = ({username, password}) => {
-    this.props.sendFunc(username, password)
-    .then(userData => {
-      const user = JSON.parse(userData);
-      if (!user) {
-        this.props.flashError('Login Failed');
-        return;
+    this.props.mutate({
+      variables: {
+        username,
+        password
+      },
+      update: (store, { data: { login } }) => {
+        // Don't logout if null
+        if (!login) { return; }
+        const data = store.readQuery({ query: currentUserQuery });
+        data.currentUser = login;
+        store.writeQuery({ query: currentUserQuery, data });
       }
-      this.props.flashSuccess(`Logged in as ${user.username}`);
-      this.props.loginUser(user);
+    })
+    .then(res => {
+      if(!res.login) {
+        return this.props.flashError('Login Failed');
+      }
+      this.props.flashSuccess('Successfully logged in.');
+      this.props.requestRedirect('/');
     });
   }
 
@@ -80,27 +91,22 @@ class LoginForm extends React.Component {
   }
 }
 
-LoginForm.propTypes = {
-  sendFunc: PropTypes.func.isRequired,
-  loginUser: PropTypes.func,
-  requestRedirect: PropTypes.func,
-  user: PropTypes.object,
-  flashSuccess: PropTypes.func,
-  flashError: PropTypes.func
-};
-
-const mapStateToProps = (state) => ({
-  user: state.common.user
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  loginUser: (user) => dispatch({type: 'LOGIN_USER', user: user}),
   requestRedirect: (location) => dispatch({type: 'REQUEST_REDIRECT', location}),
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const ConnectedLoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+const loginMutation = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      id
+    }
+  }
+`;
 
 export { LoginForm };
-export default ConnectedLoginForm;
+export default compose(
+  graphql(loginMutation),
+  connect(null, mapDispatchToProps)
+)(LoginForm);
