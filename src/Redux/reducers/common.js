@@ -5,10 +5,6 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case 'LOGIN_USER':
-      return { ...state, user: action.user };
-    case 'LOGOUT_USER':
-      return { ...state, user: null };
     case 'REQUEST_REDIRECT':
       return { ...state, redirect: action.location };
     case 'CLEAR_REDIRECT':
