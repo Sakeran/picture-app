@@ -77,6 +77,14 @@ postSchema.virtual('postDate').get(function() {
   return moment(this.createdAt).format('MMMM Do YYYY');
 })
 
+postSchema.virtual('commentCount').get(function() {
+  return this.comments.length;
+});
+
+postSchema.virtual('likeCount').get(function() {
+  return this.likes.length;
+});
+
 // Custom validation
 postSchema.pre('validate', function(next) {
 

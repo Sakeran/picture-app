@@ -225,6 +225,22 @@ describe('Post Model', () => {
     const post = new Post();
     post.createdAt = date;
     expect(post.postDate).toBe(moment(date).format('MMMM Do YYYY'));
-  })
+  });
+
+  it('Has a "commentCount" virtual field that returns the number of comments', () => {
+    const post = new Post();
+    const user = new User();
+    post.comments = [1,2,3].map(i => ({
+        createdBy: user,
+        text: `Comment numner ${i}`
+    }));
+    expect(post.commentCount).toBe(3);
+  });
+
+  it('Has a "likeCount" virtual field that returns the number of likes', () => {
+    const post = new Post();
+    post.likes = [1,2,3].map(i => new User());
+    expect(post.likeCount).toBe(3);
+  });
 
 });
