@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { MemoryRouter as Router } from 'react-router-dom';
 
 import { PostList } from './PostList';
 

@@ -3,32 +3,20 @@ import PropTypes from 'prop-types';
 
 import SafeImage from '../../Components/SafeImage/SafeImage';
 
-import { connect } from 'react-redux';
-
-import getPost from '../../GraphQL/getPost';
+import { graphql, gql, compose} from 'react-apollo';
 
 import './PostContainer.css';
 
 class PostContainer extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true
-    };
-    // Get the relevant post from the server, then save it to store.
-    getPost(props.PostId)
-    .then(post => {
-      this.props.addPost(post);
-      this.setState({loading: false});
-    });
-  }
-
   render() {
-    if (this.state.loading) {
+    const { data: {loading, error, post}} = this.props;
+    if (loading) {
       return <h2>Loading...</h2>;
     }
-    const post = this.props.posts[this.props.PostId];
+    if (error) {
+      return <h2>Error While Loading Post</h2>;
+    }
     return (
       <div className="PostContainer">
         <div className="PostContainer-display">
@@ -36,7 +24,7 @@ class PostContainer extends React.Component {
         </div>
         <div className="PostContainer-details">
           <h3>{post.title}</h3>
-          <p>Posted by {post.creatorName}</p>
+          <p>Posted by {post.creator.username}</p>
           <p>{post.description}</p>
         </div>
         <div className="PostContainer-comments">
@@ -49,16 +37,32 @@ class PostContainer extends React.Component {
 };
 
 PostContainer.propTypes = {
-  PostId: PropTypes.string
+  postId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  posts: state.posts
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch({type:'ADD_POST', post})
-});
+const postDetailsQuery = gql`
+  query postDetails($id: ID!) {
+    post(id: $id) {
+      id
+      type
+      title
+      image
+      youtubeID
+      creator {
+        id
+        username
+      }
+    }
+  }
+`;
 
 export { PostContainer };
-export default connect(mapStateToProps, mapDispatchToProps)(PostContainer);
+export default compose(
+  graphql(postDetailsQuery, {
+    options: (props) => ({
+      variables: {
+        id: props.postId
+      }
+    })
+  })
+)(PostContainer);
