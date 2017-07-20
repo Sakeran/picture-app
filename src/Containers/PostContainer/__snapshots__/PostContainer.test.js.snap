@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders correctly 1`] = `
+<div
+  className="PostContainer"
+>
+  <div
+    className="PostContainer-display"
+  >
+    <SafeImage
+      alt="test card 1"
+      className="PostContainer-img"
+      src="http://localhost:3001/exampleImg.png"
+    />
+  </div>
+  <div
+    className="PostContainer-details"
+  >
+    <h3>
+      test card 1
+    </h3>
+    <p>
+      Posted by 
+      testUser
+    </p>
+    <p />
+  </div>
+  <div
+    className="PostContainer-comments"
+  >
+    <p>
+      Comments go here
+    </p>
+  </div>
+</div>
+`;
