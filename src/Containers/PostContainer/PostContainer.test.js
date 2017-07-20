@@ -9,6 +9,7 @@ const makePost = (id, type) => ({
   image: 'http://localhost:3001/exampleImg.png',
   title: 'test card ' + id,
   youtubeID: 'xxxxxxxxxxx',
+  description: 'Test post.',
   creator: {
     id: '100',
     username: 'testUser'

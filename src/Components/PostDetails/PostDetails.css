@@ -1,0 +1,24 @@
+.PostDetails {
+  margin: 0 auto;
+  width: 75%;
+  min-width: 300px;
+  padding: 1em;
+  background: white;
+}
+
+.PostDetails-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PostDetails-creator-info {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  font-weight: lighter;
+}
+
+.PostDetails-description {
+  max-width: 75%;
+  margin: 0 auto;
+}

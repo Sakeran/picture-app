@@ -8,15 +8,6 @@
   height: auto;
 }
 
-.PostContainer-details {
-  margin-left: 1em;
-}
-
-.PostContainer-details p {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-
 .PostContainer-comments {
   text-align: center;
 }
