@@ -21,4 +21,9 @@
 .PostDetails-description {
   max-width: 75%;
   margin: 0 auto;
+  text-align: center;
+}
+.PostDetails-description p {
+  display: inline-block;
+  text-align: left;
 }
