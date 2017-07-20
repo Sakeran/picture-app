@@ -12,6 +12,7 @@ type Post {
   type: String!
   image: String
   youtubeID: String
+  postDate: String!
 }
 
 type Query {

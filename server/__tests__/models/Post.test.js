@@ -137,4 +137,12 @@ describe('Post Model', () => {
     .catch(err => { throw err });
   });
 
+  it('Has a "postDate" virtual field that formats createdAt', () => {
+    const moment = require('moment');
+    const date = Date.now();
+    const post = new Post();
+    post.createdAt = date;
+    expect(post.postDate).toBe(moment(date).format('MMMM Do YYYY'));
+  })
+
 });

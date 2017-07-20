@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const youtubeRegex = require('youtube-regex');
 const getYoutubeId = require('get-youtube-id');
+const moment = require('moment');
 
 const postSchema = new Schema({
   postType: {
@@ -64,6 +65,10 @@ postSchema.virtual('creator').get(function() {
   .execPopulate()
   .then(post => post.createdBy);
 });
+
+postSchema.virtual('postDate').get(function() {
+  return moment(this.createdAt).format('MMMM Do YYYY');
+})
 
 // Custom validation
 postSchema.pre('validate', function(next) {
