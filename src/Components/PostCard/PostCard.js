@@ -5,7 +5,6 @@ import SafeImage from '../SafeImage/SafeImage';
 
 import './PostCard.css';
 
-// <img className="PostCard-img" src={props.post.image} alt={props.post.title} />
 const PostCard = (props) => (
   <div className="PostCard-main">
     <div className="PostCard-stats">

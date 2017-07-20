@@ -1,3 +1,22 @@
 .PostList-masonry {
   margin: 0 auto;
 }
+
+.PostList-load-btn {
+  display: block;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.1em;
+  border: none;
+  background: none;
+  color: #6d1cba;
+  border-bottom: 1px solid #6d1cba;
+}
+
+.PostList-load-btn:active,
+.PostList-load-btn:hover {
+  color: #380331;
+  border-color: #380331;
+  transition: color 0.2s ease, border 0.2s ease;
+}

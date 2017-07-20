@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import latestPosts from '../../GraphQL/latestPosts';
-import getPost from '../../GraphQL/getPost';
+import { graphql, gql } from 'react-apollo';
 
 import PostList from '../PostList/PostList';
 
@@ -14,38 +12,62 @@ class IndexContainer extends React.Component {
     };
   }
 
-  componentDidMount() {
-    latestPosts()
-    .then(posts => {
-      // Add each post's data to the store, then mark the Index
-      // as displaying them.
-      const ids = posts.map(e => {
-        this.props.addPost(e);
-        return e.id;
-      });
-      this.setState({
-        listedPosts: ids
-      });
-    });
-  }
-
   render() {
+    const { loading, error, listPosts, loadMorePosts, totalPosts } = this.props;
+    if (loading) {
+      return <h2>Loading Latest Posts...</h2>
+    }
+    if (error) {
+      return <h2>Error occured while loading latest posts.</h2>
+    }
+    const props = {
+      posts: listPosts,
+      loadMorePosts,
+      totalPosts
+    }
     return (
       <div>
         <h2 className="header">Latest Posts</h2>
-        <PostList postIDs={this.state.listedPosts} getPost={getPost} />
+        <PostList {...props} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  posts: state.posts
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch({type: 'ADD_POST', post: post})
-});
+const latestPostsQuery = gql`
+  query listPosts($offset: Int, $limit: Int) {
+    totalPosts
+    listPosts(offset: $offset, limit: $limit) {
+      id
+      image
+    }
+  }
+`;
 
 export { IndexContainer }
-export default connect(mapStateToProps, mapDispatchToProps)(IndexContainer);
+export default graphql(latestPostsQuery, {
+  options: (props) => ({
+    variables: {
+      offset: 0,
+      limit: 20
+    },
+  }),
+  props: ({ data: { loading, error, listPosts, totalPosts, fetchMore } }) => ({
+    loading,
+    error,
+    listPosts,
+    totalPosts,
+    loadMorePosts: () => fetchMore({
+      variables: {
+        offset: listPosts.length,
+        limit: 10
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) { return previousResult; }
+        return Object.assign({}, previousResult, {
+          listPosts: [...previousResult.listPosts, ...fetchMoreResult.listPosts]
+        });
+      }
+    })
+  })
+})(IndexContainer);

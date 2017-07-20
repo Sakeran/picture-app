@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import PostCard from '../../Components/PostCard/PostCard';
@@ -10,56 +9,39 @@ import './PostList.css';
 
 class PostList extends React.Component {
 
-  componentDidMount() {
-    // Check each post id as it is passed in. Query for any data that does
-    // not exist in store. The list will only display once everything is
-    // finished loading.
-    this.props.postIDs.forEach(e => {
-      if(!this.props.posts[e]) {
-        return this.props.getPost(e)
-        .then(post => {
-          this.props.addPost(post);
-        });
-      }
-    });
-  }
-
   render() {
+    const { posts, totalPosts, loadMorePosts } = this.props;
     return (
-      <Masonry className="PostList-masonry"
-               updateOnEachImageLoad={true}
-               options={{
-                 fitWidth: true,
-                 gutter: 6,
-                 stagger: 30
-               }}>
-        {this.props.postIDs.map(e => (
-          this.props.posts[e] &&
-          (
-            <Link key={e} to={`/post/${e}`}>
-              <PostCard post={this.props.posts[e]} />
-            </Link>
-          )
+      <div>
+        <Masonry className="PostList-masonry"
+        updateOnEachImageLoad={true}
+        options={{
+          fitWidth: true,
+          gutter: 6,
+          stagger: 30
+        }}>
+        {posts.map(e => (
+          <Link key={e.id} to={`/post/${e.id}`}>
+          <PostCard post={e} />
+          </Link>
         ))}
-      </Masonry>
+        </Masonry>
+        {
+          (posts.length < totalPosts) &&
+          (
+            <button className="PostList-load-btn" onClick={loadMorePosts}>
+              Get More Posts
+            </button>
+          )
+        }
+      </div>
     );
   }
 }
 
 PostList.propTypes = {
-  posts: PropTypes.object.isRequired,
-  addPost: PropTypes.func.isRequired,
-  getPost: PropTypes.func.isRequired,
-  postIDs: PropTypes.array.isRequired
+  posts: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  posts: state.posts
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addPost: (post) => dispatch({type:'ADD_POST', post: post})
-});
-
 export { PostList }
-export default connect(mapStateToProps, mapDispatchToProps)(PostList);
+export default PostList;
