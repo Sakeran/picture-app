@@ -16,7 +16,7 @@ const makePost = (id) => ({
 });
 
 test('renders PostList element correctly', () => {
-  const posts = [1,2,3,4,5].map(i => makePost(i));
+  const posts = ['1','2','3','4','5'].map(i => makePost(i));
   const component = shallow(<PostList posts={posts} />);
   const tree = toJson(component);
   expect(tree).toMatchSnapshot();

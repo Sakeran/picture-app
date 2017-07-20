@@ -25,7 +25,7 @@ exports[`renders PostList element correctly 1`] = `
       <PostCard
         post={
           Object {
-            "id": 1,
+            "id": "1",
             "image": "http://localhost:3001/exampleImg.png",
             "title": "test card 1",
             "type": "image",
@@ -41,7 +41,7 @@ exports[`renders PostList element correctly 1`] = `
       <PostCard
         post={
           Object {
-            "id": 2,
+            "id": "2",
             "image": "http://localhost:3001/exampleImg.png",
             "title": "test card 2",
             "type": "image",
@@ -57,7 +57,7 @@ exports[`renders PostList element correctly 1`] = `
       <PostCard
         post={
           Object {
-            "id": 3,
+            "id": "3",
             "image": "http://localhost:3001/exampleImg.png",
             "title": "test card 3",
             "type": "image",
@@ -73,7 +73,7 @@ exports[`renders PostList element correctly 1`] = `
       <PostCard
         post={
           Object {
-            "id": 4,
+            "id": "4",
             "image": "http://localhost:3001/exampleImg.png",
             "title": "test card 4",
             "type": "image",
@@ -89,7 +89,7 @@ exports[`renders PostList element correctly 1`] = `
       <PostCard
         post={
           Object {
-            "id": 5,
+            "id": "5",
             "image": "http://localhost:3001/exampleImg.png",
             "title": "test card 5",
             "type": "image",
