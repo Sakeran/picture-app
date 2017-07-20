@@ -26,7 +26,10 @@ const postSchema = new Schema({
     type: String,
     get: (id) => id || null
   },
-  imageLink: String,
+  imageLink: {
+    type: String,
+    get: (link) => link || null
+  },
   createdBy: {
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -41,6 +44,10 @@ const postSchema = new Schema({
       type: Date,
       default: Date.now
     }
+  }],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }]
 });
 
@@ -96,6 +103,37 @@ postSchema.methods.hasValidYoutubeID = function() {
   if (!this.youtubeID) { return false; }
   const idMatcher = /[a-zA-Z0-9_-]{11}/;
   return idMatcher.test(this.youtubeID);
+};
+
+postSchema.methods.addComment = function(user, message) {
+  if (!user || user.constructor.modelName !== 'User') {
+    throw new Error('User must be a User model');
+  }
+  const comment = {
+    createdBy: user,
+    text: message
+  };
+  this.comments.push(comment);
+  return this.save();
+};
+
+postSchema.methods.addLike = function(user) {
+  if (!user || user.constructor.modelName !== 'User') {
+    throw new Error('User must be a User model');
+  }
+  if (this.likes.find(e => user.equals(e))) {
+    return Promise.resolve(this);
+  }
+  this.likes.push(user);
+  return this.save();
+};
+
+postSchema.methods.removeLike = function(user) {
+  if (!user || user.constructor.modelName !== 'User') {
+    throw new Error('User must be a User model');
+  }
+  this.likes = this.likes.filter(e => !e.equals(user));
+  return this.save();
 };
 
 ///////////////////

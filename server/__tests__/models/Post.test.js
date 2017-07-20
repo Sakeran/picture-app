@@ -99,6 +99,90 @@ describe('Post Model', () => {
     });
   });
 
+  it('Can add a new comment, attributed to a user', () => {
+    Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png'
+    })
+    .then(post => {
+      expect(post.comments).toHaveLength(0);
+      const user = new User();
+      post.addComment(user, 'Test Comment')
+      .then(post => {
+        expect(post.comments).toHaveLength(1);
+        const comment = post.comments[0];
+        expect(comment.text).toBe('Test Comment');
+        done();
+      })
+      .catch(err => { throw err });
+    })
+    .catch(err => { throw err; });
+  });
+
+  it('Can add a new like, attributed to a user', (done) => {
+    Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png'
+    })
+    .then(post => {
+      expect(post.likes).toHaveLength(0);
+      const user = new User();
+      post.addLike(user)
+      .then(post => {
+        expect(post.likes).toHaveLength(1);
+        const like = post.likes[0];
+        expect(like.equals(user.id));
+        done();
+      })
+      .catch(err => { throw err });
+    })
+    .catch(err => { throw err });
+  });
+
+  it('Does not add duplicate likes by a single user', (done) => {
+    Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png'
+    })
+    .then(post => {
+      const user = new User();
+      Promise.all([
+        post.addLike(user),
+        post.addLike(user)
+      ])
+      .then(([,post]) => {
+        expect(post.likes).toHaveLength(1);
+        done();
+      })
+      .catch(err => { throw err });
+    })
+    .catch(err => { throw err });
+  });
+
+  it('Can remove a like from a given user', (done) => {
+    const user = new User();
+    const userTwo = new User();
+    Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png',
+      likes: [user, userTwo]
+    })
+    .then(post => {
+      expect(post.likes).toHaveLength(2);
+      return post.removeLike(user);
+    })
+    .then(post => {
+      expect(post.likes).toHaveLength(1);
+      expect(post.likes[0].id).toBe(userTwo.id);
+      done();
+    })
+    .catch(err => { throw err });
+  });
+
   it('Has a working "image" virtual field', () => {
     const postOne = makePost('image');
     postOne.imageLink = 'http://example.com/img.png';
