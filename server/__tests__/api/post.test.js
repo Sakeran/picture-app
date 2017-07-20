@@ -13,6 +13,7 @@ const createPost = (options={}) => Post.create({
   imageLink: options.imageLink || 'http://example.com/img.png',
   youtubeID: options.youtubeID || 'xxxxxxxxxxx',
   description: options.description || 'A test post',
+  likes: options.likes || [],
 });
 
 const createManyPosts = count => {
@@ -166,6 +167,98 @@ describe('Post endpoint', () => {
       .catch(err => { throw err });
     })
     .catch(err => { throw err });
+  });
 
-  })
+  it('can like a post while logged in', (done) => {
+    const user = new User();
+    passportStub.login(user);
+    createPost()
+    .then(post => {
+      request(app)
+      .post('/api')
+      .send({
+        query: `
+        mutation likePost($postId: ID!) {
+          likePost(postId: $postId) {
+            id
+          }
+        }
+        `,
+        operationName: 'likePost',
+        variables: {
+          postId: post.id
+        }
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) { throw err; }
+        const result = JSON.parse(res.text);
+        expect(result.data.likePost.id).toBe(post.id);
+        done();
+      });
+    })
+    .catch(err => { throw err; });
+  });
+
+  it('can remove a like while logged in', (done) => {
+    const user = new User();
+    passportStub.login(user);
+    createPost({likes: [user]})
+    .then(post => {
+      request(app)
+      .post('/api')
+      .send({
+        query: `
+        mutation unlikePost($postId: ID!) {
+          unlikePost(postId: $postId) {
+            id
+          }
+        }
+        `,
+        operationName: 'unlikePost',
+        variables: {
+          postId: post.id
+        }
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) { throw err; }
+        const result = JSON.parse(res.text);
+        expect(result.data.unlikePost.id).toBe(post.id);
+        done();
+      });
+    });
+  });
+
+  it('can add a comment while logged in', (done) => {
+    const user = new User();
+    passportStub.login(user);
+    createPost()
+    .then(post => {
+      request(app)
+      .post('/api')
+      .send({
+        query: `
+        mutation addComment($postId: ID!, $message: String!) {
+          addComment(postId: $postId, message: $message) {
+            id
+          }
+        }
+        `,
+        operationName: 'addComment',
+        variables: {
+          postId: post.id,
+          message: 'Test Comment'
+        }
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) { throw err; }
+        const result = JSON.parse(res.text);
+        expect(result.data.addComment).not.toBeNull();
+        done();
+      });
+    });
+  });
+
 })

@@ -142,24 +142,22 @@ describe('Post Model', () => {
   });
 
   it('Does not add duplicate likes by a single user', (done) => {
+    const user = new User();
     Post.create({
       title: 'Test Post',
       postType: 'image',
-      imageLink: 'http://example.com/img.png'
+      imageLink: 'http://example.com/img.png',
+      likes: [user]
     })
     .then(post => {
-      const user = new User();
-      Promise.all([
-        post.addLike(user),
-        post.addLike(user)
-      ])
-      .then(([,post]) => {
-        expect(post.likes).toHaveLength(1);
-        done();
-      })
-      .catch(err => { throw err });
+      return post.addLike(user);
+    })
+    .then(result => {
+      expect(result).toBeNull();
+      done();
     })
     .catch(err => { throw err });
+
   });
 
   it('Can remove a like from a given user', (done) => {

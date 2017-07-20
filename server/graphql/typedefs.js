@@ -28,6 +28,9 @@ type Mutation {
   logout: Boolean,
   signup(username: String!, password: String!, passwordConfirm: String!): User
   newPost(title: String!, description: String, link: String!): Post
+  likePost(postId: ID!): Post
+  unlikePost(postId: ID!): Post
+  addComment(postId: ID!, message: String!): Post
 }
 `;
 

@@ -122,7 +122,7 @@ postSchema.methods.addLike = function(user) {
     throw new Error('User must be a User model');
   }
   if (this.likes.find(e => user.equals(e))) {
-    return Promise.resolve(this);
+    return Promise.resolve(null);
   }
   this.likes.push(user);
   return this.save();

@@ -9,6 +9,9 @@ const {
   totalPosts,
   listPosts,
   newPost,
+  likePost,
+  unlikePost,
+  addComment,
 } = require('./resolvers/postResolvers')
 
 const resolvers = {
@@ -23,7 +26,10 @@ const resolvers = {
     login,
     logout,
     signup,
-    newPost
+    newPost,
+    likePost,
+    unlikePost,
+    addComment,
   }
 }
 
