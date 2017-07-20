@@ -21,6 +21,7 @@ class PostContainer extends React.Component {
     const postDetails = {
       title: post.title,
       description: post.description,
+      postDate: post.postDate,
       creator: post.creator
     };
     return (
@@ -49,6 +50,7 @@ const postDetailsQuery = gql`
       type
       title
       description
+      postDate
       image
       youtubeID
       creator {

@@ -8,7 +8,7 @@ const PostDetails = (props) => (
     <div className="PostDetails-info">
       <h2>{props.title}</h2>
       <span className="PostDetails-creator-info">
-        Posted by {props.creator.username} on {'<date goes here>'}
+        Posted by {props.creator.username} on {props.postDate}
       </span>
     </div>
     <div className="PostDetails-description">
@@ -20,6 +20,7 @@ const PostDetails = (props) => (
 PostDetails.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  postDate: PropTypes.string.isRequired,
   creator: PropTypes.object.isRequired
 }
 
