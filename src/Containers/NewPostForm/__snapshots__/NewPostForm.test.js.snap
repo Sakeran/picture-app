@@ -2,7 +2,7 @@
 
 exports[`renders all fields correctly 1`] = `
 <NewPostForm
-  sendFunc={[Function]}
+  mutate={[Function]}
 >
   <Formsy
     onChange={[Function]}

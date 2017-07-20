@@ -9,6 +9,8 @@ import youtubeRegex from 'youtube-regex';
 import getYoutubeId from 'get-youtube-id';
 
 import { connect } from 'react-redux';
+import { graphql, gql, compose } from 'react-apollo';
+import {latestPostsQuery} from '../IndexContainer/IndexContainer';
 
 class NewPostForm extends React.Component {
 
@@ -33,15 +35,28 @@ class NewPostForm extends React.Component {
 
 
   submit = ({link, title, description}) => {
-    this.props.sendFunc(title, link, description)
-    .then(success => {
-      if (success) {
-        this.props.flashSuccess('Successfully created post.');
-        this.props.requestRedirect('/');
-        return;
+    this.props.mutate({
+      variables: {
+        link,
+        title,
+        description
+      },
+      refetchQueries: [{
+        query: latestPostsQuery,
+        variables: {
+          offset: 0,
+          limit: 20
+        }
+      }]
+    })
+    .then(({data: {newPost} }) => {
+      if(!newPost) {
+          this.props.flashError('Failed to create post.');
+          this.props.requestRedirect('/');
+          return;
       }
-      this.props.flashError('Failed to create post.');
-      this.props.requestRedirect('/');
+      this.props.flashSuccess('Successfully created post.');
+      this.props.requestRedirect(`/post/${newPost.id}`);
     });
   }
 
@@ -86,15 +101,9 @@ class NewPostForm extends React.Component {
 }
 
 NewPostForm.propTypes = {
-  sendFunc: PropTypes.func.isRequired,
-  user: PropTypes.object,
   flashSuccess: PropTypes.func,
   flashError: PropTypes.func
 };
-
-const mapStateToProps = (state) => ({
-  user: state.common.user
-});
 
 const mapDispatchToProps = (dispatch) => ({
   requestRedirect: (location) => dispatch({type: 'REQUEST_REDIRECT', location}),
@@ -102,7 +111,16 @@ const mapDispatchToProps = (dispatch) => ({
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const ConnectedNewPostForm = connect(mapStateToProps, mapDispatchToProps)(NewPostForm);
+const newPostMutation = gql`
+  mutation newPost($title: String!, $link: String!, $description: String) {
+    newPost(title: $title, link: $link, description: $description) {
+      id
+    }
+  }
+`;
 
 export { NewPostForm };
-export default ConnectedNewPostForm;
+export default compose(
+  connect(null, mapDispatchToProps),
+  graphql(newPostMutation)
+)(NewPostForm);

@@ -44,6 +44,7 @@ const latestPostsQuery = gql`
   }
 `;
 
+export { latestPostsQuery };
 export { IndexContainer }
 export default graphql(latestPostsQuery, {
   options: (props) => ({
