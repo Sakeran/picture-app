@@ -14,14 +14,14 @@ test('renders all fields correctly', () => {
 });
 
 test('calls a login function when given valid data', (done) => {
-  const userData = {username: 'user'};
-  const sendFn = () => Promise.resolve(JSON.stringify(userData));
+  const mockResult = { data: { some: 'values'} }
   const loginFn = jest.fn();
+  loginFn.mockReturnValue(Promise.resolve(mockResult));
   const props = {
-    sendFunc: sendFn,
-    loginUser: loginFn,
+    mutate: loginFn,
     flashSuccess: jest.fn(),
-    flashError: jest.fn()
+    flashError: jest.fn(),
+    requestRedirect: jest.fn()
   };
   const component = mount(<LoginForm {...props} />);
 
@@ -40,10 +40,16 @@ test('calls a login function when given valid data', (done) => {
 });
 
 test('does not call a login function when given invalid data', (done) => {
-  const userData = {username: 'user'};
-  const sendFn = () => Promise.resolve(JSON.stringify(userData));
+  const mockResult = { data: { some: 'values'} }
   const loginFn = jest.fn();
-  const component = mount(<LoginForm sendFunc={sendFn} loginUser={loginFn} />);
+  loginFn.mockReturnValue(Promise.resolve(mockResult));
+  const props = {
+    mutate: loginFn,
+    flashSuccess: jest.fn(),
+    flashError: jest.fn(),
+    requestRedirect: jest.fn()
+  };
+  const component = mount(<LoginForm {...props} />);
 
   component.find('input[name="username"]')
   .simulate('change', { target: {value: 'user'} });

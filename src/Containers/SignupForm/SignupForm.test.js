@@ -5,7 +5,7 @@ import toJson from 'enzyme-to-json';
 
 test('renders all fields correctly', () => {
   const fn = () => null;
-  const component = mount(<SignupForm sendFunc={fn}/>);
+  const component = mount(<SignupForm />);
   expect(component.find('input[name="username"]').exists()).toBe(true);
   expect(component.find('input[name="password"]').exists()).toBe(true);
   expect(component.find('input[name="passwordConfirm"]').exists()).toBe(true);
@@ -15,14 +15,14 @@ test('renders all fields correctly', () => {
 });
 
 test('calls a login function when given valid data', (done) => {
-  const userData = {username: 'user'};
-  const sendFn = () => Promise.resolve(JSON.stringify(userData));
+  const mockResult = { data: { login: { some: 'data' } } };
   const loginFn = jest.fn();
+  loginFn.mockReturnValue(Promise.resolve(mockResult));
   const props = {
-    sendFunc: sendFn,
-    loginUser: loginFn,
+    mutate: loginFn,
     flashSuccess: jest.fn(),
-    flashError: jest.fn()
+    flashError: jest.fn(),
+    requestRedirect: jest.fn()
   }
   const component = mount(<SignupForm {...props} />);
 

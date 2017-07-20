@@ -1,101 +1,103 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders PostList element correctly 1`] = `
-<MasonryComponent
-  className="PostList-masonry"
-  disableImagesLoaded={false}
-  elementType="div"
-  enableResizableChildren={false}
-  onLayoutComplete={[Function]}
-  onRemoveComplete={[Function]}
-  options={
-    Object {
-      "fitWidth": true,
-      "gutter": 6,
-      "stagger": 30,
+<div>
+  <MasonryComponent
+    className="PostList-masonry"
+    disableImagesLoaded={false}
+    elementType="div"
+    enableResizableChildren={false}
+    onLayoutComplete={[Function]}
+    onRemoveComplete={[Function]}
+    options={
+      Object {
+        "fitWidth": true,
+        "gutter": 6,
+        "stagger": 30,
+      }
     }
-  }
-  updateOnEachImageLoad={true}
->
-  <Link
-    replace={false}
-    to="/post/11111"
+    updateOnEachImageLoad={true}
   >
-    <PostCard
-      post={
-        Object {
-          "id": "11111",
-          "image": "http://localhost:3001/exampleImg.png",
-          "title": "test card 11111",
-          "type": "image",
-          "youtubeID": null,
+    <Link
+      replace={false}
+      to="/post/1"
+    >
+      <PostCard
+        post={
+          Object {
+            "id": 1,
+            "image": "http://localhost:3001/exampleImg.png",
+            "title": "test card 1",
+            "type": "image",
+            "youtubeID": "xxxxxxxxxxx",
+          }
         }
-      }
-    />
-  </Link>
-  <Link
-    replace={false}
-    to="/post/22222"
-  >
-    <PostCard
-      post={
-        Object {
-          "id": "22222",
-          "image": "http://localhost:3001/exampleImg.png",
-          "title": "test card 22222",
-          "type": "image",
-          "youtubeID": null,
+      />
+    </Link>
+    <Link
+      replace={false}
+      to="/post/2"
+    >
+      <PostCard
+        post={
+          Object {
+            "id": 2,
+            "image": "http://localhost:3001/exampleImg.png",
+            "title": "test card 2",
+            "type": "image",
+            "youtubeID": "xxxxxxxxxxx",
+          }
         }
-      }
-    />
-  </Link>
-  <Link
-    replace={false}
-    to="/post/33333"
-  >
-    <PostCard
-      post={
-        Object {
-          "id": "33333",
-          "image": "http://localhost:3001/exampleImg.png",
-          "title": "test card 33333",
-          "type": "image",
-          "youtubeID": null,
+      />
+    </Link>
+    <Link
+      replace={false}
+      to="/post/3"
+    >
+      <PostCard
+        post={
+          Object {
+            "id": 3,
+            "image": "http://localhost:3001/exampleImg.png",
+            "title": "test card 3",
+            "type": "image",
+            "youtubeID": "xxxxxxxxxxx",
+          }
         }
-      }
-    />
-  </Link>
-  <Link
-    replace={false}
-    to="/post/44444"
-  >
-    <PostCard
-      post={
-        Object {
-          "id": "44444",
-          "image": "http://localhost:3001/exampleImg.png",
-          "title": "test card 44444",
-          "type": "image",
-          "youtubeID": null,
+      />
+    </Link>
+    <Link
+      replace={false}
+      to="/post/4"
+    >
+      <PostCard
+        post={
+          Object {
+            "id": 4,
+            "image": "http://localhost:3001/exampleImg.png",
+            "title": "test card 4",
+            "type": "image",
+            "youtubeID": "xxxxxxxxxxx",
+          }
         }
-      }
-    />
-  </Link>
-  <Link
-    replace={false}
-    to="/post/55555"
-  >
-    <PostCard
-      post={
-        Object {
-          "id": "55555",
-          "image": "http://localhost:3001/exampleImg.png",
-          "title": "test card 55555",
-          "type": "image",
-          "youtubeID": null,
+      />
+    </Link>
+    <Link
+      replace={false}
+      to="/post/5"
+    >
+      <PostCard
+        post={
+          Object {
+            "id": 5,
+            "image": "http://localhost:3001/exampleImg.png",
+            "title": "test card 5",
+            "type": "image",
+            "youtubeID": "xxxxxxxxxxx",
+          }
         }
-      }
-    />
-  </Link>
-</MasonryComponent>
+      />
+    </Link>
+  </MasonryComponent>
+</div>
 `;
