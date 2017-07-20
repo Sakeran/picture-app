@@ -13,6 +13,8 @@ type Post {
   image: String
   youtubeID: String
   postDate: String!
+  likeCount: Int!
+  commentCount: Int!
 }
 
 type Query {
