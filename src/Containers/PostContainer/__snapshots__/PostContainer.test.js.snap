@@ -21,8 +21,10 @@ exports[`it renders correctly 1`] = `
       }
     }
     description="Test post."
+    postDate="May 1st 2000"
     title="test card 1"
   />
+  <PostStats />
   <div
     className="PostContainer-comments"
   >

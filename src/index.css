@@ -124,3 +124,7 @@ input[type="submit"]:disabled {
 .full-width {
   width: 100%;
 }
+
+.section-border {
+  border: 2px double #6d1cba;
+}

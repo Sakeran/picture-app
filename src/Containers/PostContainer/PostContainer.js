@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
+import PostStats from '../../Components/PostStats/PostStats';
 
 import { graphql, gql, compose} from 'react-apollo';
 
@@ -24,12 +25,16 @@ class PostContainer extends React.Component {
       postDate: post.postDate,
       creator: post.creator
     };
+    const postStats = {
+      likeCount: post.likeCount,
+    };
     return (
       <div className="PostContainer">
         <div className="PostContainer-display">
           <SafeImage className="PostContainer-img" src={post.image} alt={post.title} />
         </div>
         <PostDetails {...postDetails} />
+        <PostStats {...postStats}/>
         <div className="PostContainer-comments">
           <p>Comments go here</p>
         </div>
@@ -57,6 +62,8 @@ const postDetailsQuery = gql`
         id
         username
       }
+      likeCount
+      commentCount
     }
   }
 `;

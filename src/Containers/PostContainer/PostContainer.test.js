@@ -13,7 +13,8 @@ const makePost = (id, type) => ({
   creator: {
     id: '100',
     username: 'testUser'
-  }
+  },
+  postDate: 'May 1st 2000'
 });
 
 test('it renders correctly', () => {
