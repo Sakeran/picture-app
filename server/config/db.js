@@ -37,4 +37,6 @@ process.on('SIGINT', () => {
 });
 
 require('../models/User');
+require('../models/Post');
+require('../models/Comment');
 module.exports = mongoose.connection;

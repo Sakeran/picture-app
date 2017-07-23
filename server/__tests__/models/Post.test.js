@@ -1,10 +1,12 @@
 const Post = require('../../models/Post');
 const User = require('../../models/User');
+const Comment = require('../../models/Comment');
 const db = require('../../config/db');
 
 describe('Post Model', () => {
 
   const clearPosts = () => Post.find({}).remove();
+  const clearComments = () => Comment.find({}).remove();
 
   const makePost = (type) => new Post({
     title: 'Test Post',
@@ -13,11 +15,13 @@ describe('Post Model', () => {
 
   beforeAll((done) => {
     clearPosts()
+    .then(() => clearComments())
     .then(() => done());
   });
 
   afterAll((done) => {
     clearPosts()
+    .then(() => clearComments())
     .catch(err => console.log(err))
     .then(() => {
       db.close()
@@ -106,14 +110,14 @@ describe('Post Model', () => {
       imageLink: 'http://example.com/img.png'
     })
     .then(post => {
-      expect(post.comments).toHaveLength(0);
       const user = new User();
       post.addComment(user, 'Test Comment')
       .then(post => {
-        expect(post.comments).toHaveLength(1);
-        const comment = post.comments[0];
-        expect(comment.text).toBe('Test Comment');
-        done();
+        post.comments.then(comments => {
+          expect(comments).toHaveLength(1);
+          expect(comments[0].text).toBe('Test Comment');
+          done();
+        });
       })
       .catch(err => { throw err });
     })
@@ -227,14 +231,19 @@ describe('Post Model', () => {
     expect(post.postDate).toBe(moment(date).format('MMMM Do YYYY'));
   });
 
-  it('Has a "commentCount" virtual field that returns the number of comments', () => {
+  it('Has a "commentCount" virtual field that returns the number of comments', (done) => {
     const post = new Post();
     const user = new User();
-    post.comments = [1,2,3].map(i => ({
-        createdBy: user,
-        text: `Comment numner ${i}`
-    }));
-    expect(post.commentCount).toBe(3);
+    post.addComment(user, 'Comment1')
+    .then(post => {
+      post.addComment(user, 'Comment2')
+      .then(post => {
+        post.commentCount.then(count => {
+          expect(count).toBe(2);
+          done();
+        })
+      })
+    });
   });
 
   it('Has a "likeCount" virtual field that returns the number of likes', () => {

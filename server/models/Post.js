@@ -34,17 +34,6 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  comments: [{
-    createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-    text: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
   likes: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -78,7 +67,8 @@ postSchema.virtual('postDate').get(function() {
 })
 
 postSchema.virtual('commentCount').get(function() {
-  return this.comments.length;
+  return mongoose.model('Comment').find({post: this._id}).count()
+  .then(count => count);
 });
 
 postSchema.virtual('likeCount').get(function() {
@@ -117,12 +107,14 @@ postSchema.methods.addComment = function(user, message) {
   if (!user || user.constructor.modelName !== 'User') {
     throw new Error('User must be a User model');
   }
-  const comment = {
-    createdBy: user,
-    text: message
-  };
-  this.comments.push(comment);
-  return this.save();
+  const Comment = mongoose.model('Comment');
+  const comment = Comment();
+  comment.user = user;
+  comment.post = this;
+  comment.text = message;
+  return comment.save()
+  .then(comment => comment.post)
+  .catch(err => null);
 };
 
 postSchema.methods.addLike = function(user) {

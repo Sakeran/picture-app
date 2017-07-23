@@ -16,6 +16,15 @@ type Post {
   postDate: String!
   likeCount: Int!
   commentCount: Int!
+  comments: [Comment]
+}
+
+type Comment {
+  id: ID!
+  user: User!,
+  post: Post!,
+  text: String!
+  createdAt: String!
 }
 
 type Query {
