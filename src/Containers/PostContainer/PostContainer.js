@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
 import PostStats from '../../Components/PostStats/PostStats';
+import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 import { graphql, gql, compose} from 'react-apollo';
 
@@ -87,6 +88,7 @@ class PostContainer extends React.Component {
         <div className="PostContainer-comments">
           <p>Comments go here</p>
         </div>
+        {currentUser && <AddCommentForm postId={post.id}/>}
       </div>
     );
   }
