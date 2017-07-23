@@ -24,7 +24,16 @@ exports[`it renders correctly 1`] = `
     postDate="May 1st 2000"
     title="test card 1"
   />
-  <PostStats />
+  <PostStats
+    likeFunc={[Function]}
+    liked={false}
+    user={
+      Object {
+        "id": "1111",
+        "likesPost": false,
+      }
+    }
+  />
   <div
     className="PostContainer-comments"
   >
@@ -32,5 +41,8 @@ exports[`it renders correctly 1`] = `
       Comments go here
     </p>
   </div>
+  <Apollo(AddCommentForm)
+    postId="1"
+  />
 </div>
 `;

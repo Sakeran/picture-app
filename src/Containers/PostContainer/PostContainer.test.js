@@ -20,8 +20,14 @@ const makePost = (id, type) => ({
 test('it renders correctly', () => {
   const data = {
     post: makePost('1')
+  };
+  const userData = {
+    currentUser: {
+      id: '1111',
+      likesPost: false
+    }
   }
-  const component = shallow(<PostContainer postId="1" data={data} />);
+  const component = shallow(<PostContainer postId="1" PostQuery={data} UserQuery={userData}/>);
   const tree = toJson(component);
   expect(tree).toMatchSnapshot();
 });

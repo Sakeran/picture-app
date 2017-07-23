@@ -4,46 +4,14 @@ exports[`renders correctly when "liked" is false 1`] = `
 <div
   className="PostStats section-border"
 >
-  <div
-    className="PostStats-btn-container"
-  >
-    <button
-      className="button"
-    >
-      <i
-        aria-hidden="true"
-        className="fa fa-2x fa-heart-o"
-      />
-      <div>
-        Like
-      </div>
-    </button>
-  </div>
-  0
-   people like this post.
+  0 people like this post.
 </div>
 `;
 
-exports[`renders correctly when "liked" is false 2`] = `
+exports[`renders correctly when "liked" is true 1`] = `
 <div
   className="PostStats section-border"
 >
-  <div
-    className="PostStats-btn-container"
-  >
-    <button
-      className="button"
-    >
-      <i
-        aria-hidden="true"
-        className="fa fa-2x fa-heart PostStats-is-liked"
-      />
-      <div>
-        Unlike
-      </div>
-    </button>
-  </div>
-  0
-   people like this post.
+  1 person likes this post.
 </div>
 `;

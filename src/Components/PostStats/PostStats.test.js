@@ -4,15 +4,13 @@ import toJson from 'enzyme-to-json';
 import PostStats from './PostStats';
 
 test('renders correctly when "liked" is false', () => {
-  const component = shallow(<PostStats liked={false} />);
+  const component = shallow(<PostStats liked={false} likeCount={0} />);
   const tree = toJson(component);
-  expect(component.find('.PostStats-is-liked')).toHaveLength(0);
   expect(tree).toMatchSnapshot();
 });
 
-test('renders correctly when "liked" is false', () => {
-  const component = shallow(<PostStats liked={true} />);
+test('renders correctly when "liked" is true', () => {
+  const component = shallow(<PostStats liked={true} likeCount={1} />);
   const tree = toJson(component);
-  expect(component.find('.PostStats-is-liked')).toHaveLength(1);
   expect(tree).toMatchSnapshot();
 });

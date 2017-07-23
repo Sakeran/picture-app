@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddCommentForm renders correctly 1`] = `
+<div
+  className="AddCommentForm"
+  id="addComment"
+>
+  <h3
+    className="centered"
+  >
+    Add a new comment:
+  </h3>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="field"
+    >
+      <textarea
+        name="comment"
+        onChange={[Function]}
+        placeholder="Enter a comment here."
+        value=""
+      />
+    </div>
+    <div
+      className="field"
+    >
+      <input
+        className="button"
+        type="submit"
+        value="Add Comment"
+      />
+    </div>
+  </form>
+</div>
+`;

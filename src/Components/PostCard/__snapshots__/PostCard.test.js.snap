@@ -14,24 +14,43 @@ exports[`PostCard element renders correctly 1`] = `
   <div
     className="PostCard-main"
   >
+    <SafeImage
+      alt="test card"
+      className="PostCard-img"
+      src="http://localhost:3001/exampleImg.png"
+    >
+      <img
+        alt="test card"
+        className="PostCard-img"
+        onError={[Function]}
+        src="http://localhost:3001/exampleImg.png"
+      />
+    </SafeImage>
     <div
       className="PostCard-stats"
     >
-      <SafeImage
-        alt="test card"
-        className="PostCard-img"
-        src="http://localhost:3001/exampleImg.png"
+      <div
+        className="PostCard-stat"
       >
-        <img
-          alt="test card"
-          className="PostCard-img"
-          onError={[Function]}
-          src="http://localhost:3001/exampleImg.png"
+        <i
+          aria-hidden="true"
+          className="fa fa-lg fa-heart"
         />
-      </SafeImage>
-      <strong>
-         Post Stats 
-      </strong>
+        <div
+          className="PostCard-number"
+        />
+      </div>
+      <div
+        className="PostCard-stat"
+      >
+        <i
+          aria-hidden="true"
+          className="fa fa-lg fa-comment"
+        />
+        <div
+          className="PostCard-number"
+        />
+      </div>
     </div>
   </div>
 </PostCard>
