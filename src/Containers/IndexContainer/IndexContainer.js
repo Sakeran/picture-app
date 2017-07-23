@@ -40,6 +40,8 @@ const latestPostsQuery = gql`
     listPosts(offset: $offset, limit: $limit) {
       id
       image
+      likeCount
+      commentCount
     }
   }
 `;

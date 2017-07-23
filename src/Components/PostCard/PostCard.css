@@ -2,6 +2,8 @@
   width: 200px;
   padding-top: 1em;
   margin-bottom: 1em;
+  color: #888;
+  text-decoration: none !important;
 }
 
 .PostCard-main:hover {
@@ -19,5 +21,25 @@
 }
 
 .PostCard-stats {
-  text-align: center;
+  display: flex;
+  width: 120px;
+  margin: 0 auto;
+  margin-top: 0.5em;
+  padding: 0.5em 1em;
+  justify-content: space-around;
+  align-items: space-around;
+  border: 1px double #888;
+  border-radius: 0.8em;
+}
+
+.PostCard-stat {
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.PostCard-number {
+  color: #888;
+  font-size: 0.8em;
+  margin-left: 0.25em;
 }
