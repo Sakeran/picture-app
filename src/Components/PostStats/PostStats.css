@@ -35,9 +35,7 @@
 }
 
 .PostStats-is-liked {
-  background-color: #43d056;
-  color: #cf0c0c;
-  font-size: 1.1em;
+  background-color: #43d056 !important;
 }
 
 .PostStats-stats {
