@@ -41,7 +41,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:server": "PORT=3001 nodemon server/server.js",
+    "start:server": "PORT=3001 node server/server.js",
+    "start:devserver": "PORT=3001 nodemon server/server.js -w /server/*",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:server": "node ./node_modules/jest/bin/jest.js server --watch",

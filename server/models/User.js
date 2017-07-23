@@ -119,6 +119,22 @@ UserSchema.methods.username = function() {
   return this.auth.local.username || 'Unknown';
 };
 
+UserSchema.methods.likesPost = function({ postId }, req, info) {
+  return mongoose.model('Post').findById(postId)
+  .then(post => {
+    const {path: { prev: { key } } } = info;
+    // Only allow this field to be called on a currentUser query.
+    if (key !== 'currentUser') {
+      return null;
+    }
+    if (post.likes.find(e => this._id.equals(e))) {
+      return true;
+    }
+    return false;
+  })
+  .catch(err => false);
+}
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

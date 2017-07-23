@@ -3,30 +3,43 @@ import PropTypes from 'prop-types';
 
 import './PostStats.css';
 
-const getButtonClass = ({liked}) => ('fa fa-2x ' + (
+const getButtonClass = ({liked}) => ('button' + (
   liked ?
-  'fa-heart PostStats-is-liked'
+  ' PostStats-is-liked'
   :
-  'fa-heart-o'
+  ''
 ));
+
+const getHeartClass = ({liked}) => 'fa fa-2x fa-heart' + (liked ? '' : '-o');
+
+const likeCountMsg = (likeCount) => {
+  if (likeCount === 1) {
+    return '1 person likes this post.';
+  }
+  return likeCount + ' people like this post.';
+}
 
 const PostStats = (props) => (
   <div className="PostStats section-border">
-    <div className="PostStats-btn-container">
-      <button className="button" onClick={props.likeFunc}>
-        <i className={getButtonClass(props)} aria-hidden="true"></i>
-        <div>
-          {props.liked ? "Unlike" : "Like"}
-        </div>
-      </button>
-    </div>
-      {props.likeCount || '0' } people like this post.
+    {props.user && (
+      <div className="PostStats-btn-container">
+        <button className={getButtonClass(props)} onClick={props.likeFunc}>
+          <i className={getHeartClass(props)} aria-hidden="true"></i>
+          <div>
+            {props.liked ? "Unlike" : "Like"}
+          </div>
+        </button>
+      </div>
+    )}
+      {likeCountMsg(props.likeCount)}
   </div>
 );
 
 PostStats.propTypes = {
+  liked: PropTypes.bool,
   likeCount: PropTypes.number,
-  likeFunc: PropTypes.func
+  likeFunc: PropTypes.func,
+  user: PropTypes.object,
 };
 
 export default PostStats;

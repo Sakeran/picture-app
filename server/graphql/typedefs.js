@@ -2,6 +2,7 @@ const typeDefs = `
 type User {
   id: ID!
   username: String!
+  likesPost(postId: ID!): Boolean
 }
 
 type Post {

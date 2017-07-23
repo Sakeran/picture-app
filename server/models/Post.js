@@ -140,7 +140,7 @@ postSchema.methods.removeLike = function(user) {
   if (!user || user.constructor.modelName !== 'User') {
     throw new Error('User must be a User model');
   }
-  this.likes = this.likes.filter(e => !e.equals(user));
+  this.likes = this.likes.filter(e => !e.equals(user._id));
   return this.save();
 };
 

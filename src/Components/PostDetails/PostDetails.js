@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './PostDetails.css';
 
 const PostDetails = (props) => (
-  <div className="PostDetails">
+  <div className="PostDetails section-border">
     <div className="PostDetails-info">
       <h2>{props.title}</h2>
       <span className="PostDetails-creator-info">

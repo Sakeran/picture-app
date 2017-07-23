@@ -40,10 +40,6 @@
   font-size: 1.1em;
 }
 
-.PostStats-is-liked {
-  background-color: green !important;
-}
-
 .PostStats-stats {
   font-weight: lighter;
 }
