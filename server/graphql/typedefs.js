@@ -16,7 +16,7 @@ type Post {
   postDate: String!
   likeCount: Int!
   commentCount: Int!
-  comments: [Comment]
+  comments(offset: Int, limit: Int): [Comment]
 }
 
 type Comment {

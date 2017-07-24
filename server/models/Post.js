@@ -136,6 +136,14 @@ postSchema.methods.removeLike = function(user) {
   return this.save();
 };
 
+postSchema.methods.comments = function({offset, limit}) {
+  return mongoose.model('Comment').find({post: this._id})
+  .sort('-createdAt')
+  .skip(offset || 0)
+  .limit(limit || 10)
+  .populate('user');
+};
+
 ///////////////////
 // Static Methods
 ///////////////////
