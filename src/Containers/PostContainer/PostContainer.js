@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
 import PostStats from '../../Components/PostStats/PostStats';
-import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import CommentListContainer from '../CommentListContainer/CommentListContainer';
+import AddCommentForm from '../AddCommentForm/AddCommentForm';
 
 import { graphql, gql, compose} from 'react-apollo';
 

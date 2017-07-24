@@ -1,4 +1,5 @@
 const Post = require('../../models/Post');
+const Comment = require('../../models/Comment');
 
 module.exports = {
   newPost: (_, args, {req}) => {
@@ -44,4 +45,11 @@ module.exports = {
       return post.addComment(req.user, message);
     });
   },
+  comments: (_, {postId, offset, limit}) => {
+    return Comment.find({post: postId})
+    .sort('-createdAt')
+    .populate('user')
+    .skip(offset || 0)
+    .limit(limit || 10);
+  }
 };

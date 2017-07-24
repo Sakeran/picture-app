@@ -12,6 +12,7 @@ const {
   likePost,
   unlikePost,
   addComment,
+  comments,
 } = require('./resolvers/postResolvers')
 
 const resolvers = {
@@ -21,6 +22,7 @@ const resolvers = {
     post: (_, { id }) => Post.findById(id),
     listPosts,
     totalPosts,
+    comments,
   },
   Mutation: {
     login,

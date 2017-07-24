@@ -33,6 +33,7 @@ type Query {
   totalPosts: Int
   post(id: ID!): Post
   listPosts(offset: Int, limit: Int): [Post]
+  comments(postId: ID!, offset: Int, limit: Int): [Comment]
 }
 
 type Mutation {
