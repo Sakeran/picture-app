@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
 import PostStats from '../../Components/PostStats/PostStats';
-import CommentList from '../../Components/CommentList/CommentList';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
+import CommentListContainer from '../CommentListContainer/CommentListContainer';
 
 import { graphql, gql, compose} from 'react-apollo';
 
@@ -86,8 +86,7 @@ class PostContainer extends React.Component {
         </div>
         <PostDetails {...postDetails} />
         <PostStats {...postStats}/>
-        <CommentList comments={post.comments} />
-        <button onClick={this.props.loadMoreComments}>More</button>
+        <CommentListContainer postId={post.id} />
         {currentUser && <AddCommentForm postId={post.id}/>}
       </div>
     );
@@ -123,34 +122,8 @@ const postDetailsQuery = gql`
         username
       }
       likeCount
-      commentCount
-      comments(offset: 0) @connection(key: "comments", filter:["offset"]) {
-        id
-        text
-        date
-        user {
-          id
-          username
-        }
-      }
     }
   }
-`;
-const postCommentsQuery = gql`
-query moreCommentsQuery($id: ID!, $offset: Int!) {
-  post(id: $id) {
-    id
-    comments(offset: $offset) @connection(key: "comments", filter:["offset"]) {
-      id
-      text
-      date
-      user {
-        id
-        username
-      }
-    }
-  }
-}
 `;
 
 const likeMutation = gql`
@@ -179,29 +152,6 @@ export default compose(
     options: (props) => ({
       variables: {
         id: props.postId
-      }
-    }),
-    props: (props) => ({
-      ...props,
-      loadMoreComments: () => {
-        return props.PostQuery.fetchMore({
-          query: postCommentsQuery,
-          variables: {
-            id: props.ownProps.postId,
-            offset: props.PostQuery.post.comments.length
-          },
-          updateQuery: (prevResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult) { return prevResult; }
-            const { post: prevPost} = prevResult;
-            const {comments: prevComments} = prevPost;
-            const { post: { comments: nextComments} } = fetchMoreResult;
-            const newComments = [...prevComments, ...nextComments];
-            const newPost = Object.assign({}, prevPost, {
-              comments: newComments
-            });
-            return { post: newPost };
-          }
-        })
       }
     })
   }),
