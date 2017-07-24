@@ -24,7 +24,7 @@ type Comment {
   user: User!,
   post: Post!,
   text: String!
-  createdAt: String!
+  date: String!
 }
 
 type Query {
