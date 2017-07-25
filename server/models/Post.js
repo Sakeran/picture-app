@@ -113,7 +113,6 @@ postSchema.methods.addComment = function(user, message) {
   comment.post = this;
   comment.text = message;
   return comment.save()
-  .then(comment => comment.post)
   .catch(err => null);
 };
 

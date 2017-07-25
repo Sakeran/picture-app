@@ -1,6 +1,8 @@
 import React from 'react';
 import { graphql, gql } from 'react-apollo';
 
+import { commentsQuery } from '../CommentListContainer/CommentListContainer';
+
 class AddCommentForm extends React.Component {
   constructor() {
     super();
@@ -24,6 +26,25 @@ class AddCommentForm extends React.Component {
       variables: {
         postId: this.props.postId,
         message: this.state.commentText
+      },
+      update: (store, { data: { addComment } }) => {
+        if (!addComment) { return; }
+        const data = store.readQuery({
+          query: commentsQuery,
+          variables: {
+            postId: this.props.postId,
+            offset: 0
+          }
+        });
+        data.comments.unshift(addComment);
+        store.writeQuery({
+          query: commentsQuery,
+          variables: {
+            postId: this.props.postId,
+            offset: 0
+          },
+          data
+        });
       }
     })
     .then(res => {
@@ -58,7 +79,12 @@ const addCommentMutation = gql`
   mutation addComment($postId: ID!, $message: String!) {
     addComment(postId: $postId, message: $message) {
       id
-      commentCount
+      text
+      date
+      user {
+        id
+        username
+      }
     }
   }
 `;
