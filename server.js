@@ -2,8 +2,12 @@
 require('dotenv').config({path: 'server/.env'});
 
 const http = require('http');
-const app = require('./app');
-const db = require('./config/db');
+const app = require('./server/app');
+const express = require('express');
+const db = require('./server/config/db');
+
+// Set static files
+app.use('/', express.static('build'));
 
 // Create Server
 const server = http.createServer(app);

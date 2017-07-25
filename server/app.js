@@ -31,6 +31,7 @@ app.get('/auth/twitter/callback',
          (req, res, next) => { next() }
 );
 
+
 // Define GraphQL endpoint
 app.use('/api', bodyParser.json(), graphqlExpress(req => ({
   schema,
@@ -42,7 +43,5 @@ if (process.env.NODE_ENV === 'development') {
     endpointURL: '/api'
   }));
 }
-
-app.use(express.static(path.join(__dirname, '..', 'build')));
 
 module.exports = app;
