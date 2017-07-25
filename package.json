@@ -36,6 +36,7 @@
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.8",
     "react-test-renderer": "^15.6.1",
+    "react-youtube": "^7.4.0",
     "redux": "^3.7.1",
     "supertest": "^3.0.0"
   },

@@ -6,6 +6,7 @@ import PostDetails from '../../Components/PostDetails/PostDetails';
 import PostStats from '../../Components/PostStats/PostStats';
 import CommentListContainer from '../CommentListContainer/CommentListContainer';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
+import YoutubeContainer from '../YoutubeContainer/YoutubeContainer';
 
 import { graphql, gql, compose} from 'react-apollo';
 
@@ -82,7 +83,11 @@ class PostContainer extends React.Component {
     return (
       <div className="PostContainer">
         <div className="PostContainer-display">
-          <SafeImage className="PostContainer-img" src={post.image} alt={post.title} />
+          {post.type === 'youtube' ?
+            <YoutubeContainer videoId={post.youtubeID} />
+            :
+            <SafeImage className="PostContainer-img" src={post.image} alt={post.title} />
+          }
         </div>
         <PostDetails {...postDetails} />
         <PostStats {...postStats}/>
