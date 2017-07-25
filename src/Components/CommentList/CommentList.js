@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CommentList = ({ comments, count, loadMore }) => (
+import Comment from '../Comment/Comment';
+
+import './CommentList.css';
+
+const listWithComments = ({ comments, count, loadMore }) => (
   <div className="CommentList">
-    <ul>
+    <ul className="CommentList-List">
     {comments.map(e => (
       <li key={e.id}>
-        {e.text}
+        <Comment comment={e}/>
       </li>
     ))}
     </ul>
@@ -17,6 +21,18 @@ const CommentList = ({ comments, count, loadMore }) => (
       </button>
     }
   </div>
+);
+
+const CommentList = (props) => (
+  props.count ? listWithComments(props)
+  :
+  (
+    <div className="CommentList CommentList-no-comments">
+      <h3 className="centered">
+        There are no comments for this post.
+      </h3>
+    </div>
+  )
 );
 
 CommentList.propTypes = {

@@ -1,0 +1,17 @@
+.Comment {
+  margin: 0.5em 0;
+  padding: 0.5em 0;
+  background: white;
+}
+
+.Comment-header {
+  margin: 0;
+  padding-left: 0.5em;
+  padding-bottom: 0.25em;
+  font-weight: 400;
+  border-bottom: 1px solid #6d1cba;
+}
+
+.Comment-text {
+  padding-left: 0.5em;
+}

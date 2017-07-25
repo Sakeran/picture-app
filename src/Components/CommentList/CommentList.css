@@ -1,0 +1,15 @@
+.CommentList {
+    margin: 0 auto;
+    max-width: 75%;
+    min-width: 300px;
+}
+
+.CommentList-List {
+  list-style: none;
+  margin-top: 1em;
+}
+
+.CommentList-no-comments h3 {
+  margin: 1em 0;
+  text-align: center;
+}
