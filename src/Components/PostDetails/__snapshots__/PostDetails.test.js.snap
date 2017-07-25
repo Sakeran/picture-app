@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PostDetails component renders correctly 1`] = `
+<div
+  className="PostDetails section-border"
+>
+  <div
+    className="PostDetails-info"
+  >
+    <h2>
+      Test Post
+    </h2>
+    <span
+      className="PostDetails-creator-info"
+    >
+      Posted by 
+      Test User
+       on 
+      January 1st 2001
+    </span>
+  </div>
+  <div
+    className="PostDetails-description"
+  >
+    <p>
+      A test post.
+    </p>
+  </div>
+</div>
+`;

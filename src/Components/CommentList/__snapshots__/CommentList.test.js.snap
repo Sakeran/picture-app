@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentList component renders correctly with comments 1`] = `
+<div
+  className="CommentList"
+>
+  <ul
+    className="CommentList-List"
+  >
+    <li>
+      <Comment
+        comment={
+          Object {
+            "date": "January 1st 2001",
+            "id": 1,
+            "text": "Test Comment 1",
+            "user": Object {
+              "username": "Test User",
+            },
+          }
+        }
+      />
+    </li>
+    <li>
+      <Comment
+        comment={
+          Object {
+            "date": "January 1st 2001",
+            "id": 2,
+            "text": "Test Comment 2",
+            "user": Object {
+              "username": "Test User",
+            },
+          }
+        }
+      />
+    </li>
+    <li>
+      <Comment
+        comment={
+          Object {
+            "date": "January 1st 2001",
+            "id": 3,
+            "text": "Test Comment 3",
+            "user": Object {
+              "username": "Test User",
+            },
+          }
+        }
+      />
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`CommentList component renders correctly with no comments 1`] = `
+<div
+  className="CommentList CommentList-no-comments"
+>
+  <h3
+    className="centered"
+  >
+    There are no comments for this post.
+  </h3>
+</div>
+`;

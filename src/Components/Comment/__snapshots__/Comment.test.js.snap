@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment component renders correctly 1`] = `
+<div
+  className="Comment section-border"
+>
+  <h4
+    className="Comment-header"
+  >
+    Test User
+     commented on 
+    January 1st 2001
+  </h4>
+  <p
+    className="Comment-text"
+  >
+    Test Comment
+  </p>
+</div>
+`;
