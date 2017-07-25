@@ -34,13 +34,9 @@ exports[`it renders correctly 1`] = `
       }
     }
   />
-  <div
-    className="PostContainer-comments"
-  >
-    <p>
-      Comments go here
-    </p>
-  </div>
+  <Apollo(CommentListContainer)
+    postId="1"
+  />
   <Apollo(AddCommentForm)
     postId="1"
   />
