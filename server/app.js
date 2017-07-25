@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
@@ -36,10 +37,12 @@ app.use('/api', bodyParser.json(), graphqlExpress(req => ({
   context: { req }
 })));
 
-app.use('/graphiql', graphiqlExpress({
-  endpointURL: '/api'
-}));
+if (process.env.NODE_ENV === 'development') {
+  app.use('/graphiql', graphiqlExpress({
+    endpointURL: '/api'
+  }));
+}
 
-app.use((req, res) => res.end('Coming Soon!'));
+app.use(express.static(path.join(__dirname, '..', 'build')));
 
 module.exports = app;
