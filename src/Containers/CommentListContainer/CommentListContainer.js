@@ -7,25 +7,31 @@ import CommentList from '../../Components/CommentList/CommentList';
 class CommentListContainer extends React.Component {
 
   render() {
-    const { data: {loading, error, comments}} = this.props;
+    const { data: {loading, error, comments} } = this.props;
+    const { ownProps: {count}, loadMore } = this.props;
     if (loading) {
       return <h3 className="centered">Loading Comments</h3>
     }
     if (error) {
       return <h3 className="centered">Error While Loading Comments</h3>
     }
-    return <CommentList comments={comments} />
+    return (<CommentList
+              comments={comments}
+              count={count}
+              loadMore={loadMore}
+              />);
   }
 
 }
 
 CommentListContainer.propTypes = {
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
+  count: PropTypes.number
 };
 
 const commentsQuery = gql`
   query queryPostComments($postId: ID!, $offset: Int!) {
-    comments(postId: $postId, offset: $offset) @connection(key: "comments", filter:["postId"]) {
+    comments(postId: $postId, offset: $offset) {
       id
       text
       date
@@ -36,6 +42,7 @@ const commentsQuery = gql`
     }
   }
 `;
+export { commentsQuery };
 export { CommentListContainer };
 export default compose(
   graphql(commentsQuery, {
@@ -43,6 +50,23 @@ export default compose(
       variables: {
         postId: props.postId,
         offset: 0
+      }
+    }),
+    props: (props) => ({
+      ...props,
+      loadMore: () => {
+        return props.data.fetchMore({
+          variables: {
+            postId: props.ownProps.postId,
+            offset: props.data.comments.length
+          },
+          updateQuery: (prevResult, { fetchMoreResult }) => {
+            if (!fetchMoreResult) { return prevResult; }
+            return Object.assign({}, prevResult, {
+              comments: [...prevResult.comments, ...fetchMoreResult.comments]
+            });
+          }
+        })
       }
     })
   })

@@ -86,8 +86,8 @@ class PostContainer extends React.Component {
         </div>
         <PostDetails {...postDetails} />
         <PostStats {...postStats}/>
-        <CommentListContainer postId={post.id} />
-        {currentUser && <AddCommentForm postId={post.id}/>}
+        <CommentListContainer postId={post.id} count={post.commentCount} />
+        {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
       </div>
     );
   }
@@ -122,6 +122,7 @@ const postDetailsQuery = gql`
         username
       }
       likeCount
+      commentCount
     }
   }
 `;
