@@ -1,7 +1,9 @@
 import React from 'react';
 
+import UserProfileContainer from '../../Containers/UserProfileContainer/UserProfileContainer';
+
 const Profile = (props) => (
-  <h2>Profile</h2>
+  <UserProfileContainer />
 );
 
 export default Profile;
