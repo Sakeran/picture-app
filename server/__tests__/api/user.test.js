@@ -317,7 +317,6 @@ describe('User graphql endpoints', () => {
           .end((err, res) => {
             if (err) { throw err; }
             const result = JSON.parse(res.text);
-            console.log(result);
             expect(result.data.editProfile).toBeTruthy();
             done();
           });

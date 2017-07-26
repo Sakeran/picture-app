@@ -67,8 +67,7 @@ postSchema.virtual('postDate').get(function() {
 })
 
 postSchema.virtual('commentCount').get(function() {
-  return mongoose.model('Comment').find({post: this._id}).count()
-  .then(count => count);
+  return mongoose.model('Comment').find({post: this._id}).count();
 });
 
 postSchema.virtual('likeCount').get(function() {
