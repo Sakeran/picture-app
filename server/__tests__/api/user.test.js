@@ -276,5 +276,51 @@ describe('User graphql endpoints', () => {
           });
         })
         .catch(err => { throw err });
-      })
+      });
+
+      it('Can edit a user profile', (done) => {
+        User.create({
+          auth: {
+            local: {
+              username: 'Test User',
+              password: 'password'
+            }
+          },
+          profile: {
+            name: 'User Name 1',
+            location: 'Location 1',
+            bio: 'Bio 1'
+          }
+        })
+        .then(user => {
+          passportStub.login(user);
+          request(app)
+          .post('/api')
+          .send({
+            query: `mutation editProfile($name: String, $location: String, $bio: String) {
+              editProfile(name: $name, location: $location, bio: $bio) {
+                profile {
+                  name
+                  location
+                  bio
+                }
+              }
+            }`,
+            operationName: 'editProfile',
+            variables: {
+              name: 'User Name 2',
+              location: 'Location 2',
+              bio: 'Bio 2'
+            }
+          })
+          .expect(200)
+          .end((err, res) => {
+            if (err) { throw err; }
+            const result = JSON.parse(res.text);
+            console.log(result);
+            expect(result.data.editProfile).toBeTruthy();
+            done();
+          });
+        });
+      });
 });

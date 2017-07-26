@@ -4,6 +4,7 @@ const {
   login,
   logout,
   signup,
+  editProfile,
 } = require('./resolvers/userResolvers');
 const {
   totalPosts,
@@ -28,6 +29,7 @@ const resolvers = {
     login,
     logout,
     signup,
+    editProfile,
     newPost,
     likePost,
     unlikePost,

@@ -38,5 +38,11 @@ module.exports = {
       })
       .catch(err => reject(err));
     });
+  },
+  editProfile: (_, {name, location, bio}, {req}) => {
+    if (!req.isAuthenticated()) {
+      return null;
+    }
+    return req.user.editProfile(name, location, bio);
   }
 }

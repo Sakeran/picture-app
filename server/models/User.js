@@ -13,9 +13,18 @@ const UserSchema = new Schema({
     }
   },
   profile: {
-    name: String,
-    location: String,
-    bio: String
+    name: {
+      type: String,
+      default: ''
+    },
+    location: {
+      type: String,
+      default: ''
+    },
+    bio: {
+      type: String,
+      default: ''
+    },
   }
 });
 
@@ -133,7 +142,20 @@ UserSchema.methods.likesPost = function({ postId }, req, info) {
     return false;
   })
   .catch(err => false);
-}
+};
+
+UserSchema.methods.editProfile = function(name, location, bio) {
+  if (name) {
+    this.profile.name = name;
+  }
+  if (location) {
+    this.profile.location = location;
+  }
+  if (bio) {
+    this.profile.bio = bio;
+  }
+  return this.save();
+};
 
 const User = mongoose.model('User', UserSchema);
 
