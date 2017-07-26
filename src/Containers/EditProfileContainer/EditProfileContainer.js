@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import {graphql, gql, compose} from 'react-apollo';
 import { connect } from 'react-redux';
 
-class UserProfileContainer extends React.Component {
+class EditProfileContainer extends React.Component {
 
   send = (e) => {
     e.preventDefault();
@@ -104,4 +104,4 @@ export default compose(
   graphql(profileQuery),
   graphql(profileMutation),
   connect(null, mapDispatchToProps)
-)(UserProfileContainer);
+)(EditProfileContainer);
