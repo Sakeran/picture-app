@@ -37,8 +37,8 @@ app.use('/api', bodyParser.json(), graphqlExpress(req => ({
   schema,
   context: { req }
 })));
-
-if (process.env.NODE_ENV === 'development') {
+console.log(process.env);
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'dev') {
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/api'
   }));

@@ -3,6 +3,13 @@ type User {
   id: ID!
   username: String!
   likesPost(postId: ID!): Boolean
+  profile: Profile!
+}
+
+type Profile {
+  name: String
+  location: String
+  bio: String
 }
 
 type Post {
