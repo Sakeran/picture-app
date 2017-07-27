@@ -5,6 +5,7 @@ import Login from '../../Pages/Login/Login';
 import NotFound from '../../Pages/NotFound/NotFound';
 import Signup from '../../Pages/Signup/Signup';
 import EditProfile from '../../Pages/EditProfile/EditProfile';
+import Profile from '../../Pages/Profile/Profile';
 import NewPost from '../../Pages/NewPost/NewPost';
 import Post from '../../Pages/Post/Post';
 
@@ -13,8 +14,9 @@ const Routes = (props) => (
     <Route exact path="/" component={Index} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/signup" component={Signup} />
-    <Route exact path="/profile" component={EditProfile}/>
+    <Route exact path="/profile/edit" component={EditProfile}/>
     <Route exact path="/new" component={NewPost} />
+    <Route path="/profile/:uid" component={Profile} />
     <Route path="/post/:id" component={Post} />
     <Route component={NotFound} />
   </Switch>

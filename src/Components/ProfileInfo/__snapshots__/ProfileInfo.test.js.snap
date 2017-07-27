@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileInfo renders correctly 1`] = `
+<div
+  className="ProfileInfo"
+>
+  <h2
+    className="ProfileInfo-name"
+  >
+    Test User
+  </h2>
+  <div
+    className="ProfileInfo-row"
+  >
+    <h3>
+      Location:
+    </h3>
+    <span
+      className="ProfileInfo-span"
+    >
+      Somewhere
+    </span>
+  </div>
+  <div
+    className="ProfileInfo-row"
+  >
+    <h3>
+      About Me:
+    </h3>
+    <span
+      className="ProfileInfo-span"
+    >
+      A test user.
+    </span>
+  </div>
+</div>
+`;

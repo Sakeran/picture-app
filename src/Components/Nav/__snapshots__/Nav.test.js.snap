@@ -39,6 +39,14 @@ exports[`Nav component shows logout link when logged in 1`] = `
       </Link>
     </li>
     <li>
+      <Link
+        replace={false}
+        to="/profile/undefined"
+      >
+        Profile
+      </Link>
+    </li>
+    <li>
       <button
         id="logoutBtn"
       >

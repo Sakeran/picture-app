@@ -1,0 +1,13 @@
+.ProfileInfo-name {
+
+}
+
+.ProfileInfo-row {
+  display: flex;
+  align-items: flex-end;
+  margin: 1em 0;
+}
+
+.ProfileInfo-span {
+  margin-left: 0.3em;
+}
