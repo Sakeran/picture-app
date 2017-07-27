@@ -1,11 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './Comment.css';
 
-const Comment = ({comment: {user, date, text}}) => (
+const Comment = ({comment: {user: {username, id}, date, text}}) => (
   <div className="Comment section-border">
-    <h4 className="Comment-header">{user.username} commented on {date}</h4>
+    <h4 className="Comment-header">
+      <Link to={`profile/${id}`}>{username}</Link> commented on {date}
+    </h4>
     <p className="Comment-text">{text}</p>
   </div>
 );

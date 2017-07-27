@@ -12,6 +12,10 @@
   border-bottom: 1px solid #6d1cba;
 }
 
+.Comment-header a {
+  color: #6d1cba;
+}
+
 .Comment-text {
   padding-left: 0.5em;
 }

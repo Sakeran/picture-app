@@ -10,6 +10,7 @@ test('PostDetails component renders correctly', () => {
       description: 'A test post.',
       postDate: 'January 1st 2001',
       creator: {
+        id: '1111',
         username: 'Test User'
       }
     };

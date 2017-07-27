@@ -7,7 +7,12 @@ exports[`Comment component renders correctly 1`] = `
   <h4
     className="Comment-header"
   >
-    Test User
+    <Link
+      replace={false}
+      to="profile/1111"
+    >
+      Test User
+    </Link>
      commented on 
     January 1st 2001
   </h4>

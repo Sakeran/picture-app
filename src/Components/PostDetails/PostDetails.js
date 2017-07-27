@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './PostDetails.css';
 
-const PostDetails = (props) => (
+const PostDetails = ({title, description, postDate, creator: {username, id}}) => (
   <div className="PostDetails section-border">
     <div className="PostDetails-info">
-      <h2>{props.title}</h2>
+      <h2>{title}</h2>
       <span className="PostDetails-creator-info">
-        Posted by {props.creator.username} on {props.postDate}
+        Posted by <Link to={`/profile/${id}`}>{username}</Link> on {postDate}
       </span>
     </div>
     <div className="PostDetails-description">
-      <p>{props.description}</p>
+      <p>{description}</p>
     </div>
   </div>
 );

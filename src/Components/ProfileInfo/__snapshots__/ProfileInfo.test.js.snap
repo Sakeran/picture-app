@@ -2,7 +2,7 @@
 
 exports[`ProfileInfo renders correctly 1`] = `
 <div
-  className="ProfileInfo"
+  className="ProfileInfo section-border"
 >
   <h2
     className="ProfileInfo-name"

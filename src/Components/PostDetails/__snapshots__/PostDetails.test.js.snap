@@ -14,7 +14,12 @@ exports[`PostDetails component renders correctly 1`] = `
       className="PostDetails-creator-info"
     >
       Posted by 
-      Test User
+      <Link
+        replace={false}
+        to="/profile/1111"
+      >
+        Test User
+      </Link>
        on 
       January 1st 2001
     </span>
