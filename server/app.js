@@ -25,12 +25,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Define Twitter authentication routes
-app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback',
+const authRouter = express.Router();
+
+authRouter.get('/twitter', passport.authenticate('twitter'));
+authRouter.get('/twitter/callback',
          passport.authenticate('twitter', {failureRedirect: '/'}),
-         (req, res, next) => { next() }
+         (req, res, next) => { res.redirect('/'); }
 );
 
+app.use('/auth', authRouter);
 
 // Define GraphQL endpoint
 app.use('/api', bodyParser.json(), graphqlExpress(req => ({

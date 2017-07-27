@@ -6,8 +6,11 @@ const app = require('./server/app');
 const express = require('express');
 const db = require('./server/config/db');
 
-// Set static files
+// Set static files, and resolve all get requests to index.html
 app.use('/', express.static('build'));
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/build/index.html');
+});
 
 // Create Server
 const server = http.createServer(app);
