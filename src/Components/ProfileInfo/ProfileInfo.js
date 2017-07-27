@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './ProfileInfo.css';
 
 const ProfileInfo = ({ name, location, bio}) => (
-  <div className="ProfileInfo">
+  <div className="ProfileInfo section-border">
     <h2 className="ProfileInfo-name">{name || 'No Given Name'}</h2>
     <div className="ProfileInfo-row">
       <h3>Location:</h3>

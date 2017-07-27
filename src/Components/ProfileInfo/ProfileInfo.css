@@ -1,11 +1,14 @@
-.ProfileInfo-name {
-
+.ProfileInfo{
+  background-color: white;
+  padding: 1em 0;
+  padding-left: 1em;
+  margin-bottom: 1em;
 }
 
 .ProfileInfo-row {
   display: flex;
   align-items: flex-end;
-  margin: 1em 0;
+  margin: 1em auto;
 }
 
 .ProfileInfo-span {
