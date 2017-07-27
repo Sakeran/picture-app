@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders properly when loaded 1`] = `
+<div>
+  <ProfileInfo
+    bio="A test user"
+    location="Somewhere"
+    name="Test User"
+  />
+  <div>
+    <h2
+      className="header"
+    >
+      This user has the following posts:
+    </h2>
+    <PostList
+      posts={
+        Array [
+          Object {
+            "commentCount": 0,
+            "id": 1,
+            "image": "http://example.com/img.png",
+            "likeCount": 0,
+          },
+          Object {
+            "commentCount": 0,
+            "id": 2,
+            "image": "http://example.com/img.png",
+            "likeCount": 0,
+          },
+          Object {
+            "commentCount": 0,
+            "id": 3,
+            "image": "http://example.com/img.png",
+            "likeCount": 0,
+          },
+        ]
+      }
+      totalPosts={3}
+    />
+  </div>
+</div>
+`;
+
+exports[`Renders properly while loading 1`] = `
+<h2>
+  Loading...
+</h2>
+`;
+
+exports[`Renders properly with an error 1`] = `
+<h2>
+  Error while loading profile.
+</h2>
+`;
