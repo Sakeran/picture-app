@@ -9,7 +9,8 @@ const UserSchema = new Schema({
       password: String
     },
     twitter: {
-      id: String
+      id: String,
+      username: String
     }
   },
   profile: {
@@ -101,6 +102,31 @@ UserSchema.static('findAndValidate', function(username, password) {
 });
 
 ////////////////////
+// Virtual Fields
+////////////////////
+
+// Return the user's username, either from local or Twitter
+// credentials.
+UserSchema.virtual('username').get(function() {
+  if (this.profile.name) {
+    return this.profile.name;
+  }
+  if (this.auth.local.username) {
+    return this.auth.local.username;
+  }
+  if (this.auth.twitter.username) {
+    return this.auth.twitter.username;
+  }
+  return 'Unnamed User';
+});
+
+// Return a promise for the total number of posts by the user.
+UserSchema.virtual('postCount').get(function() {
+  return mongoose.model('Post').find({createdBy: this})
+  .count();
+});
+
+////////////////////
 // Instance Methods
 ////////////////////
 
@@ -112,21 +138,12 @@ UserSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.auth.local.password);
 };
 
-// Return an object of user details suitable for sending to clients
-// over the GraphQL endpoint.
-UserSchema.methods.sanitize = function() {
-  return {
-    id: this._id,
-    username: this.username()
-  };
-};
-
-// Return the user's username, either from local or Twitter
-// credentials.
-UserSchema.methods.username = function() {
-  // WIP - For now only return the username, or a placeholder.
-  return this.auth.local.username || 'Unknown';
-};
+UserSchema.methods.posts = function({ offset, limit }) {
+  return mongoose.model('Post').find({createdBy: this})
+  .sort('-createdAt')
+  .skip(offset || 0)
+  .limit(limit || 10);
+}
 
 UserSchema.methods.likesPost = function({ postId }, req, info) {
   return mongoose.model('Post').findById(postId)

@@ -4,6 +4,8 @@ type User {
   username: String!
   likesPost(postId: ID!): Boolean
   profile: Profile!
+  posts(offset: Int, limit: Int): [Post]
+  postCount: Int!
 }
 
 type Profile {

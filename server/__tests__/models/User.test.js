@@ -1,4 +1,5 @@
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 let db;
 describe('User Model', () => {
@@ -9,12 +10,9 @@ describe('User Model', () => {
 
   afterAll((done) => {
     User.find({}).remove()
-    .then(() => {
-      db.close()
-      .then(() => {
-        done();
-      });
-    });
+    .then(() => Post.find({}).remove())
+    .then(() => db.close())
+    .then(() => done());
   });
 
   it('exists', () => {
@@ -44,7 +42,7 @@ describe('User Model', () => {
       done();
     });
   });
-  
+
   it('is valid with only the auth.twitter field set', (done) => {
     const user = new User();
     user.auth.twitter.id = '111111111';
@@ -56,4 +54,47 @@ describe('User Model', () => {
       done();
     });
   });
+
+  it('Can get an array of its own posts, in reverse chronological order', (done) => {
+    const user = new User();
+    const otherUser = new User();
+    Promise.all(
+      [1,2,3,4,5,6].map(i => Post.create({
+        title: 'Test Post ' + i,
+        postType: 'image',
+        imageLink: 'http://example.com/img.png',
+        // First user has every odd-indexed post.
+        createdBy: (i % 2) ? user : otherUser
+      }))
+    )
+    .then(() => {
+      user.posts({})
+      .then(posts => {
+        expect(posts).toHaveLength(3);
+        const [post1, post2, post3] = posts;
+        expect(post1.title).toBe('Test Post 5');
+        expect(post2.title).toBe('Test Post 3');
+        expect(post3.title).toBe('Test Post 1');
+        done();
+      });
+    });
+  });
+
+  it('Can get a count of its own posts', (done) => {
+    const user = new User();
+    Promise.all(
+      [1,2,3].map(i => Post.create({
+        title: 'Test Post ' + i,
+        postType: 'image',
+        imageLink: 'http://example.com/img.png',
+        createdBy: user
+      }))
+    )
+    .then(() => user.postCount)
+    .then(count => {
+      expect(count).toBe(3);
+      done();
+    });
+  });
+
 });
