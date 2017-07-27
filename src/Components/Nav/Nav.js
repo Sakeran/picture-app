@@ -11,6 +11,7 @@ const Nav = (props) => (
         <ul>
           <li><Link to="/new">New Post</Link></li>
           <li><Link to={`/profile/${props.user.id}`}>Profile</Link></li>
+          <li><Link to={`/profile/edit`}>Edit Profile</Link></li>
           <li><button id="logoutBtn" onClick={props.logoutFn}>Log Out</button></li>
         </ul>
       :
