@@ -6,6 +6,7 @@ type User {
   profile: Profile!
   posts(offset: Int, limit: Int): [Post]
   postCount: Int!
+  isAdmin: Boolean
 }
 
 type Profile {

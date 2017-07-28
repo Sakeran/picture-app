@@ -322,4 +322,73 @@ describe('User graphql endpoints', () => {
           });
         });
       });
+
+      it('Can get its admin status while logged in as admin', (done) => {
+        User.create({
+          auth: {
+            local: {
+              username: 'Admin',
+              password: 'password'
+            }
+          },
+          hasAdmin: true
+        })
+        .then(user => {
+          passportStub.login(user);
+          request(app)
+          .post('/api')
+          .send({
+            query: `query getAdminStatus {
+              currentUser {
+                id
+                isAdmin
+              }
+            }`,
+            operationName: 'getAdminStatus'
+          })
+          .expect(200)
+          .end((err, res) => {
+            if (err) { throw err; }
+            console.log(res.text);
+            const { data: { currentUser: { isAdmin } } } = JSON.parse(res.text);
+            expect(isAdmin).not.toBeUndefined();
+            expect(isAdmin).toBe(true);
+            done();
+          })
+        });
+      });
+
+      it('Can get its admin status while logged in as non-admin', (done) => {
+        User.create({
+          auth: {
+            local: {
+              username: 'Not Admin',
+              password: 'password'
+            }
+          }
+        })
+        .then(user => {
+          passportStub.login(user);
+          request(app)
+          .post('/api')
+          .send({
+            query: `query getAdminStatus {
+              currentUser {
+                id
+                isAdmin
+              }
+            }`,
+            operationName: 'getAdminStatus'
+          })
+          .expect(200)
+          .end((err, res) => {
+            if (err) { throw err; }
+            console.log(res.text);
+            const { data: { currentUser: { isAdmin } } } = JSON.parse(res.text);
+            expect(isAdmin).not.toBeUndefined();
+            expect(isAdmin).toBe(false);
+            done();
+          })
+        });
+      });
 });

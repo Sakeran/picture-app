@@ -13,6 +13,10 @@ const UserSchema = new Schema({
       username: String
     }
   },
+  hasAdmin: {
+    type: Boolean,
+    default: false
+  },
   profile: {
     name: {
       type: String,
@@ -67,6 +71,8 @@ UserSchema.static('newUser', function (username, password, passwordConfirm) {
       const newUser = new User();
       newUser.auth.local.username = username;
       newUser.auth.local.password = newUser.generateHash(password);
+      // Set the user's profile name to the username by default.
+      newUser.profile.name = username;
       newUser.save()
       .then(user => {
         return resolve(user);
@@ -172,6 +178,15 @@ UserSchema.methods.editProfile = function(name, location, bio) {
     this.profile.bio = bio;
   }
   return this.save();
+};
+
+UserSchema.methods.isAdmin = function(args, req, info) {
+  const {path: { prev: { key } } } = info;
+  // Only allow this field to be called on a currentUser query.
+  if (key !== 'currentUser') {
+    return false;
+  }
+  return this.hasAdmin;
 };
 
 const User = mongoose.model('User', UserSchema);
