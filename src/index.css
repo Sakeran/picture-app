@@ -110,6 +110,15 @@ input[type="submit"]:disabled {
   cursor: pointer;
 }
 
+.button-warning {
+  background-color: #f21365;
+}
+
+.button-warning:hover,
+.button-warning:active {
+  background-color: #c11152;
+}
+
 /*
   Misc classes
  */

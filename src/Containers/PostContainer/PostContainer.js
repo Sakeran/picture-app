@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
+import PostDeleteButton from '../../Components/PostDeleteButton/PostDeleteButton';
 import PostStats from '../../Components/PostStats/PostStats';
 import CommentListContainer from '../CommentListContainer/CommentListContainer';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
@@ -80,6 +81,10 @@ class PostContainer extends React.Component {
       liked: likesPost,
       likeFunc: this.handleLikeClick
     };
+    // Show the "delete" button only if the user is logged in, and either
+    // owns the post or is an admin.
+    const showDeleteOption = currentUser && (currentUser.isAdmin ||
+                             currentUser.id === post.creator.id);
     return (
       <div className="PostContainer">
         <div className="PostContainer-display">
@@ -90,6 +95,7 @@ class PostContainer extends React.Component {
           }
         </div>
         <PostDetails {...postDetails} />
+        {showDeleteOption && <PostDeleteButton />}
         <PostStats {...postStats}/>
         <CommentListContainer postId={post.id} count={post.commentCount} />
         {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
@@ -108,6 +114,7 @@ const currentUserQuery = gql`
     currentUser {
       id
       likesPost(postId: $id)
+      isAdmin
     }
   }
 `;
