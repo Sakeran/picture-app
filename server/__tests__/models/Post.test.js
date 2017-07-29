@@ -19,15 +19,15 @@ describe('Post Model', () => {
     .then(() => done());
   });
 
-  afterAll((done) => {
+  afterEach((done) => {
     clearPosts()
     .then(() => clearComments())
-    .catch(err => console.log(err))
-    .then(() => {
-      db.close()
-      .catch(err => console.log(err))
-      .then(() => done());
-    });
+    .then(() => done());
+  });
+
+  afterAll((done) => {
+    db.close()
+    .then(() => done());
   });
 
   it('exists', () => {
@@ -151,6 +151,82 @@ describe('Post Model', () => {
       .then(post => {
         expect(post.likes).toHaveLength(1);
         expect(post.likes[0].id).toBe(userTwo.id);
+      });
+    });
+  });
+
+  it('Can be deleted by its creator', () => {
+    const user = new User();
+    return Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png',
+      createdBy: user
+    })
+    .then(post => {
+      return Post.find({}).count()
+      .then(count => {
+        expect(count).toBe(1);
+        return post.deleteIfUserAllowed(user)
+        .then(result => {
+          expect(result).toBe(true);
+          return Post.find({}).count()
+          .then(count => {
+            expect(count).toBe(0);
+          });
+        });
+      });
+    });
+  });
+
+  it('Cannot be deleted by a different user (non-admin)', () => {
+    const user = new User();
+    const otherUser = new User();
+    return Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png',
+      createdBy: otherUser
+    })
+    .then(post => {
+      return Post.find({}).count()
+      .then(count => {
+        expect(count).toBe(1);
+        return post.deleteIfUserAllowed(user)
+        .then(result => {
+          expect(result).toBe(false);
+          return Post.find({}).count()
+          .then(count => {
+            expect(count).toBe(1);
+          });
+        });
+      });
+    });
+  });
+
+  it('Can be deleted by an admin, regardless of ownership', () => {
+    const user = new User({
+      hasAdmin: true
+    });
+    const otherUser = new User();
+    return Post.create({
+      title: 'Test Post',
+      postType: 'image',
+      imageLink: 'http://example.com/img.png',
+      createdBy: otherUser
+    })
+    .then(post => {
+      return Post.find({}).count()
+      .then(count => {
+        expect(count).toBe(1);
+        return post.deleteIfUserAllowed(user)
+        .then(result => {
+          expect(result).toBe(true);
+          return Post.find({}).count()
+          .then(count => {
+            expect(count).toBe(0);
+          });
+        });
       });
     });
   });
