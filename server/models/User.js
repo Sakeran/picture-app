@@ -146,7 +146,7 @@ UserSchema.methods.validPassword = function(password) {
 
 UserSchema.methods.posts = function({ offset, limit }) {
   return mongoose.model('Post').find({createdBy: this})
-  .sort('-createdAt')
+  .sort({'createdAt': 'desc'})
   .skip(offset || 0)
   .limit(limit || 10);
 }

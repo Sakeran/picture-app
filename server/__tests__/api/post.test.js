@@ -6,6 +6,7 @@ const User = require('../../models/User');
 let db;
 
 const clearAllPosts = () => Post.find({}).remove();
+const clearAllUsers = () => User.find({}).remove();
 
 const createPost = (options={}) => Post.create({
   title: options.title || 'Test Post',
@@ -33,6 +34,7 @@ describe('Post endpoint', () => {
 
   afterEach((done) => {
     clearAllPosts()
+    .then(() => clearAllUsers())
     .then(() => done());
   });
 
@@ -41,10 +43,10 @@ describe('Post endpoint', () => {
     .then(() => done());
   })
 
-  it('Can query for an existing post', (done) => {
-    createPost()
+  it('Can query for an existing post', () => {
+    return createPost()
     .then(post => {
-      request(app)
+      return request(app)
       .post('/api')
       .send({
         query: `
@@ -56,20 +58,17 @@ describe('Post endpoint', () => {
         `
       })
       .expect(200)
-      .end((err, res) => {
-        if (err) { throw err; }
+      .then(res => {
         const result = JSON.parse(res.text);
         expect(result.data.post.id).toBe(post.id);
-        done();
       });
-    })
-    .catch(err => { throw err });
+    });
   });
 
-  it('Can query the number of total posts', (done) => {
-    createManyPosts(3)
+  it('Can query the number of total posts', () => {
+    return createManyPosts(3)
     .then(() => {
-      request(app)
+      return request(app)
       .post('/api')
       .send({
         query: `
@@ -79,17 +78,15 @@ describe('Post endpoint', () => {
         `
       })
       .expect(200)
-      .end((err, res) => {
-        if (err) { throw err; }
+      .then(res => {
         const result = JSON.parse(res.text);
         expect(result.data.totalPosts).toBe(3);
-        done();
       });
     })
   });
 
-  it('Cannot create a post while not logged in', (done) => {
-    request(app)
+  it('Cannot create a post without a logged-in user', () => {
+    return request(app)
     .post('/api')
     .send({
       query: `
@@ -107,74 +104,60 @@ describe('Post endpoint', () => {
       }
     })
     .expect(200)
-    .end((err, res) => {
-      if (err) { throw err; }
+    .then(res => {
       const result = JSON.parse(res.text);
       expect(result.data.newPost).toBeNull();
-      Post.find({}).count()
+      return Post.find({}).count()
       .then(count => {
         expect(count).toBe(0);
-        done();
-      })
-      .catch(err => { throw err });
+      });
     });
   });
 
-  it('Can create a post while logged in', () => {
-    User.create({
-      auth: {
-        local: {username: 'TestUser', password: '123456'}
-      }
-    })
-    .then(user => {
-      passportStub.login(user);
-      request(app)
-      .post('/api')
-      .send({
-        query: `
-        mutation createPost($title: String!, $link: String!, $description: String) {
-          newPost(title: $title, link: $link, description: $description) {
-            id
+  it('Can create a post with a logged-in user', () => {
+      return User.create({
+        auth: {
+          local: {username: 'TestUser', password: '123456'}
+        }
+      })
+      .then(user => {
+        passportStub.login(user);
+        return request(app)
+        .post('/api')
+        .send({
+          query: `
+          mutation createPost($title: String!, $link: String!, $description: String) {
+            newPost(title: $title, link: $link, description: $description) {
+              id
+            }
           }
-        }
-        `,
-        operationName: 'createPost',
-        variables: {
-          title: 'Legal Post',
-          link: 'http://example.com/img.png',
-          description: 'A test post',
-        }
-      })
-      .expect(200)
-      .then(res => {
-        // 07-19-2017
-        // Note: This test currently passes, but also seems to execute
-        // and throw a second time. Using .then() instead of .end() in
-        // this case seems to keep the test watcher from crashing outright,
-        // though it still warns of a rejected promise.
-        // https://github.com/visionmedia/supertest/issues/352
-        const result = JSON.parse(res.text);
-        expect(result.data.newPost).not.toBeNull();
-        expect(result.data.newPost.id).not.toBeNull();
-        Post.find({}).count()
-        .then(count => {
-          expect(count).toBe(1);
-          User.find({}).remove()
-          then(() => done());
+          `,
+          operationName: 'createPost',
+          variables: {
+            title: 'Legal Post',
+            link: 'http://example.com/img.png',
+            description: 'A test post',
+          }
         })
-        .catch(err => { throw err });
-      })
-      .catch(err => { throw err });
-    })
-    .catch(err => { throw err });
+        .expect(200)
+        .then(res => {
+          const result = JSON.parse(res.text);
+          expect(result.data.newPost).not.toBeNull();
+          expect(result.data.newPost.id).not.toBeNull();
+          return Post.find({}).count()
+          .then(count => {
+            expect(count).toBe(1);
+          });
+        });
+      });
   });
 
-  it('can like a post while logged in', (done) => {
-    const user = new User();
+  it('Can "like" a post with a logged-in user', () => {
+    const user = new User;
     passportStub.login(user);
-    createPost()
+    return createPost()
     .then(post => {
-      request(app)
+      return request(app)
       .post('/api')
       .send({
         query: `
@@ -190,22 +173,19 @@ describe('Post endpoint', () => {
         }
       })
       .expect(200)
-      .end((err, res) => {
-        if (err) { throw err; }
+      .then(res => {
         const result = JSON.parse(res.text);
         expect(result.data.likePost.id).toBe(post.id);
-        done();
-      });
-    })
-    .catch(err => { throw err; });
-  });
+      })
+    });
+  })
 
-  it('can remove a like while logged in', (done) => {
+  it('Can remove a "like" with a logged-in user', () => {
     const user = new User();
     passportStub.login(user);
-    createPost({likes: [user]})
+    return createPost({likes: [user]})
     .then(post => {
-      request(app)
+      return request(app)
       .post('/api')
       .send({
         query: `
@@ -221,21 +201,19 @@ describe('Post endpoint', () => {
         }
       })
       .expect(200)
-      .end((err, res) => {
-        if (err) { throw err; }
+      .then(res => {
         const result = JSON.parse(res.text);
         expect(result.data.unlikePost.id).toBe(post.id);
-        done();
       });
     });
   });
 
-  it('can add a comment while logged in', (done) => {
+  it('Can add a comment with a logged-in user', () => {
     const user = new User();
     passportStub.login(user);
-    createPost()
+    return createPost()
     .then(post => {
-      request(app)
+      return request(app)
       .post('/api')
       .send({
         query: `
@@ -252,13 +230,10 @@ describe('Post endpoint', () => {
         }
       })
       .expect(200)
-      .end((err, res) => {
-        if (err) { throw err; }
+      .then(res => {
         const result = JSON.parse(res.text);
         expect(result.data.addComment).not.toBeNull();
-        done();
       });
     });
   });
-
 })

@@ -34,77 +34,57 @@ describe('Post Model', () => {
     expect(new Post()).toBeTruthy();
   });
 
-  it('Is valid with a type of "image" and a valid imageLink', (done) => {
+  it('Is valid with a type of "image" and a valid imageLink', () => {
     const newPost = makePost('image');
     newPost.imageLink = 'http://example.com/placeholderLink.png';
-    newPost.validate()
-    .then(() => true)
-    .catch(err => console.log(err), false)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
-    });
+    return newPost.validate();
   });
 
-  it('Is invalid with a type of "image" with no imageLink', (done) => {
+  it('Is invalid with a type of "image" with no imageLink', () => {
+    expect.assertions(1);
     const newPost = makePost('image');
-    newPost.validate()
-    .then(() => false)
-    .catch(() => true)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
+    return newPost.validate().catch(e => {
+      expect(e).toBeDefined();
     });
   });
 
-  it('Can create a new image post with a user and an options object', (done) => {
+  it('Can create a new image post, given a user and an options object', () => {
     const testUser = new User();
     const options = {
       title: 'My Created Post',
       description: 'A test description for a test post',
       link: 'http://example.com/placeholderLink.png'
     };
-    Post.createUserPost(testUser, options)
+    return Post.createUserPost(testUser, options)
     .then(post => {
       expect(post.createdBy.equals(testUser)).toBe(true);
       expect(post.postType).toBe('image');
       expect(post.title).toBe(options.title);
       expect(post.description).toBe(options.description);
       expect(post.imageLink).toBe(options.link);
-      return true;
-    })
-    .catch(err => console.log(err), false)
-    .then(status => {
-      expect(status).toBeTruthy();
-      done();
     });
   });
 
-  it('Can create a new youtube post with a user and an options object', (done) => {
+
+  it('Can create a new youtube post with a user and an options object', () => {
     const testUser = new User();
     const options = {
       title: 'My Created Post',
       description: 'A test description for a test post',
       link: 'https://www.youtube.com/watch?v=xxxxxxxxxxx'
     };
-    Post.createUserPost(testUser, options)
+    return Post.createUserPost(testUser, options)
     .then(post => {
       expect(post.createdBy.equals(testUser)).toBe(true);
       expect(post.postType).toBe('youtube');
       expect(post.title).toBe(options.title);
       expect(post.description).toBe(options.description);
       expect(post.youtubeID).toBe('xxxxxxxxxxx');
-      return true;
-    })
-    .catch(err => false)
-    .then(status => {
-      expect(status).toBeTruthy();
-      done();
     });
   });
 
-  it('Can add a new comment, attributed to a user', () => {
-    Post.create({
+  it('Can add a new comment by a user', () => {
+    return Post.create({
       title: 'Test Post',
       postType: 'image',
       imageLink: 'http://example.com/img.png'
@@ -113,19 +93,17 @@ describe('Post Model', () => {
       const user = new User();
       post.addComment(user, 'Test Comment')
       .then(post => {
-        post.comments.then(comments => {
+        post.comments()
+        .then(comments => {
           expect(comments).toHaveLength(1);
           expect(comments[0].text).toBe('Test Comment');
-          done();
         });
-      })
-      .catch(err => { throw err });
-    })
-    .catch(err => { throw err; });
+      });
+    });
   });
 
-  it('Can add a new like, attributed to a user', (done) => {
-    Post.create({
+  it('Can record a like by a given user', () => {
+    return Post.create({
       title: 'Test Post',
       postType: 'image',
       imageLink: 'http://example.com/img.png'
@@ -133,41 +111,35 @@ describe('Post Model', () => {
     .then(post => {
       expect(post.likes).toHaveLength(0);
       const user = new User();
-      post.addLike(user)
+      return post.addLike(user)
       .then(post => {
         expect(post.likes).toHaveLength(1);
         const like = post.likes[0];
         expect(like.equals(user.id));
-        done();
-      })
-      .catch(err => { throw err });
-    })
-    .catch(err => { throw err });
+      });
+    });
   });
 
-  it('Does not add duplicate likes by a single user', (done) => {
+  it('Will not record multiple likes by the same user', () => {
     const user = new User();
-    Post.create({
+    return Post.create({
       title: 'Test Post',
       postType: 'image',
       imageLink: 'http://example.com/img.png',
       likes: [user]
     })
     .then(post => {
-      return post.addLike(user);
-    })
-    .then(result => {
-      expect(result).toBeNull();
-      done();
-    })
-    .catch(err => { throw err });
-
+      return post.addLike(user)
+      .then(result => {
+        expect(result).toBeNull();
+      });
+    });
   });
 
-  it('Can remove a like from a given user', (done) => {
+  it('Can remove a like from a given user', () => {
     const user = new User();
     const userTwo = new User();
-    Post.create({
+    return Post.create({
       title: 'Test Post',
       postType: 'image',
       imageLink: 'http://example.com/img.png',
@@ -175,14 +147,12 @@ describe('Post Model', () => {
     })
     .then(post => {
       expect(post.likes).toHaveLength(2);
-      return post.removeLike(user);
-    })
-    .then(post => {
-      expect(post.likes).toHaveLength(1);
-      expect(post.likes[0].id).toBe(userTwo.id);
-      done();
-    })
-    .catch(err => { throw err });
+      return post.removeLike(user)
+      .then(post => {
+        expect(post.likes).toHaveLength(1);
+        expect(post.likes[0].id).toBe(userTwo.id);
+      });
+    });
   });
 
   it('Has a working "image" virtual field', () => {
@@ -201,8 +171,8 @@ describe('Post Model', () => {
     expect(postTwo.type).toContain('youtube');
   });
 
-  it('Correctly queries for the "creator" virtual field and yields a promise', (done) => {
-    User.create({
+  it('Correctly queries for the "creator" virtual field and yields a promise', () => {
+    return User.create({
       auth: {
         local: {username: 'TestUser', password: '123456'}
       }
@@ -211,16 +181,14 @@ describe('Post Model', () => {
       const post = makePost('image');
       post.imageLink = 'http://example.com/img.png';
       post.createdBy = user;
-      post.save()
+      return post.save()
       .then(post => {
-        post.creator
+        return post.creator
         .then(creator => {
           expect(creator.id).toBe(user.id);
-          done();
-        })
-      })
-    })
-    .catch(err => { throw err });
+        });
+      });
+    });
   });
 
   it('Has a "postDate" virtual field that formats createdAt', () => {
@@ -231,13 +199,12 @@ describe('Post Model', () => {
     expect(post.postDate).toBe(moment(date).format('MMMM Do YYYY'));
   });
 
-  it('Has a "commentCount" virtual field that returns the number of comments', (done) => {
+  it('Has a "commentCount" virtual field that returns the number of comments', () => {
     const post = new Post();
-    post.commentCount
+    return post.commentCount
     .then(count => {
       expect(typeof count).toBe('number');
-      done();
-    })
+    });
   });
 
   it('Has a "likeCount" virtual field that returns the number of likes', () => {

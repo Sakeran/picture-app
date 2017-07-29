@@ -19,46 +19,31 @@ describe('User Model', () => {
     expect(new User()).toBeTruthy();
   });
 
-  it('is invalid without at least one auth field', (done) => {
+  it('is invalid without at least one auth field', () => {
     const user = new User();
-    user.validate()
-    .then(() => false)
-    .catch(() => true)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
+    expect.assertions(1);
+    return user.validate().catch(e => {
+      expect(e).toBeDefined();
     });
   });
 
-  it('is valid with only the auth.local field set', (done) => {
+  it('is valid with only the auth.local field set', () => {
     const user = new User();
     user.auth.local.username = 'testUser';
     user.auth.local.password = 'testPassword';
-    user.validate()
-    .then(() => true)
-    .catch(() => false)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
-    });
+    return user.validate();
   });
 
-  it('is valid with only the auth.twitter field set', (done) => {
+  it('is valid with only the auth.twitter field set', () => {
     const user = new User();
     user.auth.twitter.id = '111111111';
-    user.validate()
-    .then(() => true)
-    .catch(() => false)
-    .then(passes => {
-      expect(passes).toBeTruthy();
-      done();
-    });
+    return user.validate();
   });
 
-  it('Can get an array of its own posts, in reverse chronological order', (done) => {
+  it('Can get an array of its own posts in reverse chronological order', () => {
     const user = new User();
     const otherUser = new User();
-    Promise.all(
+    return Promise.all(
       [1,2,3,4,5,6].map(i => Post.create({
         title: 'Test Post ' + i,
         postType: 'image',
@@ -68,21 +53,20 @@ describe('User Model', () => {
       }))
     )
     .then(() => {
-      user.posts({})
+      return user.posts({})
       .then(posts => {
         expect(posts).toHaveLength(3);
         const [post1, post2, post3] = posts;
         expect(post1.title).toBe('Test Post 5');
         expect(post2.title).toBe('Test Post 3');
         expect(post3.title).toBe('Test Post 1');
-        done();
       });
     });
   });
 
-  it('Can get a count of its own posts', (done) => {
+  it('Can get a count of its own posts', () => {
     const user = new User();
-    Promise.all(
+    return Promise.all(
       [1,2,3].map(i => Post.create({
         title: 'Test Post ' + i,
         postType: 'image',
@@ -90,11 +74,11 @@ describe('User Model', () => {
         createdBy: user
       }))
     )
-    .then(() => user.postCount)
-    .then(count => {
-      expect(count).toBe(3);
-      done();
+    .then(() => {
+      return user.postCount
+      .then(count => {
+        expect(count).toBe(3);
+      });
     });
   });
-
 });
