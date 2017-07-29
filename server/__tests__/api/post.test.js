@@ -8,6 +8,8 @@ let db;
 const clearAllPosts = () => Post.find({}).remove();
 const clearAllUsers = () => User.find({}).remove();
 
+const defaultUser = new User();
+
 const createPost = (options={}) => Post.create({
   title: options.title || 'Test Post',
   postType: options.postType || 'image',
@@ -15,6 +17,7 @@ const createPost = (options={}) => Post.create({
   youtubeID: options.youtubeID || 'xxxxxxxxxxx',
   description: options.description || 'A test post',
   likes: options.likes || [],
+  createdBy: options.createdBy || defaultUser
 });
 
 const createManyPosts = count => {
@@ -31,6 +34,10 @@ describe('Post endpoint', () => {
     db = require('../../config/db');
     passportStub.install(app);
   });
+
+  beforeEach(() => {
+    passportStub.logout();
+  })
 
   afterEach((done) => {
     clearAllPosts()
@@ -236,4 +243,84 @@ describe('Post endpoint', () => {
       });
     });
   });
-})
+
+  it('Can delete a post if the logged-in user owns it', () => {
+    const user = new User();
+    return createPost({createdBy: user})
+    .then(post => {
+      passportStub.login(user);
+      return request(app)
+      .post('/api')
+      .send({
+        query: `
+          mutation deletePost($postId: ID!) {
+            deletePost(postId: $postId)
+          }
+        `,
+        operationName: 'deletePost',
+        variables: {
+          postId: post.id
+        }
+      })
+      .expect(200)
+      .then(res => {
+        const result = JSON.parse(res.text);
+        expect(result.data.deletePost).toBe(true);
+      });
+    });
+  });
+
+  it('Can delete a post if the logged-in user is an admin', () => {
+    const user = new User({hasAdmin: true});
+    const otherUser = new User();
+    return createPost({createdBy: otherUser})
+    .then(post => {
+      passportStub.login(user);
+      return request(app)
+      .post('/api')
+      .send({
+        query: `
+          mutation deletePost($postId: ID!) {
+            deletePost(postId: $postId)
+          }
+        `,
+        operationName: 'deletePost',
+        variables: {
+          postId: post.id
+        }
+      })
+      .expect(200)
+      .then(res => {
+        const result = JSON.parse(res.text);
+        expect(result.data.deletePost).toBe(true);
+      });
+    });
+  });
+
+  it('Cannot delete a post if not logged in', () => {
+    const user = new User({hasAdmin: true});
+    return createPost({createdBy: user})
+    .then(post => {
+      // Skip login step.
+      return request(app)
+      .post('/api')
+      .send({
+        query: `
+          mutation deletePost($postId: ID!) {
+            deletePost(postId: $postId)
+          }
+        `,
+        operationName: 'deletePost',
+        variables: {
+          postId: post.id
+        }
+      })
+      .expect(200)
+      .then(res => {
+        const result = JSON.parse(res.text);
+        expect(result.data.deletePost).toBe(false);
+      });
+    });
+  });
+
+});
