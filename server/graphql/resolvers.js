@@ -14,6 +14,7 @@ const {
   unlikePost,
   addComment,
   comments,
+  deletePost,
 } = require('./resolvers/postResolvers')
 
 const resolvers = {
@@ -34,6 +35,7 @@ const resolvers = {
     likePost,
     unlikePost,
     addComment,
+    deletePost,
   }
 }
 

@@ -54,6 +54,7 @@ type Mutation {
   newPost(title: String!, description: String, link: String!): Post
   likePost(postId: ID!): Post
   unlikePost(postId: ID!): Post
+  deletePost(postId: ID!): Boolean
   addComment(postId: ID!, message: String!): Comment
 }
 `;

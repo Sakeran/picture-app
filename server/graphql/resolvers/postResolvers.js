@@ -51,5 +51,15 @@ module.exports = {
     .populate('user')
     .skip(offset || 0)
     .limit(limit || 10);
+  },
+  deletePost: (_, {postId}, {req}) => {
+    if (!req.isAuthenticated()) {
+      return false;
+    }
+    return Post.findById(postId)
+    .then(post => {
+      if (!post) { return false; }
+      return post.deleteIfUserAllowed(req.user);
+    });
   }
 };

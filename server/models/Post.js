@@ -142,6 +142,30 @@ postSchema.methods.comments = function({offset, limit}) {
   .populate('user');
 };
 
+// Deletes the post if the given user either owns the post, or if
+// the user is an admin. Returns true or false depending on whether
+// the post was successfully deleted.
+postSchema.methods.deleteIfUserAllowed = function(user) {
+  return new Promise((resolve, reject) => {
+    if (!user || user.constructor.modelName !== 'User') {
+      return reject(new Error('User must be a User model'));
+    }
+    const isAdmin = user.hasAdmin;
+    const isOwner = this.createdBy.equals(user.id);
+    if (!isOwner && !isAdmin) {
+      return resolve(false);
+    }
+    mongoose.model('Post').findByIdAndRemove(this.id)
+    .then(post => {
+      return resolve(true);
+    })
+    .catch(err => {
+      return reject(err);
+    });
+  });
+
+};
+
 ///////////////////
 // Static Methods
 ///////////////////
