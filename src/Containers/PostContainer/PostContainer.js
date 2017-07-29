@@ -10,6 +10,7 @@ import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import YoutubeContainer from '../YoutubeContainer/YoutubeContainer';
 
 import { graphql, gql, compose} from 'react-apollo';
+import { connect } from 'react-redux';
 
 import './PostContainer.css';
 
@@ -58,6 +59,22 @@ class PostContainer extends React.Component {
     });
   }
 
+  delete = () => {
+    this.props.deleteMutation({
+      variables: {
+        postId: this.props.postId
+      }
+    })
+    .then(({data: { deletePost }}) => {
+      if (deletePost) {
+        this.props.flashSuccess('Post was deleted.');
+        this.props.requestRedirect('/');
+        return;
+      }
+      this.props.flashError('Failed to delete post.');
+    });
+  }
+
   render() {
     const { PostQuery: { loading: postLoading, error, post }} = this.props;
     const { UserQuery: { loading: userLoading, currentUser }} = this.props;
@@ -95,7 +112,7 @@ class PostContainer extends React.Component {
           }
         </div>
         <PostDetails {...postDetails} />
-        {showDeleteOption && <PostDeleteButton />}
+        {showDeleteOption && <PostDeleteButton deleteFn={this.delete} />}
         <PostStats {...postStats}/>
         <CommentListContainer postId={post.id} count={post.commentCount} />
         {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
@@ -157,6 +174,18 @@ const unlikeMutation = gql`
   }
 `;
 
+const deleteMutation = gql`
+  mutation deleteMutation($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
+
+const mapDispatchToProps = (dispatch) => ({
+  requestRedirect: () => dispatch({type: 'REQUEST_REDIRECT', location: '/'}),
+  flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
+  flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg}),
+});
+
 
 export { PostContainer };
 export default compose(
@@ -191,5 +220,14 @@ export default compose(
         postId: props.postId
       }
     })
-  })
+  }),
+  graphql(deleteMutation, {
+    name: 'deleteMutation',
+    options: (props) => ({
+      variables: {
+        postId: props.postId
+      }
+    })
+  }),
+  connect(null, mapDispatchToProps)
 )(PostContainer);

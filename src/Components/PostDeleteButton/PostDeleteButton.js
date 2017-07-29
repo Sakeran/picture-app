@@ -5,7 +5,9 @@ import './PostDeleteButton.css';
 
 const PostDeleteButton = ({ deleteFn }) => (
   <div className="PostDelete section-border">
-    <button className="button button-warning">Delete Post</button>
+    <button className="button button-warning" onClick={deleteFn}>
+      Delete Post
+    </button>
   </div>
 );
 
