@@ -56,6 +56,7 @@ type Mutation {
   unlikePost(postId: ID!): Post
   deletePost(postId: ID!): Boolean
   addComment(postId: ID!, message: String!): Comment
+  deleteComment(commentId: ID!): Boolean
 }
 `;
 

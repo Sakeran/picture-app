@@ -114,7 +114,9 @@ class PostContainer extends React.Component {
         <PostDetails {...postDetails} />
         {showDeleteOption && <PostDeleteButton deleteFn={this.delete} />}
         <PostStats {...postStats}/>
-        <CommentListContainer postId={post.id} count={post.commentCount} />
+        <CommentListContainer user={currentUser}
+                              postId={post.id}
+                              count={post.commentCount} />
         {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
       </div>
     );

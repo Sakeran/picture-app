@@ -61,5 +61,14 @@ module.exports = {
       if (!post) { return false; }
       return post.deleteIfUserAllowed(req.user);
     });
-  }
+  },
+  deleteComment: (_, {commentId}, {req}) => {
+    if (!req.isAuthenticated()) {
+      return false;
+    }
+    return Comment.findById(commentId)
+    .then(comment => {
+      return comment.deleteIfUserAllowed(req.user);
+    });
+  },
 };

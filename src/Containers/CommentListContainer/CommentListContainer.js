@@ -26,7 +26,8 @@ class CommentListContainer extends React.Component {
 
 CommentListContainer.propTypes = {
   postId: PropTypes.string.isRequired,
-  count: PropTypes.number
+  count: PropTypes.number,
+  user: PropTypes.object
 };
 
 const commentsQuery = gql`
