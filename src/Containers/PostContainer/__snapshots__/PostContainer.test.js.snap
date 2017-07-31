@@ -34,8 +34,14 @@ exports[`it renders correctly 1`] = `
       }
     }
   />
-  <Apollo(CommentListContainer)
+  <Apollo(Apollo(CommentListContainer))
     postId="1"
+    user={
+      Object {
+        "id": "1111",
+        "likesPost": false,
+      }
+    }
   />
   <Apollo(AddCommentForm)
     postId="1"

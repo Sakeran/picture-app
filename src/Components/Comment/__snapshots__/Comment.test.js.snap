@@ -9,7 +9,7 @@ exports[`Comment component renders correctly 1`] = `
   >
     <Link
       replace={false}
-      to="profile/1111"
+      to="/profile/1111"
     >
       Test User
     </Link>
