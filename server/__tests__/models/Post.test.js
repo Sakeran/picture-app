@@ -91,9 +91,9 @@ describe('Post Model', () => {
     })
     .then(post => {
       const user = new User();
-      post.addComment(user, 'Test Comment')
-      .then(post => {
-        post.comments()
+      return post.addComment(user, 'Test Comment')
+      .then(comment => {
+        return post.comments({})
         .then(comments => {
           expect(comments).toHaveLength(1);
           expect(comments[0].text).toBe('Test Comment');
