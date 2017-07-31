@@ -21,8 +21,10 @@ class CommentListContainer extends React.Component {
           }
         });
         data.comments.forEach(comment => {
-          (comment.id === commentId)
-          && (comment.text = '(This comment has been removed.)');
+          if (comment.id === commentId) {
+            comment.text = '(This comment has been removed)';
+            comment.deleted = true;
+          }
         });
         store.writeQuery({
           query: commentsQuery,
@@ -68,6 +70,7 @@ const commentsQuery = gql`
       id
       text
       date
+      deleted
       user {
         id
         username

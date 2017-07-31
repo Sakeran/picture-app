@@ -10,7 +10,10 @@ const listWithComments = ({ comments, user, count, loadMore, deleteFn }) => (
     <ul className="CommentList-List">
     {comments.map(e => (
       <li key={e.id}>
-        <Comment comment={e} deleteFn={deleteFn && deleteFn(e.id)} user={user}/>
+        <Comment comment={e}
+                 deleteFn={deleteFn && deleteFn(e.id)}
+                 user={user}
+                 />
       </li>
     ))}
     </ul>
