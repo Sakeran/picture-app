@@ -2,7 +2,7 @@
 
 exports[`Comment component renders correctly 1`] = `
 <div
-  className="Comment section-border"
+  className="Comment"
 >
   <h4
     className="Comment-header"

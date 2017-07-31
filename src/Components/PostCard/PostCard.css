@@ -22,13 +22,14 @@
 
 .PostCard-stats {
   display: flex;
+  color: #b5a6c4;
   width: 120px;
   margin: 0 auto;
   margin-top: 0.5em;
   padding: 0.5em 1em;
   justify-content: space-around;
   align-items: space-around;
-  border: 1px double #888;
+  border: 1px double #b5a6c4;
   border-radius: 0.8em;
 }
 
@@ -39,7 +40,7 @@
 }
 
 .PostCard-number {
-  color: #888;
+  /*color: #888;*/
   font-size: 0.8em;
   margin-left: 0.25em;
 }

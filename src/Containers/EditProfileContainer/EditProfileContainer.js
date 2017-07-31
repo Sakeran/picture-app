@@ -36,10 +36,10 @@ class EditProfileContainer extends React.Component {
   render() {
     const { data: { loading, error, currentUser } } = this.props;
     if (loading) {
-      return <h2>Loading...</h2>;
+      return <h2 className="header">Loading...</h2>;
     }
     if (error) {
-      return <h2>Encountered error: {error}</h2>;
+      return <h2 className="header">Encountered error: {error}</h2>;
     }
     if (!currentUser) {
       return <Redirect to="/" />;
@@ -48,7 +48,7 @@ class EditProfileContainer extends React.Component {
 
     return (
       <div>
-        <h2>Edit Profile</h2>
+        <h2 className="header">Edit Profile</h2>
         <form onSubmit={this.send}>
           <div className="field">
             <label htmlFor="name">Name</label>

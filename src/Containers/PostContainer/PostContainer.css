@@ -11,3 +11,10 @@
 .PostContainer-comments {
   text-align: center;
 }
+
+.PostContainer-subdisplay {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

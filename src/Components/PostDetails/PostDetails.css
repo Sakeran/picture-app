@@ -1,8 +1,5 @@
 .PostDetails {
-  margin: 0 auto;
-  margin-bottom: 1em;
   width: 75%;
-  min-width: 300px;
   padding: 1em;
   background: white;
 }
@@ -11,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .PostDetails-creator-info {

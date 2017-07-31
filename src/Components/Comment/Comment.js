@@ -14,7 +14,7 @@ const showDeleteOption = (commentId, deleted, creator, user, deleteFn) => {
 const Comment = ({comment: {user: creator, date, text, deleted, id},
                   user,
                   deleteFn}) => (
-  <div className="Comment section-border">
+  <div className="Comment">
     <h4 className="Comment-header">
       <Link to={`/profile/${creator.id}`}>{creator.username}</Link> commented on {date}
       {showDeleteOption(id, deleted, creator, user, deleteFn) &&

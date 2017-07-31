@@ -3,6 +3,8 @@ import { graphql, gql } from 'react-apollo';
 
 import { commentsQuery } from '../CommentListContainer/CommentListContainer';
 
+import './AddCommentForm.css';
+
 class AddCommentForm extends React.Component {
   constructor() {
     super();

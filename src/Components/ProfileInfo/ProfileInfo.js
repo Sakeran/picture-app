@@ -5,14 +5,12 @@ import './ProfileInfo.css';
 
 const ProfileInfo = ({ name, location, bio}) => (
   <div className="ProfileInfo section-border">
-    <h2 className="ProfileInfo-name">{name || 'No Given Name'}</h2>
-    <div className="ProfileInfo-row">
-      <h3>Location:</h3>
-      <span className="ProfileInfo-span">{location || "Location Unknown"}</span>
+    <h2 className="ProfileInfo-name">{name || "No Name Given"}</h2>
+    <div className="ProfileInfo-section">
+      <strong>Location:</strong> {location}
     </div>
-    <div className="ProfileInfo-row">
-      <h3>About Me:</h3>
-      <span className="ProfileInfo-span">{bio || 'No Information'}</span>
+    <div className="ProfileInfo-section">
+      <strong>About:</strong> {bio}
     </div>
   </div>
 );

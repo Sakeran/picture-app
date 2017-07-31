@@ -2,7 +2,7 @@
 
 exports[`renders correctly when "liked" is false 1`] = `
 <div
-  className="PostStats section-border"
+  className="PostStats"
 >
   0 people like this post.
 </div>
@@ -10,7 +10,7 @@ exports[`renders correctly when "liked" is false 1`] = `
 
 exports[`renders correctly when "liked" is true 1`] = `
 <div
-  className="PostStats section-border"
+  className="PostStats"
 >
   1 person likes this post.
 </div>

@@ -1,14 +1,13 @@
 .Comment {
-  margin: 0.5em 0;
-  padding: 0.5em 0;
-  background: white;
+  margin: 0 auto;
+  margin-bottom: 2em;
 }
 
 .Comment-header {
   margin: 0;
   padding-left: 0.5em;
   padding-bottom: 0.25em;
-  font-weight: 400;
+  font-weight: 600;
   border-bottom: 1px solid #6d1cba;
 }
 

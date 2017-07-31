@@ -4,6 +4,13 @@ exports[`CommentList component renders correctly with comments 1`] = `
 <div
   className="CommentList"
 >
+  <h3
+    className="centered"
+  >
+    There are a total of 
+    3
+     comments.
+  </h3>
   <ul
     className="CommentList-List"
   >

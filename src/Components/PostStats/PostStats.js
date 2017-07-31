@@ -20,7 +20,7 @@ const likeCountMsg = (likeCount) => {
 }
 
 const PostStats = (props) => (
-  <div className="PostStats section-border">
+  <div className="PostStats">
     {props.user && (
       <div className="PostStats-btn-container">
         <button className={getButtonClass(props)} onClick={props.likeFunc}>

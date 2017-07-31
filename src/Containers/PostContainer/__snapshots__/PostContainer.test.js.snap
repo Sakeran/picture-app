@@ -13,38 +13,42 @@ exports[`it renders correctly 1`] = `
       src="http://localhost:3001/exampleImg.png"
     />
   </div>
-  <PostDetails
-    creator={
-      Object {
-        "id": "100",
-        "username": "testUser",
+  <div
+    className="PostContainer-subdisplay section-border"
+  >
+    <PostDetails
+      creator={
+        Object {
+          "id": "100",
+          "username": "testUser",
+        }
       }
-    }
-    description="Test post."
-    postDate="May 1st 2000"
-    title="test card 1"
-  />
-  <PostStats
-    likeFunc={[Function]}
-    liked={false}
-    user={
-      Object {
-        "id": "1111",
-        "likesPost": false,
+      description="Test post."
+      postDate="May 1st 2000"
+      title="test card 1"
+    />
+    <PostStats
+      likeFunc={[Function]}
+      liked={false}
+      user={
+        Object {
+          "id": "1111",
+          "likesPost": false,
+        }
       }
-    }
-  />
-  <Apollo(Apollo(CommentListContainer))
-    postId="1"
-    user={
-      Object {
-        "id": "1111",
-        "likesPost": false,
+    />
+    <Apollo(Apollo(CommentListContainer))
+      postId="1"
+      user={
+        Object {
+          "id": "1111",
+          "likesPost": false,
+        }
       }
-    }
-  />
-  <Apollo(AddCommentForm)
-    postId="1"
-  />
+    />
+    <Apollo(AddCommentForm)
+      postId="1"
+    />
+  </div>
 </div>
 `;

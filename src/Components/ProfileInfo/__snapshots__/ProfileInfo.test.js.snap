@@ -10,28 +10,22 @@ exports[`ProfileInfo renders correctly 1`] = `
     Test User
   </h2>
   <div
-    className="ProfileInfo-row"
+    className="ProfileInfo-section"
   >
-    <h3>
+    <strong>
       Location:
-    </h3>
-    <span
-      className="ProfileInfo-span"
-    >
-      Somewhere
-    </span>
+    </strong>
+     
+    Somewhere
   </div>
   <div
-    className="ProfileInfo-row"
+    className="ProfileInfo-section"
   >
-    <h3>
-      About Me:
-    </h3>
-    <span
-      className="ProfileInfo-span"
-    >
-      A test user.
-    </span>
+    <strong>
+      About:
+    </strong>
+     
+    A test user.
   </div>
 </div>
 `;

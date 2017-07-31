@@ -9,10 +9,10 @@ class ProfileContainer extends React.Component {
   render() {
     const {data: {loading, error, user }, loadMorePosts } = this.props;
     if (loading) {
-      return <h2>Loading...</h2>;
+      return <h2 className="header">Loading...</h2>;
     }
     if (error) {
-      return <h2>Error while loading profile.</h2>;
+      return <h2 className="header">Error while loading profile.</h2>;
     }
     const postListProps = {
       posts: user.posts,

@@ -81,10 +81,10 @@ class PostContainer extends React.Component {
     const likesPost = currentUser ? currentUser.likesPost : false;
     const pageLoading = postLoading || userLoading;
     if (pageLoading) {
-      return <h2>Loading...</h2>;
+      return <h2 className="header">Loading...</h2>;
     }
     if (error) {
-      return <h2>Error While Loading Post</h2>;
+      return <h2 className="header">Error While Loading Post</h2>;
     }
     const postDetails = {
       title: post.title,
@@ -111,13 +111,15 @@ class PostContainer extends React.Component {
             <SafeImage className="PostContainer-img" src={post.image} alt={post.title} />
           }
         </div>
-        <PostDetails {...postDetails} />
-        {showDeleteOption && <PostDeleteButton deleteFn={this.delete} />}
-        <PostStats {...postStats}/>
-        <CommentListContainer user={currentUser}
-                              postId={post.id}
-                              count={post.commentCount} />
-        {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
+        <div className="PostContainer-subdisplay section-border">
+          <PostDetails {...postDetails} />
+          {showDeleteOption && <PostDeleteButton deleteFn={this.delete} />}
+          <PostStats {...postStats}/>
+          <CommentListContainer user={currentUser}
+                                postId={post.id}
+                                count={post.commentCount} />
+          {currentUser && <AddCommentForm postId={post.id} count={post.commentCount}/>}
+        </div>
       </div>
     );
   }

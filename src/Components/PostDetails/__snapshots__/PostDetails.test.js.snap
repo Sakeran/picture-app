@@ -2,7 +2,7 @@
 
 exports[`PostDetails component renders correctly 1`] = `
 <div
-  className="PostDetails section-border"
+  className="PostDetails"
 >
   <div
     className="PostDetails-info"

@@ -1,7 +1,5 @@
 .PostStats {
   max-width: 75%;
-  min-width: 300px;
-  margin: 0 auto;
   padding: 1em;
   background: white;
   display: flex;
@@ -26,9 +24,8 @@
 
 .PostStats button:hover,
 .PostStats button:active {
-  margin-right: 2em;
   transform: scale(1.1);
-  transition: transform 0.2s ease-in-out, margin-right 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
   background-color: #C7FCCE;
   color: #380331;
   cursor: pointer;

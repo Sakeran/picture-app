@@ -43,13 +43,17 @@ exports[`Renders properly when loaded 1`] = `
 `;
 
 exports[`Renders properly while loading 1`] = `
-<h2>
+<h2
+  className="header"
+>
   Loading...
 </h2>
 `;
 
 exports[`Renders properly with an error 1`] = `
-<h2>
+<h2
+  className="header"
+>
   Error while loading profile.
 </h2>
 `;

@@ -7,6 +7,7 @@ import './CommentList.css';
 
 const listWithComments = ({ comments, user, count, loadMore, deleteFn }) => (
   <div className="CommentList">
+    <h3 className="centered">There are a total of {count} comments.</h3>
     <ul className="CommentList-List">
     {comments.map(e => (
       <li key={e.id}>
@@ -19,7 +20,7 @@ const listWithComments = ({ comments, user, count, loadMore, deleteFn }) => (
     </ul>
     {
       (count && loadMore && (count > comments.length)) &&
-      <button onClick={loadMore}>
+      <button className="CommentList-load-btn" onClick={loadMore}>
         Load More Comments
       </button>
     }

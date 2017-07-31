@@ -20,7 +20,7 @@ a {
  */
 
 form {
-  max-width: 50%;
+  max-width: 75%;
   margin: 0 auto;
 }
 
@@ -89,6 +89,9 @@ input[type="submit"]:disabled {
 
 .header {
   color: #6d1cba;
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
 }
 
 .button {
@@ -140,4 +143,26 @@ input[type="submit"]:disabled {
 
 .section-border {
   border: 2px double #6d1cba;
+}
+
+@media (max-width: 640px) {
+  form {
+    max-width: 95%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  textarea {
+    /*margin: 0;*/
+    width: 90%;
+    margin-bottom: 0.5em;
+  }
+
+  input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+  }
 }

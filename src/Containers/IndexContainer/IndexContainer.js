@@ -15,10 +15,10 @@ class IndexContainer extends React.Component {
   render() {
     const { loading, error, listPosts, loadMorePosts, totalPosts } = this.props;
     if (loading) {
-      return <h2>Loading Latest Posts...</h2>
+      return <h2 className="header">Loading Latest Posts...</h2>
     }
     if (error) {
-      return <h2>Error occured while loading latest posts.</h2>
+      return <h2 className="header">Error occured while loading latest posts.</h2>
     }
     const props = {
       posts: listPosts,

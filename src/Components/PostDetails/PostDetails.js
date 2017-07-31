@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './PostDetails.css';
 
 const PostDetails = ({title, description, postDate, creator: {username, id}}) => (
-  <div className="PostDetails section-border">
+  <div className="PostDetails">
     <div className="PostDetails-info">
       <h2>{title}</h2>
       <span className="PostDetails-creator-info">
