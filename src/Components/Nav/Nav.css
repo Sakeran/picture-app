@@ -1,5 +1,6 @@
 .Nav {
-
+  font-weight: 600;
+  font-size: 0.85em;
 }
 
 .Nav ul {
@@ -10,9 +11,7 @@
 }
 
 .Nav ul li {
-  font-weight: 600;
-  font-size: 0.85em;
-  margin-left: 1rem;
+  margin-left: 1em;
 }
 
 .Nav ul li button {
@@ -20,7 +19,7 @@
   border: none;
   color: inherit;
   font-weight: inherit;
-  margin-left: 1rem;
+  padding-left: 0;
   cursor: pointer;
 }
 
