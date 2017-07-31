@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { graphql, gql, compose} from 'react-apollo';
+
 import CommentList from '../../Components/CommentList/CommentList';
 
 class CommentListContainer extends React.Component {

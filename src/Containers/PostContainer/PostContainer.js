@@ -191,6 +191,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
+export { postDetailsQuery };
 export { PostContainer };
 export default compose(
   graphql(postDetailsQuery, {

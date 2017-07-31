@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql, gql } from 'react-apollo';
 
 import { commentsQuery } from '../CommentListContainer/CommentListContainer';
+import { postDetailsQuery } from '../PostContainer/PostContainer';
 
 import './AddCommentForm.css';
 
@@ -47,6 +48,21 @@ class AddCommentForm extends React.Component {
           },
           data
         });
+        // We need to update the comment count in the post query, as well.
+        const postData = store.readQuery({
+          query: postDetailsQuery,
+          variables: {
+            id: this.props.postId
+          }
+        });
+        postData.post.commentCount += 1;
+        store.writeQuery({
+          query: postDetailsQuery,
+          variables: {
+            id: this.props.postId
+          },
+          data: postData
+        });
       }
     })
     .then(res => {
@@ -83,6 +99,7 @@ const addCommentMutation = gql`
       id
       text
       date
+      deleted
       user {
         id
         username

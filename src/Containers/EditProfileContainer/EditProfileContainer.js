@@ -12,7 +12,6 @@ class EditProfileContainer extends React.Component {
       location: { value: location},
       bio: { value: bio}
     } = e.target;
-    console.log(name, location, bio);
     this.props.mutate({
       variables: {
         name,
