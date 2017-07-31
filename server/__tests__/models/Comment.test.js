@@ -29,12 +29,13 @@ describe('Comment mode', () => {
       text: 'Test Comment',
     })
     .then(comment => {
-      comment.deleteIfUserAllowed()
+      return comment.deleteIfUserAllowed(user)
       .then(res => {
         expect(res).toBe(true);
         return Comment.findById(comment.id)
         .then(comment => {
           expect(comment.text).not.toBe('Test Comment');
+          expect(comment.deleted).toBe(true);
         });
       });
     });
@@ -50,7 +51,7 @@ describe('Comment mode', () => {
       text: 'Test Comment'
     })
     .then(comment => {
-      comment.deleteIfUserAllowed()
+      return comment.deleteIfUserAllowed(user)
       .then(res => {
         expect(res).toBe(false);
         return Comment.findById(comment.id)
@@ -71,7 +72,7 @@ describe('Comment mode', () => {
       text: 'Test Comment',
     })
     .then(comment => {
-      comment.deleteIfUserAllowed(user)
+      return comment.deleteIfUserAllowed(user)
       .then(res => {
         expect(res).toBe(true);
         return Comment.findById(comment.id)

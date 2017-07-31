@@ -12,6 +12,10 @@ const commentSchema = new Schema({
     ref: 'Post'
   },
   text: String,
+  deleted: {
+    type: Boolean,
+    default: false
+  },
   deletedText: {
     type: String,
     get: (string) => {
@@ -41,6 +45,7 @@ commentSchema.methods.deleteIfUserAllowed = function(user) {
     if (!isOwner && !isAdmin) {
       return resolve(false);
     }
+    this.deleted = true;
     this.deletedText = this.text;
     this.text = '(This comment has been removed.)';
     this.save()

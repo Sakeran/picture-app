@@ -35,6 +35,7 @@ type Comment {
   post: Post!,
   text: String!
   date: String!
+  deleted: Boolean!
 }
 
 type Query {
