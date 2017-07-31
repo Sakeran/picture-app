@@ -16,6 +16,14 @@
   color: #6d1cba;
 }
 
+.Comment-header button {
+  color: #c11152;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
 .Comment-text {
   padding-left: 0.5em;
 }

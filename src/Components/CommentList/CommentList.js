@@ -5,12 +5,12 @@ import Comment from '../Comment/Comment';
 
 import './CommentList.css';
 
-const listWithComments = ({ comments, count, loadMore }) => (
+const listWithComments = ({ comments, user, count, loadMore, deleteFn }) => (
   <div className="CommentList">
     <ul className="CommentList-List">
     {comments.map(e => (
       <li key={e.id}>
-        <Comment comment={e}/>
+        <Comment comment={e} deleteFn={deleteFn && deleteFn(e.id)} user={user}/>
       </li>
     ))}
     </ul>
@@ -38,7 +38,8 @@ const CommentList = (props) => (
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   count: PropTypes.number,
-  loadMore: PropTypes.func
+  loadMore: PropTypes.func,
+  deleteFn: PropTypes.func
 }
 
 export default CommentList;

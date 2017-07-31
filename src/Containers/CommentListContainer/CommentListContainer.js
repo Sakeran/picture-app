@@ -6,9 +6,39 @@ import CommentList from '../../Components/CommentList/CommentList';
 
 class CommentListContainer extends React.Component {
 
+  deleteComment = (commentId) => () => {
+    this.props.deleteCommentMutation({
+      variables: {
+        commentId
+      },
+      update: (store, { data: { deleteComment } }) => {
+        if (!deleteComment) { return };
+        const data = store.readQuery({
+          query: commentsQuery,
+          variables: {
+            postId: this.props.postId,
+            offset: 0,
+          }
+        });
+        data.comments.forEach(comment => {
+          (comment.id === commentId)
+          && (comment.text = '(This comment has been removed.)');
+        });
+        store.writeQuery({
+          query: commentsQuery,
+          variables: {
+            postId: this.props.postId,
+            offset: 0,
+          },
+          data,
+        });
+      }
+    })
+  }
+
   render() {
     const { data: {loading, error, comments} } = this.props;
-    const { ownProps: {count}, loadMore } = this.props;
+    const { ownProps: {count, user}, loadMore } = this.props;
     if (loading) {
       return <h3 className="centered">Loading Comments</h3>
     }
@@ -16,9 +46,11 @@ class CommentListContainer extends React.Component {
       return <h3 className="centered">Error While Loading Comments</h3>
     }
     return (<CommentList
+              user={user}
               comments={comments}
               count={count}
               loadMore={loadMore}
+              deleteFn={this.deleteComment}
               />);
   }
 
@@ -43,6 +75,13 @@ const commentsQuery = gql`
     }
   }
 `;
+
+const deleteCommentMutation = gql`
+  mutation deleteComment($commentId: ID!) {
+    deleteComment(commentId: $commentId)
+  }
+`;
+
 export { commentsQuery };
 export { CommentListContainer };
 export default compose(
@@ -70,5 +109,8 @@ export default compose(
         })
       }
     })
+  }),
+  graphql(deleteCommentMutation, {
+    name: 'deleteCommentMutation'
   })
 )(CommentListContainer);
