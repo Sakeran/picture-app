@@ -54,10 +54,11 @@ class PostStatsContainer extends React.Component {
 
   render() {
     const {user, post} = this.props;
+    const likesPost = user && (user.likesPost || false);
     const postStats = {
       user,
       likeCount: post.likeCount,
-      liked: user.likesPost,
+      liked: likesPost,
       likeFunc: this.handleLikeClick
     };
     return <PostStats {...postStats} />
@@ -65,7 +66,7 @@ class PostStatsContainer extends React.Component {
 }
 
 PostStatsContainer.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   post: PropTypes.object.isRequired
 }
 
