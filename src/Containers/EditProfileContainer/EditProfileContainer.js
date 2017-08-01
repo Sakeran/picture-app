@@ -31,7 +31,9 @@ class EditProfileContainer extends React.Component {
       }
     })
     .then(res => {
+      const { data: { editProfile: {id} } } = res;
       this.props.flashSuccess('Successfully updated profile.');
+      this.props.requestRedirect(`/profile/${id}`);
     });
   }
 
@@ -73,6 +75,7 @@ class EditProfileContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
+  requestRedirect: (location) => dispatch({type: 'REQUEST_REDIRECT', location})
 });
 
 export default compose(

@@ -51,7 +51,7 @@ class SignupForm extends React.Component {
       }
     })
     .then(res => {
-      if(!res.data.login) {
+      if(!res.data.signup) {
         return this.flashError('Signup failed.');
       }
       this.props.flashSuccess('Successfully created account.');
