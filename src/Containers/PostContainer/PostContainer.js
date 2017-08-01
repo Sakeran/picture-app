@@ -4,16 +4,14 @@ import PropTypes from 'prop-types';
 import SafeImage from '../../Components/SafeImage/SafeImage';
 import PostDetails from '../../Components/PostDetails/PostDetails';
 import PostDeleteButton from '../../Components/PostDeleteButton/PostDeleteButton';
-import PostStats from '../../Components/PostStats/PostStats';
+import PostStatsContainer from '../PostStatsContainer/PostStatsContainer';
 import CommentListContainer from '../CommentListContainer/CommentListContainer';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import YoutubeContainer from '../YoutubeContainer/YoutubeContainer';
 
-import { graphql, compose} from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import userPostStatus from '../../GraphQL/Queries/userPostStatus';
 import postDetails from '../../GraphQL/Queries/postDetails';
-import likePost from '../../GraphQL/Mutations/likePost';
-import unlikePost from '../../GraphQL/Mutations/unlikePost';
 import deletePost from '../../GraphQL/Mutations/deletePost';
 
 import { connect } from 'react-redux';
@@ -21,49 +19,6 @@ import { connect } from 'react-redux';
 import './PostContainer.css';
 
 class PostContainer extends React.Component {
-
-  handleLikeClick = (e) => {
-    e.preventDefault();
-    const { UserQuery: { currentUser } } = this.props;
-    if (!currentUser) {
-      return;
-    }
-    currentUser.likesPost ? this.unlike() : this.like();
-  }
-
-  like = () => {
-    const { PostQuery: { post: { id, likeCount } } } = this.props;
-    this.props.likeMutation({
-      variables: {
-        postId: id
-      },
-      refetchQueries: ['userWithLikeStatus'],
-      optimisticResponse: {
-        likePost: {
-          id: id,
-          likeCount: likeCount + 1,
-          __typename: 'Post',
-        }
-      },
-    });
-  }
-
-  unlike() {
-    const { PostQuery: { post: { id, likeCount } } } = this.props;
-    this.props.unlikeMutation({
-      variables: {
-        postId: id
-      },
-      refetchQueries: ['userWithLikeStatus'],
-      optimisticResponse: {
-        unlikePost: {
-          id: id,
-          likeCount: likeCount - 1,
-          __typename: 'Post',
-        }
-      }
-    });
-  }
 
   delete = () => {
     this.props.deleteMutation({
@@ -84,7 +39,6 @@ class PostContainer extends React.Component {
   render() {
     const { PostQuery: { loading: postLoading, error, post }} = this.props;
     const { UserQuery: { loading: userLoading, currentUser }} = this.props;
-    const likesPost = currentUser ? currentUser.likesPost : false;
     const pageLoading = postLoading || userLoading;
     if (pageLoading) {
       return <h2 className="header">Loading...</h2>;
@@ -100,9 +54,7 @@ class PostContainer extends React.Component {
     };
     const postStats = {
       user: currentUser,
-      likeCount: post.likeCount,
-      liked: likesPost,
-      likeFunc: this.handleLikeClick
+      post
     };
     // Show the "delete" button only if the user is logged in, and either
     // owns the post or is an admin.
@@ -120,7 +72,7 @@ class PostContainer extends React.Component {
         <div className="PostContainer-subdisplay section-border">
           <PostDetails {...postDetails} />
           {showDeleteOption && <PostDeleteButton deleteFn={this.delete} />}
-          <PostStats {...postStats}/>
+          <PostStatsContainer {...postStats}/>
           <CommentListContainer user={currentUser}
                                 postId={post.id}
                                 count={post.commentCount} />
@@ -157,22 +109,6 @@ export default compose(
     options: (props) => ({
       variables: {
         id: props.postId
-      }
-    })
-  }),
-  graphql(likePost, {
-    name: 'likeMutation',
-    options: (props) => ({
-      variables: {
-        postId: props.postId
-      }
-    })
-  }),
-  graphql(unlikePost, {
-    name: 'unlikeMutation',
-    options: (props) => ({
-      variables: {
-        postId: props.postId
       }
     })
   }),
