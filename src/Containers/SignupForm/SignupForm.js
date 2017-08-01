@@ -3,9 +3,11 @@ import React from 'react';
 import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 
+import { graphql, compose } from 'react-apollo';
+import currentUserId from '../../GraphQL/Queries/currentUserId';
+import signup from '../../GraphQL/Mutations/signup';
+
 import { connect } from 'react-redux';
-import { graphql, gql, compose } from 'react-apollo';
-import { currentUserQuery } from '../HeaderContainer/HeaderContainer';
 
 class SignupForm extends React.Component {
 
@@ -43,9 +45,9 @@ class SignupForm extends React.Component {
       },
       update: (store, {data: { signup }}) => {
         if (!signup) { return; }
-        const data = store.readQuery({query: currentUserQuery});
+        const data = store.readQuery({query: currentUserId});
         data.currentUser = signup;
-        store.writeQuery({query: currentUserQuery, data});
+        store.writeQuery({query: currentUserId, data});
       }
     })
     .then(res => {
@@ -120,16 +122,8 @@ const mapDispatchToProps = (dispatch) => ({
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const signupMutation = gql`
-  mutation signup($username: String!, $password: String!, $passwordConfirm: String!) {
-    signup(username: $username, password: $password, passwordConfirm: $passwordConfirm) {
-      id
-    }
-  }
-`;
-
 export { SignupForm };
 export default compose(
-  graphql(signupMutation),
+  graphql(signup),
   connect(mapStateToProps, mapDispatchToProps)
 )(SignupForm);

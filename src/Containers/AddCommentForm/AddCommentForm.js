@@ -1,8 +1,9 @@
 import React from 'react';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 
-import { commentsQuery } from '../CommentListContainer/CommentListContainer';
-import { postDetailsQuery } from '../PostContainer/PostContainer';
+import addCommentMutation from '../../GraphQL/Mutations/addCommentMutation';
+import commentsQuery from '../../GraphQL/Queries/commentsQuery';
+import postDetails from '../../GraphQL/Queries/postDetails';
 
 import './AddCommentForm.css';
 
@@ -50,14 +51,14 @@ class AddCommentForm extends React.Component {
         });
         // We need to update the comment count in the post query, as well.
         const postData = store.readQuery({
-          query: postDetailsQuery,
+          query: postDetails,
           variables: {
             id: this.props.postId
           }
         });
         postData.post.commentCount += 1;
         store.writeQuery({
-          query: postDetailsQuery,
+          query: postDetails,
           variables: {
             id: this.props.postId
           },
@@ -92,21 +93,6 @@ class AddCommentForm extends React.Component {
     )
   }
 };
-
-const addCommentMutation = gql`
-  mutation addComment($postId: ID!, $message: String!) {
-    addComment(postId: $postId, message: $message) {
-      id
-      text
-      date
-      deleted
-      user {
-        id
-        username
-      }
-    }
-  }
-`;
 
 export { AddCommentForm };
 export default graphql(addCommentMutation)(AddCommentForm);

@@ -1,5 +1,7 @@
 import React from 'react';
-import { graphql, gql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+
+import latestPosts from '../../GraphQL/Queries/latestPosts';
 
 import PostList from '../PostList/PostList';
 
@@ -34,21 +36,8 @@ class IndexContainer extends React.Component {
   }
 }
 
-const latestPostsQuery = gql`
-  query listPosts($offset: Int, $limit: Int) {
-    totalPosts
-    listPosts(offset: $offset, limit: $limit) {
-      id
-      image
-      likeCount
-      commentCount
-    }
-  }
-`;
-
-export { latestPostsQuery };
 export { IndexContainer }
-export default graphql(latestPostsQuery, {
+export default graphql(latestPosts, {
   options: (props) => ({
     variables: {
       offset: 0,

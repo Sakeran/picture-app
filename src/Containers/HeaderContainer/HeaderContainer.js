@@ -1,6 +1,8 @@
 import React from 'react';
-import { gql, graphql, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 
+import currentUserId from '../../GraphQL/Queries/currentUserId';
+import logout from '../../GraphQL/Mutations/logout';
 import Header from '../../Components/Header/Header';
 
 class HeaderContainer extends React.Component {
@@ -21,9 +23,9 @@ class HeaderContainer extends React.Component {
   logout = () => {
     this.props.mutate({
       update: (store) => {
-        const data = store.readQuery({ query: currentUserQuery });
+        const data = store.readQuery({ query: currentUserId });
         data.currentUser = null;
-        store.writeQuery({ query: currentUserQuery, data });
+        store.writeQuery({ query: currentUserId, data });
       }
     })
   }
@@ -40,22 +42,7 @@ class HeaderContainer extends React.Component {
 
 };
 
-const currentUserQuery = gql`
-  query currentUser {
-    currentUser {
-      id
-    }
-  }
-`;
-
-const logoutMutation = gql`
-  mutation logout {
-    logout
-  }
-`;
-
-export { currentUserQuery };
 export default compose(
-  graphql(currentUserQuery),
-  graphql(logoutMutation),
+  graphql(currentUserId),
+  graphql(logout),
 )(HeaderContainer);

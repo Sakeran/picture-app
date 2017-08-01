@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql, gql } from 'react-apollo';
+
+import { graphql } from 'react-apollo';
+import userProfileAndPosts from '../../GraphQL/Queries/userProfileAndPosts';
 
 import ProfileInfo from '../../Components/ProfileInfo/ProfileInfo';
 import PostList from '../PostList/PostList';
@@ -40,28 +42,8 @@ ProfileContainer.propTypes = {
   userId: PropTypes.string.isRequired,
 };
 
-const userProfileQuery = gql`
-  query userProfileAndPosts($id: ID!, $postOffset: Int!) {
-    user(id: $id) {
-      id
-      profile {
-        name
-        location
-        bio
-      }
-      posts(offset: $postOffset) {
-        id
-        image
-        likeCount
-        commentCount
-      }
-      postCount
-    }
-  }
-`;
-
 export { ProfileContainer };
-export default graphql(userProfileQuery, {
+export default graphql(userProfileAndPosts, {
   options: (props) => ({
     variables: {
       id: props.userId,

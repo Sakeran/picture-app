@@ -4,8 +4,10 @@ import Formsy from 'formsy-react';
 import TextInput from '../formComponents/TextInput';
 
 import { connect } from 'react-redux';
-import { graphql, gql, compose } from 'react-apollo';
-import { currentUserQuery } from '../HeaderContainer/HeaderContainer';
+
+import { graphql, compose } from 'react-apollo';
+import currentUserId from '../../GraphQL/Queries/currentUserId';
+import login from '../../GraphQL/Mutations/login';
 
 class LoginForm extends React.Component {
 
@@ -43,9 +45,9 @@ class LoginForm extends React.Component {
       update: (store, { data: { login } }) => {
         // Don't logout if null
         if (!login) { return; }
-        const data = store.readQuery({ query: currentUserQuery });
+        const data = store.readQuery({ query: currentUserId });
         data.currentUser = login;
-        store.writeQuery({ query: currentUserQuery, data });
+        store.writeQuery({ query: currentUserId, data });
       }
     })
     .then(res => {
@@ -100,16 +102,8 @@ const mapDispatchToProps = (dispatch) => ({
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const loginMutation = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-    }
-  }
-`;
-
 export { LoginForm };
 export default compose(
-  graphql(loginMutation),
+  graphql(login),
   connect(null, mapDispatchToProps)
 )(LoginForm);

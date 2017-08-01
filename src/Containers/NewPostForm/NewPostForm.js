@@ -9,8 +9,9 @@ import youtubeRegex from 'youtube-regex';
 import getYoutubeId from 'get-youtube-id';
 
 import { connect } from 'react-redux';
-import { graphql, gql, compose } from 'react-apollo';
-import {latestPostsQuery} from '../IndexContainer/IndexContainer';
+import { graphql, compose } from 'react-apollo';
+import latestPosts from '../../GraphQL/Queries/latestPosts';
+import newPost from '../../GraphQL/Mutations/newPost';
 
 class NewPostForm extends React.Component {
 
@@ -42,7 +43,7 @@ class NewPostForm extends React.Component {
         description
       },
       refetchQueries: [{
-        query: latestPostsQuery,
+        query: latestPosts,
         variables: {
           offset: 0,
           limit: 20
@@ -111,16 +112,8 @@ const mapDispatchToProps = (dispatch) => ({
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg})
 });
 
-const newPostMutation = gql`
-  mutation newPost($title: String!, $link: String!, $description: String) {
-    newPost(title: $title, link: $link, description: $description) {
-      id
-    }
-  }
-`;
-
 export { NewPostForm };
 export default compose(
   connect(null, mapDispatchToProps),
-  graphql(newPostMutation)
+  graphql(newPost)
 )(NewPostForm);

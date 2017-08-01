@@ -9,7 +9,13 @@ import CommentListContainer from '../CommentListContainer/CommentListContainer';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import YoutubeContainer from '../YoutubeContainer/YoutubeContainer';
 
-import { graphql, gql, compose} from 'react-apollo';
+import { graphql, compose} from 'react-apollo';
+import userPostStatus from '../../GraphQL/Queries/userPostStatus';
+import postDetails from '../../GraphQL/Queries/postDetails';
+import likePost from '../../GraphQL/Mutations/likePost';
+import unlikePost from '../../GraphQL/Mutations/unlikePost';
+import deletePost from '../../GraphQL/Mutations/deletePost';
+
 import { connect } from 'react-redux';
 
 import './PostContainer.css';
@@ -130,71 +136,15 @@ PostContainer.propTypes = {
   postId: PropTypes.string.isRequired
 };
 
-const currentUserQuery = gql`
-  query userWithLikeStatus($id: ID!) {
-    currentUser {
-      id
-      likesPost(postId: $id)
-      isAdmin
-    }
-  }
-`;
-
-const postDetailsQuery = gql`
-  query postDetails($id: ID!) {
-    post(id: $id) {
-      id
-      type
-      title
-      description
-      postDate
-      image
-      youtubeID
-      creator {
-        id
-        username
-      }
-      likeCount
-      commentCount
-    }
-  }
-`;
-
-const likeMutation = gql`
-  mutation likePost($postId: ID!) {
-    likePost(postId: $postId) {
-      id
-      likeCount
-    }
-  }
-`;
-
-const unlikeMutation = gql`
-  mutation unlikePost($postId: ID!) {
-    unlikePost(postId: $postId) {
-      id
-      likeCount
-    }
-  }
-`;
-
-const deleteMutation = gql`
-  mutation deleteMutation($postId: ID!) {
-    deletePost(postId: $postId)
-  }
-`;
-
 const mapDispatchToProps = (dispatch) => ({
   requestRedirect: () => dispatch({type: 'REQUEST_REDIRECT', location: '/'}),
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
   flashError: (msg) => dispatch({type: 'FLASH_ERROR', message: msg}),
 });
 
-
-export { postDetailsQuery };
 export { PostContainer };
 export default compose(
-  graphql(postDetailsQuery, {
+  graphql(postDetails, {
     name: 'PostQuery',
     options: (props) => ({
       variables: {
@@ -202,7 +152,7 @@ export default compose(
       }
     })
   }),
-  graphql(currentUserQuery, {
+  graphql(userPostStatus, {
     name: 'UserQuery',
     options: (props) => ({
       variables: {
@@ -210,7 +160,7 @@ export default compose(
       }
     })
   }),
-  graphql(likeMutation, {
+  graphql(likePost, {
     name: 'likeMutation',
     options: (props) => ({
       variables: {
@@ -218,7 +168,7 @@ export default compose(
       }
     })
   }),
-  graphql(unlikeMutation, {
+  graphql(unlikePost, {
     name: 'unlikeMutation',
     options: (props) => ({
       variables: {
@@ -226,7 +176,7 @@ export default compose(
       }
     })
   }),
-  graphql(deleteMutation, {
+  graphql(deletePost, {
     name: 'deleteMutation',
     options: (props) => ({
       variables: {

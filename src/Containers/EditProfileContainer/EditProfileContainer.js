@@ -1,6 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import {graphql, gql, compose} from 'react-apollo';
+
+import currentProfile from '../../GraphQL/Queries/currentProfile';
+import editProfile from '../../GraphQL/Mutations/editProfile';
+import {graphql, compose} from 'react-apollo';
 import { connect } from 'react-redux';
 
 class EditProfileContainer extends React.Component {
@@ -19,10 +22,10 @@ class EditProfileContainer extends React.Component {
         bio
       },
       update: (store, { data: { editProfile: { profile } } }) => {
-        const data = store.readQuery({query: profileQuery});
+        const data = store.readQuery({query: currentProfile});
         data.profile = Object.assign({}, data.profile, profile);
         store.writeQuery({
-          query: profileQuery,
+          query: currentProfile,
           data
         });
       }
@@ -66,41 +69,14 @@ class EditProfileContainer extends React.Component {
       </div>
     );
   }
-
 };
-
-const profileQuery = gql`
-  query currentProfile {
-    currentUser {
-      id
-      profile {
-        name
-        location
-        bio
-      }
-    }
-  }
-`;
-
-const profileMutation = gql`
-  mutation editProfile($name: String, $location: String, $bio: String) {
-    editProfile(name: $name, location: $location, bio: $bio) {
-      id
-      profile {
-        name
-        location
-        bio
-      }
-    }
-  }
-`;
 
 const mapDispatchToProps = (dispatch) => ({
   flashSuccess: (msg) => dispatch({type: 'FLASH_SUCCESS', message: msg}),
 });
 
 export default compose(
-  graphql(profileQuery),
-  graphql(profileMutation),
+  graphql(currentProfile),
+  graphql(editProfile),
   connect(null, mapDispatchToProps)
 )(EditProfileContainer);

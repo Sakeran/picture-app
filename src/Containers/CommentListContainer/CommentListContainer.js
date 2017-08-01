@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { graphql, gql, compose} from 'react-apollo';
+import { graphql, compose} from 'react-apollo';
+
+import commentsQuery from '../../GraphQL/Queries/commentsQuery';
+import deleteCommentMutation from '../../GraphQL/Mutations/deleteCommentMutation';
 
 import CommentList from '../../Components/CommentList/CommentList';
 
@@ -65,28 +68,6 @@ CommentListContainer.propTypes = {
   user: PropTypes.object
 };
 
-const commentsQuery = gql`
-  query queryPostComments($postId: ID!, $offset: Int!) {
-    comments(postId: $postId, offset: $offset) {
-      id
-      text
-      date
-      deleted
-      user {
-        id
-        username
-      }
-    }
-  }
-`;
-
-const deleteCommentMutation = gql`
-  mutation deleteComment($commentId: ID!) {
-    deleteComment(commentId: $commentId)
-  }
-`;
-
-export { commentsQuery };
 export { CommentListContainer };
 export default compose(
   graphql(commentsQuery, {
