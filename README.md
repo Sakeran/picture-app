@@ -6,8 +6,6 @@ The application client is created using Create-React-App, with an Express server
 
 The application implements a Twitter OAuth login feature, alongside a local signup option. A Twitter API key is required for the app to make use of the Twitter option.
 
-A live version of this project can be found running [here](https://arm-picture-app.herokuapp.com/).
-
 Created as an exercise for [Free Code Camp](http://freecodecamp.com).
 ## Installing
 ```
